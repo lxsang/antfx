@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#ifdef LINUX
+#ifdef __unix__
 #include <linux/time.h>
 #else
 #include <time.h>
