@@ -1,7 +1,6 @@
 #include "supports.h"
 #include <signal.h>
 #include "engine.h"
-
 void shutdown(int sig)
 {
     antfx_release();
