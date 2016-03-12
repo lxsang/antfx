@@ -46,7 +46,7 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
     screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 
     // Map the device to memory
-    frame->buffer = (uint8_t *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+    frame->buffer = (uint8_t *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, frame->handle, 0);
     if ((int)fbp == -1) {
         perror("Error: failed to map framebuffer device to memory");
         exit(4);

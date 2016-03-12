@@ -1,5 +1,5 @@
 #include "engine_interface.h"
-
+#include <signal.h>
 engine_frame_t screen;
 void shutdown(int sig)
 {
@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
     conf.default_h = 320;
     conf.defaut_bbp = 16;
     conf.name = "sdl2_engine.o";
+    conf.dev = "/dev/fb1";
     // start display engine
     engine_init(&screen,conf);
 
