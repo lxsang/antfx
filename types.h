@@ -4,7 +4,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef LINUX
+#include <linux/time.h>
+#else
 #include <time.h>
+#endif
 #include <string.h>
 #define COLOR8888   4
 #define COLOR565    2
