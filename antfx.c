@@ -24,6 +24,13 @@ int main(int argc, char* argv[])
     int x = 100; int y = 100;       // Where we are going to put the pixel
     int location;
     printf("drawing some thing\n");
+
+    int i = 0;
+
+    for(i;i< screen.height*screen.width*(screen.bbp/8);i++)
+        printf("%d ", screen.buffer[i]);
+
+    printf("\n\n");
     // Figure out where in memory to put the pixel
     for (y = 100; y < 300; y++)
         for (x = 100; x < 300; x++) {

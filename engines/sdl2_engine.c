@@ -29,11 +29,6 @@ void _simulate_frame_buffer()
         SDL_RenderPresent(renderer);
         // wait for 30 mmilisecond .-i.e 30ffs
         nanosleep((const struct timespec[]){{0, 30000000L}}, NULL);
-
-        int i=0;
-        for(i; i < __screen->height*__screen->width*(__screen->bbp/8); i++)
-            printf("%d ",__screen->buffer[i]);
-        printf("\n");
     }
     __on = 2;
     printf("Engine release successful\n");
@@ -53,6 +48,7 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
     frame->yoffset = 0;
     frame->line_length = conf.default_w*(conf.defaut_bbp/8);
     frame->buffer = (uint8_t*) malloc(bsize);;
+    memset(frame->buffer, 0,bsize);
     __screen = frame;
     __on = 1;
     // create new thread to draw the buffer
