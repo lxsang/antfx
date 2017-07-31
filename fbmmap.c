@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -36,7 +37,7 @@ int main()
         exit(3);
     }
 
-    printf("%dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
+    printf("%dx%d, %dbpp xof %d yof %d, line length %d\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel, vinfo.xoffset, vinfo.yoffset, finfo.line_length);
 
     // Figure out the size of the screen in bytes
     screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
