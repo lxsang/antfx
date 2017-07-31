@@ -12,7 +12,7 @@ int main()
     struct fb_var_screeninfo vinfo;
     struct fb_fix_screeninfo finfo;
     long int screensize = 0;
-    char *fbp = 0;
+    uint8_t *fbp = 0;
     int x = 0, y = 0;
     long int location = 0;
 
@@ -42,7 +42,7 @@ int main()
     screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 
     // Map the device to memory
-    fbp = (char *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+    fbp = (uint8_t *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
     if ((int)fbp == -1) {
         perror("Error: failed to map framebuffer device to memory");
         exit(4);
@@ -77,3 +77,25 @@ int main()
     close(fbfd);
     return 0;
 }
+/*
+
+{
+       uint sampleRGB = 0xFF0000;
+       uint R = ( sampleRGB >> 16 ) & 0xFF;
+       uint G = ( sampleRGB >> 8 ) & 0xFF;
+       uint B = sampleRGB & 0xFF;
+       uint r = R * 31 / 255;
+       uint g = G * 63 / 255;
+       uint b = B * 31 / 255;
+       ushort converted16bpp = (ushort)( r << ( 5 + 6 ) | ( g << 5 ) | b );
+}
+{
+       ushort sample16bpp = 0xF800;
+       uint r = (uint)( ( sample16bpp >> ( 5 + 6 ) ) & 31 );
+       uint g = (uint)( ( sample16bpp >> 5 ) & 63 );
+       uint b = (uint)( sample16bpp & 31 );
+       uint R = r * 255 / 31;
+       uint G = g * 255 / 63;
+       uint B = b * 255 / 31;
+       uint convertedRGB = ( R << 16 ) | ( G << 8 ) | B;
+}*/
