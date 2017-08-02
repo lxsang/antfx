@@ -4,11 +4,14 @@ CFLAGS= -W  -Wall -std=c99 -g  -D DEBUG
 LIB= -lSDL2
 BUILD_DIR=./build
 
-OBJS_SIM =	engines/sdl2_engine.o \
+OBJS 	= 	supports.o \
 			antfx.o
 
+OBJS_SIM =	engines/sdl2_engine.o \
+			$(OBJS)
+
 OBJS_FB =	engines/fb_engine.o \
-			antfx.o
+			$(OBJS)
 
 main: sim 
 

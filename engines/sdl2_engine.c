@@ -1,6 +1,5 @@
-#include "../engine_interface.h"
+#include "../engine.h"
 #include <SDL2/SDL.h>
-#include <time.h>
 #include <pthread.h>
 
 engine_frame_t* __screen;
@@ -18,8 +17,6 @@ void _simulate_frame_buffer()
     else
         texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, __screen->width, __screen->height);
     
-    memset(__screen->buffer, 255,__screen->height*__screen->width*(__screen->bbp/8));
-
     while (__on)
     {
         //printf("render with %d\n",__screen->line_length);
@@ -28,7 +25,7 @@ void _simulate_frame_buffer()
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
         // wait for 30 mmilisecond .-i.e 30ffs
-        nanosleep((const struct timespec[]){{0, 30000000L}}, NULL);
+        nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
     __on = 2;
     printf("Engine release successful\n");
@@ -40,15 +37,15 @@ void _simulate_frame_buffer()
 
 void engine_init(engine_frame_t* frame, engine_config_t conf)
 {
-    int bsize = conf.default_h*conf.default_w*(conf.defaut_bbp/8);
+    frame->size = conf.default_h*conf.default_w*(conf.defaut_bbp/8);
     frame->width = conf.default_w;
     frame->height = conf.default_h;
     frame->bbp = conf.defaut_bbp;
     frame->xoffset = 0;
     frame->yoffset = 0;
     frame->line_length = conf.default_w*(conf.defaut_bbp/8);
-    frame->buffer = (uint8_t*) malloc(bsize);;
-    memset(frame->buffer, 0,bsize);
+    frame->buffer = (uint8_t*) malloc(frame->size);;
+    memset(frame->buffer, 0,frame->size);
     __screen = frame;
     __on = 1;
     // create new thread to draw the buffer
@@ -61,6 +58,8 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
 			pthread_detach(newthread) ;
 		}
     printf("engine init successful\n");
+
+    
 }
 
 void engine_release(engine_frame_t* frame)

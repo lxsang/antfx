@@ -4,7 +4,7 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-#include "../engine_interface.h"
+#include "../engine.h"
 
 void engine_init(engine_frame_t* frame, engine_config_t conf)
 {
@@ -36,17 +36,17 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
     }
 
     printf("%dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
-     frame->width = vinfo.xres;
-     frame->height = vinfo.yres;
-     frame->bbp = vinfo.bits_per_pixel;
-     frame->xoffset = vinfo.xoffset;
-     frame->yoffset = vinfo.yoffset;
-     frame->line_length = finfo.line_length;
+    frame->width = vinfo.xres;
+    frame->height = vinfo.yres;
+    frame->bbp = vinfo.bits_per_pixel;
+    frame->xoffset = vinfo.xoffset;
+    frame->yoffset = vinfo.yoffset;
+    frame->line_length = finfo.line_length;
     // Figure out the size of the screen in bytes
-    screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
+    frame->size = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 
     // Map the device to memory
-    frame->buffer = (uint8_t *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, frame->handle, 0);
+    frame->buffer = (uint8_t *)mmap(0, frame->size, PROT_READ | PROT_WRITE, MAP_SHARED, frame->handle, 0);
     if ((int)fbp == -1) {
         perror("Error: failed to map framebuffer device to memory");
         exit(4);
@@ -58,7 +58,7 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
 void engine_release(engine_frame_t* frame)
 {
     if(frame->buffer)
-        munmap(frame->buffer, frame->width*frame->height*frame->bbp/8);
+        munmap(frame->buffer, frame->size);
     close(frame->handle);
     printf("release successful\n");
 }
