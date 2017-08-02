@@ -1,6 +1,6 @@
 CC=gcc
 
-CFLAGS= -W  -Wall -std=c99 -g  -D DEBUG 
+CFLAGS= -W  -Wall -std=c99 -g  -D DEBUG -D USE_BUFFER
 LIB= -lSDL2
 BUILD_DIR=./build
 
