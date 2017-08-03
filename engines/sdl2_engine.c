@@ -9,7 +9,6 @@ void _simulate_frame_buffer()
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window * window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, __screen->width, __screen->height, 0);
-
     SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_Texture * texture;
     if(__screen->bbp == 32)

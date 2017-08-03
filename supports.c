@@ -2,9 +2,6 @@
 
 engine_frame_t _screen;
 
-#ifdef USE_BUFFER
-uint8_t* _buffer;
-#endif
 
 uint8_t* screen_position(point_t p)
 {
@@ -12,7 +9,7 @@ uint8_t* screen_position(point_t p)
     int loc  = (p.x+_screen.xoffset) * (_screen.bbp/8) + (p.y+_screen.yoffset) * _screen.line_length;
     
 #ifdef USE_BUFFER
-    return _buffer+loc;
+    return _screen.swap_buffer+loc;
 #else
     return _screen.buffer+loc;
 #endif
@@ -29,56 +26,53 @@ void _draw_point(point_t _at,color_code_t code, point_t tr)
     point_t at = _T(_at,tr);
     _put_pixel(at,code);
 }
-void _draw_line(line_t l,color_code_t code,point_t tr)
+static void _draw_line_(point_t from, point_t to, uint8_t _stroke, color_code_t code,point_t tr)
 { 
-    if(l.stroke == 0) l.stroke = 1;
+    if(_stroke == 0) return;
     line_t o;
-    o.from = _T(l.from,tr);
-    o.to = _T(l.to,tr);
-    point_t p;
-    int a,b;
-    a = (o.to.y - o.from.y)/(o.to.x - o.from.x);
-    b = o.from.y - a*o.from.x;
-    uint8_t* mem;
-    int i;
-    for(i= o.from.x; i <= o.to.x;i++)
-    {
-        p.x = i;
-        p.y = p.x*a + b;
-        mem = screen_position(p);
-        if(mem)
-            memcpy(mem ,&(code.value),code.size);
-    }
-    l.stroke--;
-    if(l.stroke == 0) return;
-    //int offset = 1;
-    line_t err_line1,err_line2;
+    o.from = _T(from,tr);
+    o.to = _T(to,tr);
+    point_t px;
 
-    err_line1.stroke =1;
-    err_line1.from = l.from;
-    err_line1.to = l.to;
-
-    err_line2.stroke =1;
-    err_line2.from = l.from;
-    err_line2.to = l.to;
-
-    while(l.stroke > 0)
-    {
-
-        // draw top
-        err_line1.from = _T(err_line1.from,(point_t){1,0});
-        err_line1.to = _T(l.to,(point_t){0,-1});
-        _draw_line(err_line1,code,tr);
-        //bot 
-        err_line2.from = _T(err_line2.from,(point_t){0,1});
-        err_line2.to = _T(err_line2.to,(point_t){-1,0});
-        _draw_line(err_line2,code,tr);
-        
-        l.stroke--;
+    signed char offset,dir;
+    uint8_t stroke;
+    
+    signed short dx, dy, sx,sy,err,e2;
+ 
+    dx =  abs (o.from.x - o.to.x);
+    sx = o.from.x  < o.to.x ? 1 : -1;
+    dy = -abs (o.from.y - o.to.y);
+    sy = o.from.y < o.to.y ? 1 : -1; 
+    err = dx + dy; /* error value e_xy */
+ 
+    px = o.from;
+    for (;;){  /* loop */
+        _put_pixel(px,code);
+        stroke = _stroke-1;
+        dir = 1;
+        offset = 1;
+        if(dx != 0 && dy != 0) stroke=(uint8_t)ceilf((float)stroke*3.0/2.0);
+        while(stroke>0)
+        {
+            _put_pixel(_T(px,(_P(0,offset*dir))),code);
+            if(dir == -1) 
+                offset++;
+            dir = -dir;
+            stroke--;
+        }
+        if (px.x == o.to.x && px.y == o.to.y) break;
+        e2 = 2 * err;
+        if (e2 >= dy) { err += dy; px.x += sx; } /* e_xy+e_x > 0 */
+        if (e2 <= dx) { err += dx; px.y += sy; } /* e_xy+e_y < 0 */
     }
 }
-
-void _draw_horizon_line(point_t from, point_t to, color_code_t cfill)
+void _draw_line(line_t l,point_t tr)
+{
+    if(l.stroke == 0) return;
+    color_code_t code = COLOR(l.color);
+    _draw_line_(l.from,l.to,l.stroke,code,tr);
+}
+static void _draw_horizon_line(point_t from, point_t to, color_code_t cfill)
 {
     int i;
     if(from.y != to.y) return;
@@ -86,9 +80,45 @@ void _draw_horizon_line(point_t from, point_t to, color_code_t cfill)
     for(i= from.x; i <= to.x; i++)
         _put_pixel((point_t){i, from.y},cfill);
 }
-
+static point_t _draw_circle_stroke(point_t org,point_t off, short r,  color_code_t c, uint8_t stroke)
+{
+    float sinx = (float)off.y/(float)r;
+    float cosx = (float)off.x/(float)r;
+    //LOG("stroke %d\n",stroke);
+    //_put_pixel(_T(off,org),c);
+    //stroke--;
+    while(stroke > 0)
+    {
+        if(off.x == 0) return off;
+        r--;
+        off.x = (signed short)ceilf((float)r*cosx);
+        off.y = (signed short)ceilf((float)r*sinx);
+        _put_pixel(_T(off,org),c);
+        _put_pixel(_T(org,_P(off.x,off.y-1)),c);
+        _put_pixel(_T(org,_P(off.y,off.x)),c);
+        _put_pixel(_T(org,_P(off.y,off.x-1)),c);
+        _put_pixel(_T(org,_P(-off.y,off.x)),c);
+        _put_pixel(_T(org,_P(-off.y,off.x-1)),c);
+        _put_pixel(_T(org,_P(-off.x,off.y)),c);
+        _put_pixel(_T(org,_P(-off.x,off.y-1)),c);
+        _put_pixel(_T(org,_P(-off.x,-off.y)),c);
+        _put_pixel(_T(org,_P(-off.x,-off.y+1)),c);
+        _put_pixel(_T(org,_P(-off.y,-off.x)),c);
+         _put_pixel(_T(org,_P(-off.y,-off.x+1)),c);
+        _put_pixel(_T(org,_P(off.y,-off.x)),c);
+        _put_pixel(_T(org,_P(off.y,-off.x+1)),c);
+        _put_pixel(_T(org,_P(off.x,-off.y)),c);
+        _put_pixel(_T(org,_P(off.x,-off.y+1)),c);
+        stroke--;
+    }
+    r--;
+    off.x = (signed short)ceilf((float)r*cosx);
+    off.y = (signed short)ceilf((float)r*sinx);
+    return off;
+}
 void _draw_circle(circle_t cir, point_t tr)
 {
+   
     if(cir.fill == 0 && cir.stroke == 0) return;
     point_t org = _T(cir.at , tr);
     int x = cir.r-1;
@@ -99,31 +129,24 @@ void _draw_circle(circle_t cir, point_t tr)
     uint8_t* mem;
     color_code_t code = COLOR(cir.color);
     color_code_t bcode = COLOR(cir.bcolor);
+    //_draw_circle_stroke(_P(50,10),_P(70,89),code,3);
     int i;
     while (x >= y)
     {
-       if(cir.fill)
-       {
-           _draw_horizon_line(_T(org,(point_t){-x,y}),_T(org,(point_t){x,y}),bcode);
-           _draw_horizon_line(_T(org,(point_t){-y,x}),_T(org,(point_t){y,x}),bcode);
-           _draw_horizon_line(_T(org,(point_t){-x,-y}),_T(org,(point_t){x,-y}),bcode);
-           _draw_horizon_line(_T(org,(point_t){-y,-x}),_T(org,(point_t){y,-x}),bcode);
-       }
-
-        if(cir.stroke>0)
+         signed short _x  = x, _y = y;
+        if(cir.stroke)
         {
-
-
-            _put_pixel(_T(org,(point_t){x,y}),code);
-            _put_pixel(_T(org,(point_t){y,x}),code);
-            _put_pixel(_T(org,(point_t){-y,x}),code);
-            _put_pixel(_T(org,(point_t){-x,y}),code);
-            _put_pixel(_T(org,(point_t){-x,-y}),code);
-            _put_pixel(_T(org,(point_t){-y,-x}),code);
-            _put_pixel(_T(org,(point_t){y,-x}),code);
-            _put_pixel(_T(org,(point_t){x,-y}),code);
+            point_t inner = _draw_circle_stroke(org,_P(x,y),cir.r,code,cir.stroke);
+            _x = inner.x;
+            _y = inner.y;
         }
-
+        if(cir.fill)
+        {
+            _draw_horizon_line(_T(org,_P(-_x,_y)),_T(org,_P(_x,_y)),bcode);
+            _draw_horizon_line(_T(org,_P(-_y,_x)),_T(org,_P(_y,_x)),bcode);
+            _draw_horizon_line(_T(org,_P(-_x,-_y)),_T(org,_P(_x,-_y)),bcode);
+            _draw_horizon_line(_T(org,_P(-_y,-_x)),_T(org,_P(_y,-_x)),bcode);
+        }
         if (err <= 0)
         {
             y++;
@@ -138,7 +161,42 @@ void _draw_circle(circle_t cir, point_t tr)
         }
     }
 }
+void _draw_polygon(polygon_t p, point_t tr)
+{
+    int i ;
+    color_code_t code = COLOR(p.color);
+    for(i=0;i < p.size - 1;i++)
+        _draw_line_(p.points[i],p.points[i+1],p.stroke,code,tr);
+    if(p.connected)
+        _draw_line_(p.points[i],p.points[0],p.stroke,code,tr);
+}
 
+void _draw_composite(composite_t comp,point_t tr)
+{
+    shape_t s;
+    for_each(s,comp.shapes)
+    {
+        switch(s->type)
+        {
+            case S_LINE: 
+                _draw_line(*((line_t*)s->value),comp.at);
+                break;
+            case S_CIRCLE: 
+                _draw_circle(*((circle_t*)s->value),comp.at);
+                break; 
+            case S_RECT:
+                _draw_rect(*((rect_t*)s->value),comp.at);
+                break;
+            case S_POLY: 
+                _draw_polygon(*((polygon_t*)s->value),comp.at);
+                break;
+            case S_COMPOSITE: 
+                _draw_composite(*((composite_t*)s->value),comp.at);
+                break;
+            default: ;
+        }
+    }
+}
 void _draw_rect(rect_t rect, point_t tr)
 {
     int i,j;
@@ -168,11 +226,10 @@ void _draw_rect(rect_t rect, point_t tr)
 void _clear(color_code_t code)
 {
 #ifdef USE_BUFFER
-    uint8_t *mem = _buffer;
+    uint8_t *mem = _screen.swap_buffer;
 #else
     uint8_t *mem = _screen.buffer;
 #endif
-    
     int i= 0;
     while(i < _screen.size)
     {
@@ -191,7 +248,7 @@ color_code_t _color_code(pixel_t px,uint8_t bbp)
             code.value = (int)(px.a << 24 | px.r << 16 | px.g << 8 | px.b);
             break;
         case COLOR565:
-            code.value = (int)( (px.r * 31 / 25) << 11 |  (px.g * 63 / 255) << 5  | (px.b * 31 / 255) );
+            code.value = (int)( (int)ceilf((float)px.r * 31.0 / 255.0) << 11 |  (int)ceilf((float)px.g * 63.0 / 255.0) << 5  | (int)ceilf((float)px.b * 31.0 / 255.0) );
             //*((unsigned short*)mem) = pixet_to_565(px);
             break;
         default:
@@ -200,14 +257,14 @@ color_code_t _color_code(pixel_t px,uint8_t bbp)
     return code;
 }
 point_t _T(point_t a,point_t b){ 
-    return (point_t){a.x+b.x,a.y+b.y};
+    return (point_t){(signed short)(a.x+b.x),(signed short)(a.y+b.y)};
 }
 void antfx_init(engine_config_t conf)
 {
     engine_init(&_screen,conf);
 #ifdef USE_BUFFER
     if(_screen.buffer)
-        _buffer = (uint8_t*) malloc(_screen.size);
+        _screen.swap_buffer = (uint8_t*) malloc(_screen.size);
 #endif
 
 }
@@ -215,14 +272,14 @@ void antfx_release()
 {
       engine_release(&_screen);
 #ifdef USE_BUFFER
-    if(_buffer)
-        free(_buffer);
+    if(_screen.swap_buffer)
+        free(_screen.swap_buffer);
 #endif
 }
 
 void render()
 {
 #ifdef USE_BUFFER
-    memcpy(_screen.buffer, _buffer, _screen.size);
+    memcpy(_screen.buffer, _screen.swap_buffer, _screen.size);
 #endif
 }

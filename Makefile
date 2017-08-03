@@ -5,7 +5,9 @@ LIB= -lSDL2
 BUILD_DIR=./build
 
 OBJS 	= 	supports.o \
-			antfx.o
+			list.o \
+			antfx.o \
+			widgets/window.o
 
 OBJS_SIM =	engines/sdl2_engine.o \
 			$(OBJS)
