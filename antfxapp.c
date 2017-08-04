@@ -1,5 +1,5 @@
 #include <signal.h>
-#include "widgets/widgets.h"
+#include "antfx.h"
 
 void shutdown(int sig)
 {
