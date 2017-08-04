@@ -23,23 +23,23 @@
     to manipulate a frame
 */
 typedef struct{
-    int value;
+    uint32_t value;
     uint8_t size;
 } color_code_t;
 
 typedef struct{
-    short width;
-    short height;
+    uint16_t width;
+    uint16_t height;
     uint8_t bbp;
-    short xoffset;
-    short yoffset;
-    short line_length;
+    int16_t xoffset;
+    int16_t yoffset;
+    uint16_t line_length;
     uint8_t* buffer;
 #ifdef USE_BUFFER
     uint8_t* swap_buffer;
 #endif
     int handle;
-    int size;
+    uint32_t size;
 } engine_frame_t;
 
 /*
@@ -48,8 +48,8 @@ typedef struct{
 */
  typedef struct{
     char* name;
-    short default_w;
-    short default_h;
+    uint16_t default_w;
+    uint16_t default_h;
     uint8_t defaut_bbp;
     char* dev;
  } engine_config_t;
@@ -65,8 +65,8 @@ typedef struct{
 } pixel_t;
 
 typedef struct{
-    signed short x;
-    signed short y;
+    int16_t x;
+    int16_t y;
 } point_t;
 
 /* a rectangle*/
@@ -108,7 +108,7 @@ typedef struct{
     uint8_t stroke;
     uint8_t fill;
     point_t* points;
-    int size;
+    uint32_t size;
     uint8_t connected;
 } polygon_t;
 

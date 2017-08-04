@@ -37,7 +37,7 @@ static void _draw_line_(point_t from, point_t to, uint8_t _stroke, color_code_t 
     signed char offset,dir;
     uint8_t stroke;
     
-    signed short dx, dy, sx,sy,err,e2;
+    int16_t dx, dy, sx,sy,err,e2;
  
     dx =  abs (o.from.x - o.to.x);
     sx = o.from.x  < o.to.x ? 1 : -1;
@@ -80,19 +80,19 @@ static void _draw_horizon_line(point_t from, point_t to, color_code_t cfill)
     for(i= from.x; i <= to.x; i++)
         _put_pixel((point_t){i, from.y},cfill);
 }
-static point_t _draw_circle_stroke(point_t org,point_t off, short r,  color_code_t c, uint8_t stroke)
+static point_t _draw_circle_stroke(point_t org,point_t off, uint16_t r,  color_code_t c, uint8_t stroke)
 {
     float sinx = (float)off.y/(float)r;
     float cosx = (float)off.x/(float)r;
     //LOG("stroke %d\n",stroke);
-    //_put_pixel(_T(off,org),c);
-    //stroke--;
+    _put_pixel(_T(off,org),c);
+    stroke--;
     while(stroke > 0)
     {
         if(off.x == 0) return off;
         r--;
-        off.x = (signed short)ceilf((float)r*cosx);
-        off.y = (signed short)ceilf((float)r*sinx);
+        off.x = (int16_t)ceilf((float)r*cosx);
+        off.y = (int16_t)ceilf((float)r*sinx);
         _put_pixel(_T(off,org),c);
         _put_pixel(_T(org,_P(off.x,off.y-1)),c);
         _put_pixel(_T(org,_P(off.y,off.x)),c);
@@ -112,8 +112,8 @@ static point_t _draw_circle_stroke(point_t org,point_t off, short r,  color_code
         stroke--;
     }
     r--;
-    off.x = (signed short)ceilf((float)r*cosx);
-    off.y = (signed short)ceilf((float)r*sinx);
+    off.x = (int16_t)ceilf((float)r*cosx);
+    off.y = (int16_t)ceilf((float)r*sinx);
     return off;
 }
 void _draw_circle(circle_t cir, point_t tr)
@@ -133,7 +133,7 @@ void _draw_circle(circle_t cir, point_t tr)
     int i;
     while (x >= y)
     {
-         signed short _x  = x, _y = y;
+         int16_t  _x  = x, _y = y;
         if(cir.stroke)
         {
             point_t inner = _draw_circle_stroke(org,_P(x,y),cir.r,code,cir.stroke);
@@ -257,7 +257,7 @@ color_code_t _color_code(pixel_t px,uint8_t bbp)
     return code;
 }
 point_t _T(point_t a,point_t b){ 
-    return (point_t){(signed short)(a.x+b.x),(signed short)(a.y+b.y)};
+    return (point_t){(int16_t)(a.x+b.x),(int16_t)(a.y+b.y)};
 }
 void antfx_init(engine_config_t conf)
 {

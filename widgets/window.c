@@ -17,25 +17,32 @@ void _draw_window(afx_window_t conf,afx_window_style_t sty,point_t tr)
     title.of = _P(conf.size.x-2*sty.border,sty.title_height);
     title.fill = 1;
     title.stroke = 0;
-    title.bcolor = sty.title_color;
+    title.bcolor = sty.title_bcolor;
 
     _draw_rect(win,org);
     _draw_rect(title,org);
 
     rect_t close;
-    close.at = _P(sty.border + 5,sty.border+1);
-    close.of = _P(8,8);
+    close.at = _P(sty.border + 2,sty.border+2);
+    close.of = _P(7,7);
     close.fill = 1;
     close.stroke = 0;
     close.bcolor = (pixel_t){252,99,93};
     _draw_rect(close, org);
 
-    close.at = _P(sty.border + 17,sty.border+1);
-    close.bcolor = (pixel_t){254,192,65};
+    close.at = _P(sty.border + 12,sty.border+2);
+    close.bcolor = (pixel_t){254,192,65,0};
     _draw_rect(close, org);
 
-    close.at = _P(sty.border + 29,sty.border+1);
-    close.bcolor = (pixel_t){54,206,76};
+    close.at = _P(sty.border + 22,sty.border+2);
+    close.bcolor = (pixel_t){54,206,76,0};
     _draw_rect(close, org);
+
+    if(conf.title)
+    {
+        uint16_t len  = strlen(conf.title);
+        uint16_t offset = len*4; // width 4 font
+        _put_text(conf.title,_T(org,_P(conf.size.x/2 - offset ,sty.border+3)),sty.title_color,SYS_FONT); 
+    }
     // draw all children here
 }

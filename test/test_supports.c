@@ -1,6 +1,6 @@
-#include "supports.h"
+#include "../supports.h"
 #include <signal.h>
-#include "engine.h"
+#include "../engine.h"
 
 composite_t shapes;
 void shutdown(int sig)
