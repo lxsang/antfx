@@ -54,9 +54,6 @@ void _draw_line(line_t, point_t);
 void _draw_circle(circle_t,point_t);
 point_t _T(point_t a,point_t b);
 void _clear(color_code_t);
-void antfx_init(engine_config_t);
-void antfx_release();
-void render();
 void _draw_polygon(polygon_t,point_t);
 void _draw_composite(composite_t,point_t);
 

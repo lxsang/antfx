@@ -259,27 +259,3 @@ color_code_t _color_code(pixel_t px,uint8_t bbp)
 point_t _T(point_t a,point_t b){ 
     return (point_t){(int16_t)(a.x+b.x),(int16_t)(a.y+b.y)};
 }
-void antfx_init(engine_config_t conf)
-{
-    engine_init(&_screen,conf);
-#ifdef USE_BUFFER
-    if(_screen.buffer)
-        _screen.swap_buffer = (uint8_t*) malloc(_screen.size);
-#endif
-
-}
-void antfx_release()
-{
-      engine_release(&_screen);
-#ifdef USE_BUFFER
-    if(_screen.swap_buffer)
-        free(_screen.swap_buffer);
-#endif
-}
-
-void render()
-{
-#ifdef USE_BUFFER
-    memcpy(_screen.buffer, _screen.swap_buffer, _screen.size);
-#endif
-}

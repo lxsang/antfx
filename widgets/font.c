@@ -1,6 +1,6 @@
 #include "font.h"
 
-afx_font_t SYS_FONT = (afx_font_t){NULL,0,NULL,0,NULL,0,0,0,0};
+afx_font_t SYS_FONT;
 
 static unsigned char _sys_font_8x13[95][13] = {
 {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},// space :32

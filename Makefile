@@ -9,7 +9,8 @@ OBJS 	= 	supports.o \
 			list.o \
 			widgets/window.o \
 			widgets/image.o \
-			widgets/font.o
+			widgets/font.o \
+			antfx.o
 
 OBJS_SIM =	engines/sdl2_engine.o \
 			$(OBJS)
@@ -22,7 +23,7 @@ main: sim
 fontgen:
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/fontgen widgets/fonts/header2bf.c 
 sim:$(OBJS_SIM)
-	$(CC) $(CFLAGS)  $(OBJS_SIM) $(LIB)  -lSDL2  -o $(BUILD_DIR)/antfx antfx.c
+	$(CC) $(CFLAGS)  $(OBJS_SIM) $(LIB)  -lSDL2  -o $(BUILD_DIR)/antfx antfxapp.c
 	$(CC) $(CFLAGS)  $(OBJS_SIM) $(LIB)  -lSDL2  -o $(BUILD_DIR)/test_support test/test_supports.c
 fb:$(OBJS_FB)
 	$(CC) $(CFLAGS)  $(OBJS_FB) $(LIB)  -o $(BUILD_DIR)/antfx antfx.c
