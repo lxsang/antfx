@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     sty.font = font;
    
     afx_bitmap_t bmp;
-    read_bitmap_file("/Users/mrsang/Documents/ushare/cwp/antfx/test/test.bmp",&bmp);
+    read_bitmap_file("test/test.bmp",&bmp);
     // try to read a bitmap font
     //shapes.at = _P(50,50);
     //clear(((pixel_t){0,0,255,0}));

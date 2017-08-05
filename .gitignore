@@ -1,4 +1,8 @@
 # Prerequisites
+build/antfx
+build/test_support
+build/fontconvert
+*.dSYM
 *._*
 *.d
 .vscode
