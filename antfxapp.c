@@ -8,6 +8,12 @@ void shutdown(int sig)
 }
 int main(int argc, char* argv[]) 
 {
+    char* font_name = NULL;
+    if(argc == 2)
+    {
+        font_name = argv[1];
+        printf("Font name %s \n", font_name);
+    }
     signal(SIGPIPE, SIG_IGN);
 	signal(SIGABRT, SIG_IGN);
 	signal(SIGINT, shutdown);
@@ -19,6 +25,15 @@ int main(int argc, char* argv[])
     conf.dev = "/dev/fb1";
     // start display engine
     antfx_init(conf);
+
+    afx_font_t font;
+    if(font_name == NULL || !load_font(font_name,&font))
+    {
+        LOG("Cannot load font. Use system font\n");
+        font = SYS_FONT;
+    }
+    else 
+        LOG("Font loaded \n");
  
     afx_window_t win;
     afx_window_style_t sty;
@@ -27,20 +42,16 @@ int main(int argc, char* argv[])
     win.title = "Terminal";
     point_t px = ORIGIN;
     sty.bg_color = WHITE;
-    sty.border_color = (pixel_t){187,185,187};
+    sty.border_color = (pixel_t){187,185,187,0};
     sty.title_height = 20;
     sty.border=1;
-    sty.title_bcolor = (pixel_t){222,220,222};
-    sty.title_color = (pixel_t){100,100,100};
+    sty.title_bcolor = (pixel_t){222,220,222,0};
+    sty.title_color = (pixel_t){100,100,100,0};
+    sty.font = font;
    
     afx_bitmap_t bmp;
-    read_bitmap_file("test/test.bmp",&bmp);
+    read_bitmap_file("/Users/mrsang/Documents/ushare/cwp/antfx/test/test.bmp",&bmp);
     // try to read a bitmap font
-    afx_font_t font;
-    if(!load_font("/Users/mrsang/Documents/ushare/cwp/antfx/build/fonts/FreeMono12pt7b.bf",&font))
-        LOG("Cannot load font\n");
-    else 
-        LOG("Font loaded \n");
     //shapes.at = _P(50,50);
     //clear(((pixel_t){0,0,255,0}));
     all_white();
@@ -53,7 +64,7 @@ int main(int argc, char* argv[])
         all_white();
         _draw_window(win,sty,ORIGIN);
         _draw_bitmap(bmp,_P(80,40));
-        //_put_text("this is a text! 1234",_P(10,300),(pixel_t){0,122,204,0},SYS_FONT);
+        _put_text("this is a text! 1234 \n new line are not implemented",_P(10,300),(pixel_t){0,122,204,0},font);
         render();
         nanosleep((const struct timespec[]){{0, 50000000L}}, NULL);
         //exit(0);

@@ -1,6 +1,6 @@
 CC=gcc
 
-CFLAGS= -W  -Wall -std=c99 -g  -D DEBUG -D USE_BUFFER
+CFLAGS= -W  -Wall -std=c99 -g -fdiagnostics-color=always  -D DEBUG -D USE_BUFFER
 
 LIB= -lm
 BUILD_DIR=./build
@@ -20,8 +20,6 @@ OBJS_FB =	engines/fb_engine.o \
 
 main: sim 
 
-fontgen:
-	$(CC) $(CFLAGS) -o $(BUILD_DIR)/fontgen widgets/fonts/header2bf.c 
 sim:$(OBJS_SIM)
 	$(CC) $(CFLAGS)  $(OBJS_SIM) $(LIB)  -lSDL2  -o $(BUILD_DIR)/antfx antfxapp.c
 	$(CC) $(CFLAGS)  $(OBJS_SIM) $(LIB)  -lSDL2  -o $(BUILD_DIR)/test_support test/test_supports.c
@@ -30,6 +28,9 @@ fb:$(OBJS_FB)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+font:
+	cd widgets/fonts/ && make
 
 clean:
 	-rm -f $(OBJS_SIM) $(OBJS_FB)

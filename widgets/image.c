@@ -2,9 +2,7 @@
 void read_bitmap_file(const char* file, afx_bitmap_t* bmp)
 {
     uint8_t header[14];
-    FILE *fp; 
-    int i=0;  
-    unsigned char tmpRGB; 
+    FILE *fp;  
 
     fp = fopen(file,"rb");
     if (fp == NULL)
@@ -72,7 +70,7 @@ void _draw_bitmap(afx_bitmap_t bmp,point_t tr)
     pixel_t c;
     point_t p;
     //int line_length = bmp.header.width*3;
-    for(i=0;i < bmp.header.size;i+=3)
+    for(i=0;i < (int)bmp.header.size;i+=3)
     {
         c.b = bmp.data[i];
         c.g = bmp.data[i+1];

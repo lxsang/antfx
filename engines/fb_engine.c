@@ -6,7 +6,7 @@
 
 #include "../engine.h"
 
-void engine_init(engine_frame_t* frame, engine_config_t conf)
+void display_init(engine_frame_t* frame, engine_config_t conf)
 {
     struct fb_var_screeninfo vinfo;
     struct fb_fix_screeninfo finfo;
@@ -55,7 +55,7 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
     printf("engine init successful\n");
 }
 
-void engine_release(engine_frame_t* frame)
+void display_release(engine_frame_t* frame)
 {
     if(frame->buffer)
         munmap(frame->buffer, frame->size);

@@ -14,8 +14,8 @@
 #include "list.h"
 #define COLOR8888   4
 #define COLOR565    2
-#define WHITE (pixel_t){255,255,255}
-#define BLACK (pixel_t){0,0,0}
+#define WHITE (pixel_t){255,255,255,0}
+#define BLACK (pixel_t){0,0,0,0}
 #define LOG printf
 /*
     A engine frame is actually a frame buffer

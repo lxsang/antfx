@@ -5,7 +5,7 @@ void _draw_window(afx_window_t conf,afx_window_style_t sty,point_t tr)
     point_t org = _T(conf.at,tr);
     rect_t win;
     rect_t title;
-
+    afx_font_t font = sty.font.loaded == 1 ? sty.font:SYS_FONT;
     win.at = ORIGIN;
     win.of = conf.size;
     win.stroke = sty.border;
@@ -27,7 +27,7 @@ void _draw_window(afx_window_t conf,afx_window_style_t sty,point_t tr)
     close.of = _P(7,7);
     close.fill = 1;
     close.stroke = 0;
-    close.bcolor = (pixel_t){252,99,93};
+    close.bcolor = (pixel_t){252,99,93,0};
     _draw_rect(close, org);
 
     close.at = _P(sty.border + 12,sty.border+2);
@@ -42,7 +42,9 @@ void _draw_window(afx_window_t conf,afx_window_style_t sty,point_t tr)
     {
         uint16_t len  = strlen(conf.title);
         uint16_t offset = len*4; // width 4 font
-        _put_text(conf.title,_T(org,_P(conf.size.x/2 - offset ,sty.border+3)),sty.title_color,SYS_FONT); 
+        _put_text(conf.title,
+            _T(org,_P(conf.size.x/2 - offset ,sty.border + sty.title_height/2 + font.yAdvance/4 -1 )),
+            sty.title_color,font); 
     }
     // draw all children here
 }

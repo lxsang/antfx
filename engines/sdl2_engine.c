@@ -7,6 +7,7 @@ static uint8_t __on = 1;
 void _simulate_frame_buffer()
 {
     SDL_Init(SDL_INIT_VIDEO);
+    //SDL_Event event;
 
     SDL_Window * window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, __screen->width, __screen->height, 0);
     SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
@@ -19,6 +20,14 @@ void _simulate_frame_buffer()
     while (__on)
     {
         //printf("render with %d\n",__screen->line_length);
+        /*SDL_WaitEvent(&event);
+ 
+        switch (event.type)
+        {
+        case SDL_QUIT:
+            __on = 0;
+            break;
+        }*/
         SDL_UpdateTexture(texture, NULL, __screen->buffer, __screen->line_length);
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -34,7 +43,7 @@ void _simulate_frame_buffer()
     SDL_Quit();
 }
 
-void engine_init(engine_frame_t* frame, engine_config_t conf)
+void display_init(engine_frame_t* frame, engine_config_t conf)
 {
     frame->size = conf.default_h*conf.default_w*(conf.defaut_bbp/8);
     frame->width = conf.default_w;
@@ -61,7 +70,7 @@ void engine_init(engine_frame_t* frame, engine_config_t conf)
     
 }
 
-void engine_release(engine_frame_t* frame)
+void display_release(engine_frame_t* frame)
 {
     __on = 0;
     while(__on == 0);

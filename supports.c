@@ -76,7 +76,6 @@ static void _draw_horizon_line(point_t from, point_t to, color_code_t cfill)
 {
     int i;
     if(from.y != to.y) return;
-    uint8_t* mem;
     for(i= from.x; i <= to.x; i++)
         _put_pixel((point_t){i, from.y},cfill);
 }
@@ -126,11 +125,9 @@ void _draw_circle(circle_t cir, point_t tr)
     int dx = 1;
     int dy = 1;
     int err = dx - (cir.r << 1);
-    uint8_t* mem;
     color_code_t code = COLOR(cir.color);
     color_code_t bcode = COLOR(cir.bcolor);
     //_draw_circle_stroke(_P(50,10),_P(70,89),code,3);
-    int i;
     while (x >= y)
     {
          int16_t  _x  = x, _y = y;
@@ -163,7 +160,7 @@ void _draw_circle(circle_t cir, point_t tr)
 }
 void _draw_polygon(polygon_t p, point_t tr)
 {
-    int i ;
+    unsigned int i ;
     color_code_t code = COLOR(p.color);
     for(i=0;i < p.size - 1;i++)
         _draw_line_(p.points[i],p.points[i+1],p.stroke,code,tr);
@@ -174,24 +171,25 @@ void _draw_polygon(polygon_t p, point_t tr)
 void _draw_composite(composite_t comp,point_t tr)
 {
     shape_t s;
+    point_t org = _T(comp.at,tr);
     for_each(s,comp.shapes)
     {
         switch(s->type)
         {
             case S_LINE: 
-                _draw_line(*((line_t*)s->value),comp.at);
+                _draw_line(*((line_t*)s->value),org);
                 break;
             case S_CIRCLE: 
-                _draw_circle(*((circle_t*)s->value),comp.at);
+                _draw_circle(*((circle_t*)s->value),org);
                 break; 
             case S_RECT:
-                _draw_rect(*((rect_t*)s->value),comp.at);
+                _draw_rect(*((rect_t*)s->value),org);
                 break;
             case S_POLY: 
-                _draw_polygon(*((polygon_t*)s->value),comp.at);
+                _draw_polygon(*((polygon_t*)s->value),org);
                 break;
             case S_COMPOSITE: 
-                _draw_composite(*((composite_t*)s->value),comp.at);
+                _draw_composite(*((composite_t*)s->value),org);
                 break;
             default: ;
         }
@@ -201,7 +199,6 @@ void _draw_rect(rect_t rect, point_t tr)
 {
     int i,j;
     uint8_t* mem;
-    point_t p;
     point_t org = _T(rect.at,tr);
     color_code_t code = COLOR(rect.color);
     color_code_t bcode = COLOR(rect.bcolor);
@@ -231,7 +228,7 @@ void _clear(color_code_t code)
     uint8_t *mem = _screen.buffer;
 #endif
     int i= 0;
-    while(i < _screen.size)
+    while(i < (int)_screen.size)
     {
         memcpy(mem,&code.value,code.size);
         mem += code.size;

@@ -19,6 +19,7 @@ typedef struct{
     pixel_t title_bcolor;
     pixel_t title_color;
     uint8_t title_height;
+    afx_font_t font;
 } afx_window_style_t;
 
 void _draw_window(afx_window_t,afx_window_style_t,point_t);

@@ -6,6 +6,6 @@
     the system will load them dynamically
 */
 
-void engine_init(engine_frame_t*, engine_config_t);
-void engine_release(engine_frame_t*);
+void display_init(engine_frame_t*, engine_config_t);
+void display_release(engine_frame_t*);
 #endif
