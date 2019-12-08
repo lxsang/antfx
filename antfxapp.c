@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
     conf.default_w = 480;
     conf.default_h = 320;
     conf.defaut_bbp = 16;
-    conf.name = "sdl2_engine.o";
     conf.dev = "/dev/fb1";
     // start display engine
     antfx_init(conf);

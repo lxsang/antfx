@@ -1,5 +1,14 @@
 #include "antfx.h"
 
+void antfx_prepare()
+{
+    _screen.buffer = NULL;
+    _screen.handle = -1;
+#ifdef USE_BUFFER
+    _screen.swap_buffer = NULL;
+#endif
+}
+
 void antfx_init(engine_config_t conf)
 {
     //SYS_FONT = (afx_font_t){NULL,0,NULL,0,NULL,0,0,0,0};

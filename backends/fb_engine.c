@@ -4,7 +4,7 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-#include "../engine.h"
+#include "../backend.h"
 
 void display_init(engine_frame_t* frame, engine_config_t conf)
 {
@@ -59,6 +59,7 @@ void display_release(engine_frame_t* frame)
 {
     if(frame->buffer)
         munmap(frame->buffer, frame->size);
-    close(frame->handle);
+    if(frame->handle != -1)
+        close(frame->handle);
     printf("release successful\n");
 }

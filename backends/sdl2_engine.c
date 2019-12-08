@@ -1,10 +1,10 @@
-#include "../engine.h"
+#include "../backend.h"
 #include <SDL2/SDL.h>
 #include <sys/types.h>
 #include <unistd.h>
 
 engine_frame_t* __screen;
-static uint8_t __on = 1;
+static uint8_t __on = 0;
 static SDL_Window * window = NULL;
 static SDL_Renderer * renderer = NULL;
 SDL_Texture * texture = NULL; 
@@ -60,7 +60,7 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
     // create window
     //SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
-
+    __on = 1;
     window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, __screen->width, __screen->height, SDL_WINDOW_SHOWN);
     if(!window) {
         LOG("Error could not create window: %s\n",SDL_GetError());
@@ -87,11 +87,16 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
 
 void display_release(engine_frame_t* frame)
 {
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    if(__screen->buffer) free(__screen->buffer);
+    if(texture)
+        SDL_DestroyTexture(texture);
+    if(renderer)
+        SDL_DestroyRenderer(renderer);
+    if(window)
+        SDL_DestroyWindow(window);
+    if(__on)
+        SDL_Quit();
+    __on = 0;
+    if(frame->buffer) free(frame->buffer);
     frame->buffer = NULL;
     LOG("Engine release successful\n");
 }

@@ -90,10 +90,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-apple-darwin18.6.0
 host_triplet = x86_64-apple-darwin18.6.0
-am__append_1 = engines/sdl2_engine.c
-#am__append_2 = engines/fb_engine.c
-bin_PROGRAMS = antfx$(EXEEXT)
+am__append_1 = backends/sdl2_engine.c
+#am__append_2 = backends/fb_engine.c
+bin_PROGRAMS = antfx$(EXEEXT) antfly$(EXEEXT)
 am__append_3 = -lSDL2
+am__append_4 = -lSDL2
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -139,11 +140,11 @@ am__uninstall_files_from_dir = { \
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libantfx_la_LIBADD =
 am__libantfx_la_SOURCES_DIST = supports.c list.c widgets/window.c \
-	widgets/image.c widgets/font.c antfx.c engines/sdl2_engine.c \
-	engines/fb_engine.c
+	widgets/image.c widgets/font.c antfx.c backends/sdl2_engine.c \
+	backends/fb_engine.c
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = engines/sdl2_engine.lo
-#am__objects_2 = engines/fb_engine.lo
+am__objects_1 = backends/sdl2_engine.lo
+#am__objects_2 = backends/fb_engine.lo
 am_libantfx_la_OBJECTS = supports.lo list.lo widgets/window.lo \
 	widgets/image.lo widgets/font.lo antfx.lo $(am__objects_1) \
 	$(am__objects_2)
@@ -152,9 +153,13 @@ AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am_antfly_OBJECTS = antfly.$(OBJEXT)
+antfly_OBJECTS = $(am_antfly_OBJECTS)
+am__DEPENDENCIES_1 =
+antfly_DEPENDENCIES = libantfx.la lib/lua-5.3.4/liblua.a \
+	$(am__DEPENDENCIES_1)
 am_antfx_OBJECTS = antfxapp.$(OBJEXT)
 antfx_OBJECTS = $(am_antfx_OBJECTS)
-am__DEPENDENCIES_1 =
 antfx_DEPENDENCIES = libantfx.la $(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -171,10 +176,10 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/antfx.Plo ./$(DEPDIR)/antfxapp.Po \
-	./$(DEPDIR)/list.Plo ./$(DEPDIR)/supports.Plo \
-	engines/$(DEPDIR)/fb_engine.Plo \
-	engines/$(DEPDIR)/sdl2_engine.Plo widgets/$(DEPDIR)/font.Plo \
+am__depfiles_remade = ./$(DEPDIR)/antfly.Po ./$(DEPDIR)/antfx.Plo \
+	./$(DEPDIR)/antfxapp.Po ./$(DEPDIR)/list.Plo \
+	./$(DEPDIR)/supports.Plo backends/$(DEPDIR)/fb_engine.Plo \
+	backends/$(DEPDIR)/sdl2_engine.Plo widgets/$(DEPDIR)/font.Plo \
 	widgets/$(DEPDIR)/image.Plo widgets/$(DEPDIR)/window.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -195,14 +200,31 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libantfx_la_SOURCES) $(antfx_SOURCES)
-DIST_SOURCES = $(am__libantfx_la_SOURCES_DIST) $(antfx_SOURCES)
+SOURCES = $(libantfx_la_SOURCES) $(antfly_SOURCES) $(antfx_SOURCES)
+DIST_SOURCES = $(am__libantfx_la_SOURCES_DIST) $(antfly_SOURCES) \
+	$(antfx_SOURCES)
+RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
+	ctags-recursive dvi-recursive html-recursive info-recursive \
+	install-data-recursive install-dvi-recursive \
+	install-exec-recursive install-html-recursive \
+	install-info-recursive install-pdf-recursive \
+	install-ps-recursive install-recursive installcheck-recursive \
+	installdirs-recursive pdf-recursive ps-recursive \
+	tags-recursive uninstall-recursive
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
 HEADERS = $(pkginclude_HEADERS)
+RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
+  distclean-recursive maintainer-clean-recursive
+am__recursive_targets = \
+  $(RECURSIVE_TARGETS) \
+  $(RECURSIVE_CLEAN_TARGETS) \
+  $(am__extra_recursive_targets)
+AM_RECURSIVE_TARGETS = $(am__recursive_targets:-recursive=) TAGS CTAGS \
+	cscope distdir distdir-am dist dist-all distcheck
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -223,7 +245,7 @@ am__define_uniq_tagged_files = \
 ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
-AM_RECURSIVE_TARGETS = cscope
+DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in compile config.guess \
 	config.sub depcomp install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -236,6 +258,31 @@ am__remove_distdir = \
       || { sleep 5 && rm -rf "$(distdir)"; }; \
   else :; fi
 am__post_remove_distdir = $(am__remove_distdir)
+am__relativize = \
+  dir0=`pwd`; \
+  sed_first='s,^\([^/]*\)/.*$$,\1,'; \
+  sed_rest='s,^[^/]*/*,,'; \
+  sed_last='s,^.*/\([^/]*\)$$,\1,'; \
+  sed_butlast='s,/*[^/]*$$,,'; \
+  while test -n "$$dir1"; do \
+    first=`echo "$$dir1" | sed -e "$$sed_first"`; \
+    if test "$$first" != "."; then \
+      if test "$$first" = ".."; then \
+        dir2=`echo "$$dir0" | sed -e "$$sed_last"`/"$$dir2"; \
+        dir0=`echo "$$dir0" | sed -e "$$sed_butlast"`; \
+      else \
+        first2=`echo "$$dir2" | sed -e "$$sed_first"`; \
+        if test "$$first2" = "$$first"; then \
+          dir2=`echo "$$dir2" | sed -e "$$sed_rest"`; \
+        else \
+          dir2="../$$dir2"; \
+        fi; \
+        dir0="$$dir0"/"$$first"; \
+      fi; \
+    fi; \
+    dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
+  done; \
+  reldir="$$dir2"
 DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 DIST_TARGETS = dist-gzip
@@ -257,7 +304,7 @@ CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEBUG=1 -DUSE_BUFFER=1 -DUSE_SDL2=1
+DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEBUG=1 -DUSE_BUFFER=1 -DUSE_SDL2=1 -DMACOS=1
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = dsymutil
@@ -360,6 +407,8 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
 AM_CPPFLAGS = -W  -Wall -g -std=c99
+SUBDIRS = lib/ .
+
 # dynamic library
 lib_LTLIBRARIES = libantfx.la
 libantfx_la_SOURCES = supports.c list.c widgets/window.c \
@@ -369,7 +418,7 @@ pkginclude_HEADERS = list.h \
             types.h\
 			supports.h \
 			antfx.h \
-			engine.h \
+			backend.h \
 			widgets/widgets.h \
 			widgets/window.h \
 			widgets/image.h \
@@ -379,7 +428,9 @@ EXTRA_DIST = README.md
 # lib source files
 antfx_SOURCES = antfxapp.c
 antfx_LDADD = libantfx.la $(am__append_3)
-all: all-am
+antfly_SOURCES = antfly.c
+antfly_LDADD = libantfx.la lib/lua-5.3.4/liblua.a $(am__append_4)
+all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
@@ -512,19 +563,23 @@ widgets/image.lo: widgets/$(am__dirstamp) \
 	widgets/$(DEPDIR)/$(am__dirstamp)
 widgets/font.lo: widgets/$(am__dirstamp) \
 	widgets/$(DEPDIR)/$(am__dirstamp)
-engines/$(am__dirstamp):
-	@$(MKDIR_P) engines
-	@: > engines/$(am__dirstamp)
-engines/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) engines/$(DEPDIR)
-	@: > engines/$(DEPDIR)/$(am__dirstamp)
-engines/sdl2_engine.lo: engines/$(am__dirstamp) \
-	engines/$(DEPDIR)/$(am__dirstamp)
-engines/fb_engine.lo: engines/$(am__dirstamp) \
-	engines/$(DEPDIR)/$(am__dirstamp)
+backends/$(am__dirstamp):
+	@$(MKDIR_P) backends
+	@: > backends/$(am__dirstamp)
+backends/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) backends/$(DEPDIR)
+	@: > backends/$(DEPDIR)/$(am__dirstamp)
+backends/sdl2_engine.lo: backends/$(am__dirstamp) \
+	backends/$(DEPDIR)/$(am__dirstamp)
+backends/fb_engine.lo: backends/$(am__dirstamp) \
+	backends/$(DEPDIR)/$(am__dirstamp)
 
 libantfx.la: $(libantfx_la_OBJECTS) $(libantfx_la_DEPENDENCIES) $(EXTRA_libantfx_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libantfx_la_OBJECTS) $(libantfx_la_LIBADD) $(LIBS)
+
+antfly$(EXEEXT): $(antfly_OBJECTS) $(antfly_DEPENDENCIES) $(EXTRA_antfly_DEPENDENCIES) 
+	@rm -f antfly$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(antfly_OBJECTS) $(antfly_LDADD) $(LIBS)
 
 antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIES) 
 	@rm -f antfx$(EXEEXT)
@@ -532,20 +587,21 @@ antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIE
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f engines/*.$(OBJEXT)
-	-rm -f engines/*.lo
+	-rm -f backends/*.$(OBJEXT)
+	-rm -f backends/*.lo
 	-rm -f widgets/*.$(OBJEXT)
 	-rm -f widgets/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/antfly.Po # am--include-marker
 include ./$(DEPDIR)/antfx.Plo # am--include-marker
 include ./$(DEPDIR)/antfxapp.Po # am--include-marker
 include ./$(DEPDIR)/list.Plo # am--include-marker
 include ./$(DEPDIR)/supports.Plo # am--include-marker
-include engines/$(DEPDIR)/fb_engine.Plo # am--include-marker
-include engines/$(DEPDIR)/sdl2_engine.Plo # am--include-marker
+include backends/$(DEPDIR)/fb_engine.Plo # am--include-marker
+include backends/$(DEPDIR)/sdl2_engine.Plo # am--include-marker
 include widgets/$(DEPDIR)/font.Plo # am--include-marker
 include widgets/$(DEPDIR)/image.Plo # am--include-marker
 include widgets/$(DEPDIR)/window.Plo # am--include-marker
@@ -585,7 +641,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-	-rm -rf engines/.libs engines/_libs
+	-rm -rf backends/.libs backends/_libs
 	-rm -rf widgets/.libs widgets/_libs
 
 distclean-libtool:
@@ -612,14 +668,61 @@ uninstall-pkgincludeHEADERS:
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(pkgincludedir)'; $(am__uninstall_files_from_dir)
 
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run 'make' without going through this Makefile.
+# To change the values of 'make' variables: instead of editing Makefiles,
+# (1) if the variable is set in 'config.status', edit 'config.status'
+#     (which will cause the Makefiles to be regenerated when you run 'make');
+# (2) otherwise, pass the desired values on the 'make' command line.
+$(am__recursive_targets):
+	@fail=; \
+	if $(am__make_keepgoing); then \
+	  failcom='fail=yes'; \
+	else \
+	  failcom='exit 1'; \
+	fi; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	case "$@" in \
+	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
+	  *) list='$(SUBDIRS)' ;; \
+	esac; \
+	for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  ($(am__cd) $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	  || eval $$failcom; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
-tags: tags-am
+tags: tags-recursive
 TAGS: tags
 
 tags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
 	set x; \
 	here=`pwd`; \
+	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
+	  include_option=--etags-include; \
+	  empty_fix=.; \
+	else \
+	  include_option=--include; \
+	  empty_fix=; \
+	fi; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test ! -f $$subdir/TAGS || \
+	      set "$$@" "$$include_option=$$here/$$subdir/TAGS"; \
+	  fi; \
+	done; \
 	$(am__define_uniq_tagged_files); \
 	shift; \
 	if test -z "$(ETAGS_ARGS)$$*$$unique"; then :; else \
@@ -632,7 +735,7 @@ tags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
 	      $$unique; \
 	  fi; \
 	fi
-ctags: ctags-am
+ctags: ctags-recursive
 
 CTAGS: ctags
 ctags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
@@ -651,7 +754,7 @@ cscope: cscope.files
 clean-cscope:
 	-rm -f cscope.files
 cscope.files: clean-cscope cscopelist
-cscopelist: cscopelist-am
+cscopelist: cscopelist-recursive
 
 cscopelist-am: $(am__tagged_files)
 	list='$(am__tagged_files)'; \
@@ -704,6 +807,31 @@ distdir-am: $(DISTFILES)
 	    test -f "$(distdir)/$$file" \
 	    || cp -p $$d/$$file "$(distdir)/$$file" \
 	    || exit 1; \
+	  fi; \
+	done
+	@list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    $(am__make_dryrun) \
+	      || test -d "$(distdir)/$$subdir" \
+	      || $(MKDIR_P) "$(distdir)/$$subdir" \
+	      || exit 1; \
+	    dir1=$$subdir; dir2="$(distdir)/$$subdir"; \
+	    $(am__relativize); \
+	    new_distdir=$$reldir; \
+	    dir1=$$subdir; dir2="$(top_distdir)"; \
+	    $(am__relativize); \
+	    new_top_distdir=$$reldir; \
+	    echo " (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir="$$new_top_distdir" distdir="$$new_distdir" \\"; \
+	    echo "     am__remove_distdir=: am__skip_length_check=: am__skip_mode_fix=: distdir)"; \
+	    ($(am__cd) $$subdir && \
+	      $(MAKE) $(AM_MAKEFLAGS) \
+	        top_distdir="$$new_top_distdir" \
+	        distdir="$$new_distdir" \
+		am__remove_distdir=: \
+		am__skip_length_check=: \
+		am__skip_mode_fix=: \
+	        distdir) \
+	      || exit 1; \
 	  fi; \
 	done
 	-test -n "$(am__skip_mode_fix)" \
@@ -838,23 +966,24 @@ distcleancheck: distclean
 	       $(distcleancheck_listfiles) ; \
 	       exit 1; } >&2
 check-am: all-am
-check: check-am
+check: check-recursive
 all-am: Makefile $(PROGRAMS) $(LTLIBRARIES) $(HEADERS)
 install-binPROGRAMS: install-libLTLIBRARIES
 
-installdirs:
+installdirs: installdirs-recursive
+installdirs-am:
 	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
-install: install-am
-install-exec: install-exec-am
-install-data: install-data-am
-uninstall: uninstall-am
+install: install-recursive
+install-exec: install-exec-recursive
+install-data: install-data-recursive
+uninstall: uninstall-recursive
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-am
+installcheck: installcheck-recursive
 install-strip:
 	if test -z '$(STRIP)'; then \
 	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
@@ -872,27 +1001,28 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f engines/$(DEPDIR)/$(am__dirstamp)
-	-rm -f engines/$(am__dirstamp)
+	-rm -f backends/$(DEPDIR)/$(am__dirstamp)
+	-rm -f backends/$(am__dirstamp)
 	-rm -f widgets/$(DEPDIR)/$(am__dirstamp)
 	-rm -f widgets/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-am
+clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
 	clean-libtool mostlyclean-am
 
-distclean: distclean-am
+distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f ./$(DEPDIR)/antfx.Plo
+		-rm -f ./$(DEPDIR)/antfly.Po
+	-rm -f ./$(DEPDIR)/antfx.Plo
 	-rm -f ./$(DEPDIR)/antfxapp.Po
 	-rm -f ./$(DEPDIR)/list.Plo
 	-rm -f ./$(DEPDIR)/supports.Plo
-	-rm -f engines/$(DEPDIR)/fb_engine.Plo
-	-rm -f engines/$(DEPDIR)/sdl2_engine.Plo
+	-rm -f backends/$(DEPDIR)/fb_engine.Plo
+	-rm -f backends/$(DEPDIR)/sdl2_engine.Plo
 	-rm -f widgets/$(DEPDIR)/font.Plo
 	-rm -f widgets/$(DEPDIR)/image.Plo
 	-rm -f widgets/$(DEPDIR)/window.Plo
@@ -900,81 +1030,83 @@ distclean: distclean-am
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-libtool distclean-tags
 
-dvi: dvi-am
+dvi: dvi-recursive
 
 dvi-am:
 
-html: html-am
+html: html-recursive
 
 html-am:
 
-info: info-am
+info: info-recursive
 
 info-am:
 
 install-data-am: install-pkgincludeHEADERS
 
-install-dvi: install-dvi-am
+install-dvi: install-dvi-recursive
 
 install-dvi-am:
 
 install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
-install-html: install-html-am
+install-html: install-html-recursive
 
 install-html-am:
 
-install-info: install-info-am
+install-info: install-info-recursive
 
 install-info-am:
 
 install-man:
 
-install-pdf: install-pdf-am
+install-pdf: install-pdf-recursive
 
 install-pdf-am:
 
-install-ps: install-ps-am
+install-ps: install-ps-recursive
 
 install-ps-am:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-am
+maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f ./$(DEPDIR)/antfx.Plo
+		-rm -f ./$(DEPDIR)/antfly.Po
+	-rm -f ./$(DEPDIR)/antfx.Plo
 	-rm -f ./$(DEPDIR)/antfxapp.Po
 	-rm -f ./$(DEPDIR)/list.Plo
 	-rm -f ./$(DEPDIR)/supports.Plo
-	-rm -f engines/$(DEPDIR)/fb_engine.Plo
-	-rm -f engines/$(DEPDIR)/sdl2_engine.Plo
+	-rm -f backends/$(DEPDIR)/fb_engine.Plo
+	-rm -f backends/$(DEPDIR)/sdl2_engine.Plo
 	-rm -f widgets/$(DEPDIR)/font.Plo
 	-rm -f widgets/$(DEPDIR)/image.Plo
 	-rm -f widgets/$(DEPDIR)/window.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-am
+mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-pdf: pdf-am
+pdf: pdf-recursive
 
 pdf-am:
 
-ps: ps-am
+ps: ps-recursive
 
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
 	uninstall-pkgincludeHEADERS
 
-.MAKE: install-am install-strip
+.MAKE: $(am__recursive_targets) install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am am--depfiles am--refresh check \
-	check-am clean clean-binPROGRAMS clean-cscope clean-generic \
+.PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
+	am--depfiles am--refresh check check-am clean \
+	clean-binPROGRAMS clean-cscope clean-generic \
 	clean-libLTLIBRARIES clean-libtool cscope cscopelist-am ctags \
 	ctags-am dist dist-all dist-bzip2 dist-gzip dist-lzip \
 	dist-shar dist-tarZ dist-xz dist-zip distcheck distclean \
@@ -987,10 +1119,10 @@ uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
 	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
 	install-pkgincludeHEADERS install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
 	uninstall-pkgincludeHEADERS
 
 .PRECIOUS: Makefile

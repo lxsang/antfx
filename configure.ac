@@ -52,15 +52,39 @@ if test "$use_sdl2" = "yes"; then
     ])
 fi
 
+build_linux=no
+build_windows=no
+build_mac=no
+# Detect the target system
+case "${host_os}" in
+    linux*)
+        AC_DEFINE([LINUX], [1],[Linux system])
+        build_linux=yes
+        ;;
+    darwin*)
+        build_mac=yes
+        AC_DEFINE([MACOS], [1],[MacOS system])
+        ;;
+    *)
+        AC_MSG_ERROR(["OS $host_os is not supported"])
+        ;;
+esac
+
 AC_CANONICAL_HOST
 
 # Pass the conditionals to automake
 AM_CONDITIONAL([USE_SDL2], [test "$use_sdl2" = "yes"])
+AM_CONDITIONAL([LINUX], [test "$build_linux" = "yes"])
+AM_CONDITIONAL([WINDOWS], [test "$build_windows" = "yes"])
+AM_CONDITIONAL([OSX], [test "$build_mac" = "yes"])
 
 # find a file called Makefile.in, substitute placeholders
 # like @PACKAGE_VERSION@ with values like 0.1.0a, 
 # and write the results to Makefile.
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([
+    lib/Makefile
+    Makefile
+])
 
 # output the script:
 AC_OUTPUT

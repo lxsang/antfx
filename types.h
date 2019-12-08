@@ -42,7 +42,6 @@ typedef struct{
     to load the user config file
 */
  typedef struct{
-    char* name;
     uint16_t default_w;
     uint16_t default_h;
     uint8_t defaut_bbp;

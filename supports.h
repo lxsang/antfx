@@ -2,7 +2,7 @@
 #define AFX_SUPPORT_H
 
 #include "types.h"
-#include "engine.h"
+#include "backend.h"
 
 #define S_COMPOSITE 1
 #define S_LINE      2
