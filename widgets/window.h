@@ -14,10 +14,10 @@ typedef struct{
 
 typedef struct{
     uint8_t border;
-    pixel_t bg_color;
-    pixel_t border_color;
-    pixel_t title_bcolor;
-    pixel_t title_color;
+    color_t bg_color;
+    color_t border_color;
+    color_t title_bcolor;
+    color_t title_color;
     uint8_t title_height;
     afx_font_t font;
 } afx_window_style_t;

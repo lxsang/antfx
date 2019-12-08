@@ -24,4 +24,7 @@ void render()
 #ifdef USE_BUFFER
     memcpy(_screen.buffer, _screen.swap_buffer, _screen.size);
 #endif
+#ifdef USE_SDL2
+    display_update();
+#endif
 }

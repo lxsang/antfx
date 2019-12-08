@@ -34,11 +34,7 @@ EXTRA_DIST = README.md
 # bin
 bin_PROGRAMS = antfx
 # lib source files
-if USE_SDL2
-    antfx_SOURCES = test/test_supports.c
-else
-    antfx_SOURCES = antfxapp.c
-endif
+antfx_SOURCES = antfxapp.c
 antfx_LDADD = libantfx.la
 
 if USE_SDL2

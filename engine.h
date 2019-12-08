@@ -7,5 +7,8 @@
 */
 
 void display_init(engine_frame_t*, engine_config_t);
+#ifdef USE_SDL2
+void display_update();
+#endif
 void display_release(engine_frame_t*);
 #endif

@@ -235,7 +235,7 @@ void _clear(color_code_t code)
         i += code.size;
     }
 }
-color_code_t _color_code(pixel_t px,uint8_t bbp)
+color_code_t _color_code(color_t px,uint8_t bbp)
 {
     color_code_t code;
     code.size = bbp/8;

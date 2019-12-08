@@ -12,12 +12,13 @@ void shutdown(int sig)
 {
     antfx_release();
     destroy_composite(shapes);
+    printf("Shuting down \n");
     exit(0);
 }
 int main(int argc, char* argv[]) 
 {
-    signal(SIGPIPE, SIG_IGN);
-	signal(SIGABRT, SIG_IGN);
+    signal(SIGPIPE, shutdown);
+	signal(SIGABRT, shutdown);
 	signal(SIGINT, shutdown);
     engine_config_t conf;
     conf.default_w = 640;
@@ -33,8 +34,8 @@ int main(int argc, char* argv[])
     
     circle_t c;
     c.at = (point_t){100,100};
-    c.color = (pixel_t){255,0,0,0};
-    c.bcolor = (pixel_t){100,100,255,0};
+    c.color = (color_t){255,0,0,0};
+    c.bcolor = (color_t){100,100,255,0};
     c.stroke = 2;
     c.fill = 1;
     c.r = 50;
@@ -42,20 +43,20 @@ int main(int argc, char* argv[])
     rect_t r;
     r.at = (point_t){150,140};
     r.of = (point_t){50,50};
-    r.bcolor = (pixel_t){100,255,100,0};
-    r.color = (pixel_t){255,0,0,0};
+    r.bcolor = (color_t){100,255,100,0};
+    r.color = (color_t){255,0,0,0};
     r.fill = 1;
     r.stroke = 3;
 
     line_t l;
     l.from = (point_t){300,300};
     l.to = (point_t){200,200};
-    l.color = (pixel_t){0,0,255,0};
+    l.color = (color_t){0,0,255,0};
     l.stroke = 3;
 
     polygon_t p;
     p.stroke = 2;
-    p.color =  (pixel_t){255,0,255,0};
+    p.color =  (color_t){255,0,255,0};
     p.connected = 1;
     p.size = 3;
     point_t _p_[3];
@@ -71,7 +72,7 @@ int main(int argc, char* argv[])
     add_shape(shapes, new_shape(S_POLY, & p));
 
     //shapes.at = _P(50,50);
-    //clear(((pixel_t){0,0,255,0}));
+    //clear(((color_t){0,0,255,0}));
     all_white();
     while(1)
     { 
@@ -79,6 +80,7 @@ int main(int argc, char* argv[])
         //draw_rect(r);
         //draw_line(l);
         //draw_polygon(p);
+        //printf("Drawing ...\n");
         all_white();
         shapes.at = px;
         draw_composite(shapes);

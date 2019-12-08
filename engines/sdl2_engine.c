@@ -1,48 +1,50 @@
 #include "../engine.h"
 #include <SDL2/SDL.h>
-#include <pthread.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 engine_frame_t* __screen;
 static uint8_t __on = 1;
-void _simulate_frame_buffer()
+static SDL_Window * window = NULL;
+static SDL_Renderer * renderer = NULL;
+SDL_Texture * texture = NULL; 
+
+void display_update()
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    //SDL_Event event;
-
-    SDL_Window * window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, __screen->width, __screen->height, 0);
-    SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-    SDL_Texture * texture;
-    if(__screen->bbp == 32)
-        texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, __screen->width, __screen->height);
-    else
-        texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, __screen->width, __screen->height);
-    
-    while (__on)
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    pid_t pid;
+    switch (event.type)
     {
-        //printf("render with %d\n",__screen->line_length);
-        /*SDL_WaitEvent(&event);
- 
-        switch (event.type)
-        {
         case SDL_QUIT:
-            __on = 0;
+            pid = getpid();
+            kill(pid, SIGINT);
             break;
-        }*/
-        SDL_UpdateTexture(texture, NULL, __screen->buffer, __screen->line_length);
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-        // wait for 30 mmilisecond .-i.e 30ffs
-        nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
-    __on = 2;
-    printf("Engine release successful\n");
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    int stat;
+    stat = SDL_UpdateTexture(texture, NULL, __screen->buffer, __screen->line_length);
+    if(stat == -1)
+    {
+        LOG("Could not update texture: %s\n",SDL_GetError());
+        return;
+    }
+    stat = SDL_RenderClear(renderer);
+    if(stat == -1)
+    {
+        LOG("Could not clear renderer: %s\n",SDL_GetError());
+        return;
+    }
+    stat = SDL_RenderCopy(renderer, texture, NULL, NULL);
+    if(stat == -1)
+    {
+        LOG("Could not copy texture to renderer: %s\n",SDL_GetError());
+        return;
+    }
+    SDL_RenderPresent(renderer);
+    // wait for 30 mmilisecond .-i.e 30ffs
+    //sleep(1);
+    //nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
 }
-
 void display_init(engine_frame_t* frame, engine_config_t conf)
 {
     frame->size = conf.default_h*conf.default_w*(conf.defaut_bbp/8);
@@ -55,25 +57,41 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
     frame->buffer = (uint8_t*) malloc(frame->size);;
     memset(frame->buffer, 0,frame->size);
     __screen = frame;
-    __on = 1;
-    // create new thread to draw the buffer
-    pthread_t newthread;
-    if (pthread_create(&newthread , NULL,(void *(*)())_simulate_frame_buffer, NULL) != 0)
-			perror("pthread_create");
-		else
-		{
-			//reclaim the stack data when thread finish
-			pthread_detach(newthread) ;
-		}
-    printf("engine init successful\n");
+    // create window
+    //SDL_Event event;
+    SDL_Init(SDL_INIT_VIDEO);
 
+    window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, __screen->width, __screen->height, SDL_WINDOW_SHOWN);
+    if(!window) {
+        LOG("Error could not create window: %s\n",SDL_GetError());
+        exit(1);
+    }
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if(!renderer)
+    {
+        LOG("Error could not create renderer: %s\n",SDL_GetError());
+        exit(1);
+    }
+    if(__screen->bbp == 32)
+        texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, __screen->width, __screen->height);
+    else
+        texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, __screen->width, __screen->height);
     
+    if(!texture)
+    {
+        LOG("Error could not create texture: %s\n",SDL_GetError());
+        exit(1);
+    }
+    LOG("engine init successful\n");
 }
 
 void display_release(engine_frame_t* frame)
 {
-    __on = 0;
-    while(__on == 0);
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
     if(__screen->buffer) free(__screen->buffer);
     frame->buffer = NULL;
+    LOG("Engine release successful\n");
 }

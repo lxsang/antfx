@@ -46,7 +46,7 @@ extern engine_frame_t _screen;
     get the absolute the buffer pointer to the given position
 */
 uint8_t* screen_position(point_t);
-color_code_t _color_code(pixel_t px,uint8_t bbp);
+color_code_t _color_code(color_t px,uint8_t bbp);
 void _draw_point(point_t,color_code_t,point_t);
 void _put_pixel(point_t,color_code_t);
 void _draw_rect(rect_t rec,point_t);

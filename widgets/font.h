@@ -36,7 +36,7 @@ typedef struct{
 
 extern afx_font_t SYS_FONT;
 
-void _put_text(const char*,point_t, pixel_t, afx_font_t);
+void _put_text(const char*,point_t, color_t, afx_font_t);
 
 int load_font(const char* file, afx_font_t*);
 void font_release(afx_font_t*);

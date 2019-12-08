@@ -42,7 +42,11 @@ AC_ARG_ENABLE([sdl2],
 
 if test "$use_sdl2" = "yes"; then
     AC_CHECK_HEADER([SDL2/SDL.h],[
-        AC_CHECK_LIB([SDL2],[SDL_CreateWindow],[],[])
+        AC_CHECK_LIB([SDL2],[SDL_CreateWindow],[
+            AC_DEFINE([USE_SDL2], [1],[Use SLD2 as backend])
+        ],[
+            AC_MSG_ERROR([Unable to find SDL2 shared library])
+        ])
     ],[
         AC_MSG_ERROR([Unable to find SDL2 headers])
     ])

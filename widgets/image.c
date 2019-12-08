@@ -67,7 +67,7 @@ void dump_bitmap(const char* file)
 void _draw_bitmap(afx_bitmap_t bmp,point_t tr)
 {
     int i;
-    pixel_t c;
+    color_t c;
     point_t p;
     //int line_length = bmp.header.width*3;
     for(i=0;i < (int)bmp.header.size;i+=3)

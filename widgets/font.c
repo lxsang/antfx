@@ -296,7 +296,7 @@ uint8_t _put_char(char c, point_t p, color_code_t code, afx_font_t font)
     return glyph.xAdvance;
 }
 
-void _put_text(const char* s,point_t p, pixel_t color, afx_font_t font)
+void _put_text(const char* s,point_t p, color_t color, afx_font_t font)
 {
     color_code_t code = COLOR(color);
     char* c;

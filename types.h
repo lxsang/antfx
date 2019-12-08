@@ -9,8 +9,8 @@
 #include "list.h"
 #define COLOR8888   4
 #define COLOR565    2
-#define WHITE (pixel_t){255,255,255,0}
-#define BLACK (pixel_t){0,0,0,0}
+#define WHITE (color_t){255,255,255,0}
+#define BLACK (color_t){0,0,0,0}
 #define LOG printf
 /*
     A engine frame is actually a frame buffer
@@ -57,7 +57,7 @@ typedef struct{
     uint8_t g;
     uint8_t b;
     uint8_t a;
-} pixel_t;
+} color_t;
 
 typedef struct{
     int16_t x;
@@ -69,8 +69,8 @@ typedef struct{
     point_t at;
     point_t of;
     uint8_t fill;
-    pixel_t color;
-    pixel_t bcolor;
+    color_t color;
+    color_t bcolor;
     uint8_t stroke;
 } rect_t;
 
@@ -78,15 +78,15 @@ typedef struct{
     point_t from;
     point_t to;
     uint8_t stroke;
-    pixel_t color;
+    color_t color;
 } line_t;
 /*a circle*/
 typedef struct{
     point_t at;
     short r;
     uint8_t fill;
-    pixel_t color;
-    pixel_t bcolor;
+    color_t color;
+    color_t bcolor;
     uint8_t stroke;
 } circle_t;
 
@@ -99,7 +99,7 @@ typedef struct{
 } composite_t;
 
 typedef struct{
-    pixel_t color;
+    color_t color;
     uint8_t stroke;
     uint8_t fill;
     point_t* points;

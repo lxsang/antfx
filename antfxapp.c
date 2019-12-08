@@ -24,8 +24,8 @@ int main(int argc, char* argv[])
 	signal(SIGABRT, SIG_IGN);
 	signal(SIGINT, shutdown);
     engine_config_t conf;
-    conf.default_w = 640;
-    conf.default_h = 480;
+    conf.default_w = 480;
+    conf.default_h = 320;
     conf.defaut_bbp = 16;
     conf.name = "sdl2_engine.o";
     conf.dev = "/dev/fb1";
@@ -48,18 +48,18 @@ int main(int argc, char* argv[])
     win.title = "Terminal";
     point_t px = ORIGIN;
     sty.bg_color = WHITE;
-    sty.border_color = (pixel_t){187,185,187,0};
+    sty.border_color = (color_t){187,185,187,0};
     sty.title_height = 20;
     sty.border=1;
-    sty.title_bcolor = (pixel_t){222,220,222,0};
-    sty.title_color = (pixel_t){100,100,100,0};
+    sty.title_bcolor = (color_t){222,220,222,0};
+    sty.title_color = (color_t){100,100,100,0};
     sty.font = font;
    
     afx_bitmap_t bmp;
     read_bitmap_file("test/test.bmp",&bmp);
     // try to read a bitmap font
     //shapes.at = _P(50,50);
-    //clear(((pixel_t){0,0,255,0}));
+    //clear(((color_t){0,0,255,0}));
     all_white();
     while(1)
     { 
@@ -70,11 +70,9 @@ int main(int argc, char* argv[])
         all_white();
         _draw_window(win,sty,ORIGIN);
         _draw_bitmap(bmp,_P(80,40));
-        _put_text("this is a text! 1234 \n new line are not implemented",_P(10,300),(pixel_t){0,122,204,0},font);
+        _put_text("this is a text! 1234\n new line are not implemented",_P(10,290),(color_t){0,122,204,0},font);
         render();
-        nanosleep((const struct timespec[]){{0, 50000000L}}, NULL);
-        //exit(0);
-        //nanosleep((const struct timespec[]){{0, 30000000L}}, NULL);
+        nanosleep((const struct timespec[]){{0, 30000000L}}, NULL);
         px.x += 1;
         px.y += 1;
     }
