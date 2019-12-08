@@ -4,11 +4,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#ifdef __unix__
-#include <linux/time.h>
-#else
-#include <time.h>
-#endif
 #include <string.h>
 #include <math.h>
 #include "list.h"

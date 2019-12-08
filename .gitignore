@@ -1,10 +1,9 @@
 # Prerequisites
-build/antfx
-build/test_support
-build/fontconvert
-*.dSYM
+plugins
+build
 *._*
 *.d
+*.deb
 .vscode
 # Object files
 *.o
@@ -52,6 +51,24 @@ build/fontconvert
 *.cmd
 modules.order
 Module.symvers
-Mkfile.old
+Makefile.old
 dkms.con
 .DS_Store
+.*
+*.cache
+Makefile
+antd
+compile
+config.guess
+depcomp
+install-sh
+missing
+libtool
+config.log
+config.status
+config.sub
+configure
+aclocal.m4
+ltmain.sh
+Makefile.in
+antfx
