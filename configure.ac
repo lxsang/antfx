@@ -8,7 +8,7 @@ AM_INIT_AUTOMAKE([subdir-objects])
 # C compiler
 AC_PROG_CC
 # libtool for linking
-AC_PROG_LIBTOOL
+# AC_PROG_LIBTOOL
 
 # debug option
 AC_ARG_ENABLE([debug],
@@ -20,38 +20,22 @@ AC_ARG_ENABLE([debug],
     esac],[debug=false])
 
 
-# buffer option
-AC_ARG_ENABLE([buffer],
-    [  --enable-buffer    Turn on buffer],
-    [case "${enableval}" in
-        yes) AC_DEFINE([USE_BUFFER], [1],[Enable debug]) ;;
-        no) ;;
-        *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
-    esac],[debug=false])
-
 
 use_sdl2=no
-AC_ARG_ENABLE([sdl2],
-    [  --enable-sdl2  Use sdl2 as engile],
-    [case "${enableval}" in
-        yes) use_sdl2=yes ;;
-        no) ;;
-        *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
-    esac],[debug=false])
+AC_CHECK_HEADER([SDL2/SDL.h],[
+    use_sdl2=yes
+    AC_DEFINE([USE_SDL2], [1],[Enable sdl2])
+],[])
 
+AC_CHECK_LIB([SDL2],[SDL_CreateWindow],[],[
+    if test "$use_sdl2" = "yes"; then
+        AC_MSG_ERROR([Unable to find SDL2 shared lib])
+    fi
+])
 
-if test "$use_sdl2" = "yes"; then
-    AC_CHECK_HEADER([SDL2/SDL.h],[
-        AC_CHECK_LIB([SDL2],[SDL_CreateWindow],[
-            AC_DEFINE([USE_SDL2], [1],[Use SLD2 as backend])
-        ],[
-            AC_MSG_ERROR([Unable to find SDL2 shared library])
-        ])
-    ],[
-        AC_MSG_ERROR([Unable to find SDL2 headers])
-    ])
-fi
+AC_DEFINE([_GNU_SOURCE], [1],[Use GNU source])
 
+AC_CANONICAL_HOST
 build_linux=no
 build_windows=no
 build_mac=no
@@ -82,7 +66,6 @@ AM_CONDITIONAL([OSX], [test "$build_mac" = "yes"])
 # like @PACKAGE_VERSION@ with values like 0.1.0a, 
 # and write the results to Makefile.
 AC_CONFIG_FILES([
-    lib/Makefile
     Makefile
 ])
 

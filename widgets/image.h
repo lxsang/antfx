@@ -23,8 +23,10 @@ typedef struct
 {
     afx_bitmap_tag_t header;
     uint8_t* data;
+    uint8_t loaded;
 } afx_bitmap_t;
 
-void read_bitmap_file(const char*, afx_bitmap_t*);
+int read_bitmap_file(const char*, afx_bitmap_t*);
 void _draw_bitmap(afx_bitmap_t,point_t tr);
+void release_bitmap(afx_bitmap_t*);
 #endif

@@ -63,3 +63,8 @@ void display_release(engine_frame_t* frame)
         close(frame->handle);
     printf("release successful\n");
 }
+
+antfx_event_t get_pointer_input(uint16_t* data)
+{
+    return AFX_EVT_NONE;
+}

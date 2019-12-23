@@ -1,12 +1,12 @@
 #include "image.h"
-void read_bitmap_file(const char* file, afx_bitmap_t* bmp)
+int read_bitmap_file(const char* file, afx_bitmap_t* bmp)
 {
     uint8_t header[14];
     FILE *fp;  
-
+    bmp->loaded = 0;
     fp = fopen(file,"rb");
     if (fp == NULL)
-        return;
+        return 0;
 
     fread(header, 14,1,fp);
     
@@ -14,7 +14,7 @@ void read_bitmap_file(const char* file, afx_bitmap_t* bmp)
     {
         fclose(fp);
         LOG("wrong magic number \n");
-        return;
+        return 0;
     }
 
     //read the bitmap info header
@@ -31,7 +31,7 @@ void read_bitmap_file(const char* file, afx_bitmap_t* bmp)
     if (!bmp->data)
     {
         fclose(fp);
-        return;
+        return 0;
     }
 
     //read in the bitmap image data
@@ -48,8 +48,19 @@ void read_bitmap_file(const char* file, afx_bitmap_t* bmp)
 
     //close file and return bitmap iamge data
     fclose(fp);
+    bmp->loaded = 1;
+    return 1;
 }
 
+void release_bitmap(afx_bitmap_t* bmp)
+{
+    bmp->loaded = 0;
+    if(bmp->data)
+    {
+        free(bmp->data);
+        bmp->data= NULL;
+    }
+}
 void dump_bitmap(const char* file)
 {
     afx_bitmap_t bmp;

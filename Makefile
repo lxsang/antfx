@@ -15,8 +15,6 @@
 
 
 
-
-
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -90,77 +88,168 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-apple-darwin18.6.0
 host_triplet = x86_64-apple-darwin18.6.0
+bin_PROGRAMS = antfx$(EXEEXT)
 am__append_1 = backends/sdl2_engine.c
 #am__append_2 = backends/fb_engine.c
-bin_PROGRAMS = antfx$(EXEEXT) antfly$(EXEEXT)
-am__append_3 = -lSDL2
-am__append_4 = -lSDL2
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
-	$(am__configure_deps) $(pkginclude_HEADERS) $(am__DIST_COMMON)
+	$(am__configure_deps) $(am__DIST_COMMON)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" \
-	"$(DESTDIR)$(pkgincludedir)"
+am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__uninstall_files_from_dir = { \
-  test -z "$$files" \
-    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
-    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
-         $(am__cd) "$$dir" && rm -f $$files; }; \
-  }
-LTLIBRARIES = $(lib_LTLIBRARIES)
-libantfx_la_LIBADD =
-am__libantfx_la_SOURCES_DIST = supports.c list.c widgets/window.c \
-	widgets/image.c widgets/font.c antfx.c backends/sdl2_engine.c \
-	backends/fb_engine.c
+am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
+	backends/fb_engine.c lib/liblv/lv_core/lv_group.c \
+	lib/liblv/lv_core/lv_indev.c lib/liblv/lv_core/lv_disp.c \
+	lib/liblv/lv_core/lv_obj.c lib/liblv/lv_core/lv_refr.c \
+	lib/liblv/lv_core/lv_style.c lib/liblv/lv_core/lv_debug.c \
+	lib/liblv/lv_draw/lv_draw_basic.c lib/liblv/lv_draw/lv_draw.c \
+	lib/liblv/lv_draw/lv_draw_rect.c \
+	lib/liblv/lv_draw/lv_draw_label.c \
+	lib/liblv/lv_draw/lv_draw_line.c \
+	lib/liblv/lv_draw/lv_draw_img.c \
+	lib/liblv/lv_draw/lv_draw_arc.c \
+	lib/liblv/lv_draw/lv_draw_triangle.c \
+	lib/liblv/lv_draw/lv_img_decoder.c \
+	lib/liblv/lv_draw/lv_img_cache.c lib/liblv/lv_font/lv_font.c \
+	lib/liblv/lv_font/lv_font_fmt_txt.c \
+	lib/liblv/lv_font/lv_font_roboto_12.c \
+	lib/liblv/lv_font/lv_font_roboto_16.c \
+	lib/liblv/lv_font/lv_font_roboto_22.c \
+	lib/liblv/lv_font/lv_font_roboto_28.c \
+	lib/liblv/lv_font/lv_font_unscii_8.c \
+	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
+	lib/liblv/lv_hal/lv_hal_tick.c lib/liblv/lv_misc/lv_circ.c \
+	lib/liblv/lv_misc/lv_area.c lib/liblv/lv_misc/lv_task.c \
+	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_anim.c \
+	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_ll.c \
+	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_txt.c \
+	lib/liblv/lv_misc/lv_math.c lib/liblv/lv_misc/lv_log.c \
+	lib/liblv/lv_misc/lv_gc.c lib/liblv/lv_misc/lv_utils.c \
+	lib/liblv/lv_misc/lv_async.c lib/liblv/lv_misc/lv_printf.c \
+	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_objx/lv_arc.c \
+	lib/liblv/lv_objx/lv_bar.c lib/liblv/lv_objx/lv_cb.c \
+	lib/liblv/lv_objx/lv_cpicker.c lib/liblv/lv_objx/lv_ddlist.c \
+	lib/liblv/lv_objx/lv_kb.c lib/liblv/lv_objx/lv_line.c \
+	lib/liblv/lv_objx/lv_mbox.c lib/liblv/lv_objx/lv_preload.c \
+	lib/liblv/lv_objx/lv_roller.c lib/liblv/lv_objx/lv_table.c \
+	lib/liblv/lv_objx/lv_tabview.c lib/liblv/lv_objx/lv_tileview.c \
+	lib/liblv/lv_objx/lv_btn.c lib/liblv/lv_objx/lv_calendar.c \
+	lib/liblv/lv_objx/lv_chart.c lib/liblv/lv_objx/lv_canvas.c \
+	lib/liblv/lv_objx/lv_gauge.c lib/liblv/lv_objx/lv_label.c \
+	lib/liblv/lv_objx/lv_list.c lib/liblv/lv_objx/lv_slider.c \
+	lib/liblv/lv_objx/lv_ta.c lib/liblv/lv_objx/lv_spinbox.c \
+	lib/liblv/lv_objx/lv_btnm.c lib/liblv/lv_objx/lv_cont.c \
+	lib/liblv/lv_objx/lv_img.c lib/liblv/lv_objx/lv_imgbtn.c \
+	lib/liblv/lv_objx/lv_led.c lib/liblv/lv_objx/lv_lmeter.c \
+	lib/liblv/lv_objx/lv_page.c lib/liblv/lv_objx/lv_sw.c \
+	lib/liblv/lv_objx/lv_win.c \
+	lib/liblv/lv_themes/lv_theme_alien.c \
+	lib/liblv/lv_themes/lv_theme.c \
+	lib/liblv/lv_themes/lv_theme_default.c \
+	lib/liblv/lv_themes/lv_theme_night.c \
+	lib/liblv/lv_themes/lv_theme_templ.c \
+	lib/liblv/lv_themes/lv_theme_zen.c \
+	lib/liblv/lv_themes/lv_theme_material.c \
+	lib/liblv/lv_themes/lv_theme_nemo.c \
+	lib/liblv/lv_themes/lv_theme_mono.c
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = backends/sdl2_engine.lo
-#am__objects_2 = backends/fb_engine.lo
-am_libantfx_la_OBJECTS = supports.lo list.lo widgets/window.lo \
-	widgets/image.lo widgets/font.lo antfx.lo $(am__objects_1) \
-	$(am__objects_2)
-libantfx_la_OBJECTS = $(am_libantfx_la_OBJECTS)
-AM_V_lt = $(am__v_lt_$(V))
-am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
-am__v_lt_0 = --silent
-am__v_lt_1 = 
-am_antfly_OBJECTS = antfly.$(OBJEXT)
-antfly_OBJECTS = $(am_antfly_OBJECTS)
-am__DEPENDENCIES_1 =
-antfly_DEPENDENCIES = libantfx.la lib/lua-5.3.4/liblua.a \
-	$(am__DEPENDENCIES_1)
-am_antfx_OBJECTS = antfxapp.$(OBJEXT)
+am__objects_1 = backends/sdl2_engine.$(OBJEXT)
+#am__objects_2 = backends/fb_engine.$(OBJEXT)
+am_antfx_OBJECTS = antfxapp.$(OBJEXT) antfx.$(OBJEXT) $(am__objects_1) \
+	$(am__objects_2) lib/liblv/lv_core/lv_group.$(OBJEXT) \
+	lib/liblv/lv_core/lv_indev.$(OBJEXT) \
+	lib/liblv/lv_core/lv_disp.$(OBJEXT) \
+	lib/liblv/lv_core/lv_obj.$(OBJEXT) \
+	lib/liblv/lv_core/lv_refr.$(OBJEXT) \
+	lib/liblv/lv_core/lv_style.$(OBJEXT) \
+	lib/liblv/lv_core/lv_debug.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_basic.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_rect.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_label.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_line.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_img.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_arc.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_draw_triangle.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_img_decoder.$(OBJEXT) \
+	lib/liblv/lv_draw/lv_img_cache.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_fmt_txt.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_roboto_12.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_roboto_16.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_roboto_22.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_roboto_28.$(OBJEXT) \
+	lib/liblv/lv_font/lv_font_unscii_8.$(OBJEXT) \
+	lib/liblv/lv_hal/lv_hal_disp.$(OBJEXT) \
+	lib/liblv/lv_hal/lv_hal_indev.$(OBJEXT) \
+	lib/liblv/lv_hal/lv_hal_tick.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_circ.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_area.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_task.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_fs.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_anim.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_mem.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_ll.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_color.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_txt.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_math.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_log.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_gc.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_utils.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_async.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_printf.$(OBJEXT) \
+	lib/liblv/lv_misc/lv_bidi.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_arc.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_bar.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_cb.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_cpicker.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_ddlist.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_kb.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_line.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_mbox.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_preload.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_roller.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_table.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_tabview.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_tileview.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_btn.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_calendar.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_chart.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_canvas.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_gauge.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_label.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_list.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_slider.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_ta.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_spinbox.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_btnm.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_cont.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_img.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_imgbtn.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_led.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_lmeter.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_page.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_sw.$(OBJEXT) \
+	lib/liblv/lv_objx/lv_win.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_alien.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_default.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_night.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_templ.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_zen.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_material.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_nemo.$(OBJEXT) \
+	lib/liblv/lv_themes/lv_theme_mono.$(OBJEXT)
 antfx_OBJECTS = $(am_antfx_OBJECTS)
-antfx_DEPENDENCIES = libantfx.la $(am__DEPENDENCIES_1)
+antfx_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -176,55 +265,113 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/antfly.Po ./$(DEPDIR)/antfx.Plo \
-	./$(DEPDIR)/antfxapp.Po ./$(DEPDIR)/list.Plo \
-	./$(DEPDIR)/supports.Plo backends/$(DEPDIR)/fb_engine.Plo \
-	backends/$(DEPDIR)/sdl2_engine.Plo widgets/$(DEPDIR)/font.Plo \
-	widgets/$(DEPDIR)/image.Plo widgets/$(DEPDIR)/window.Plo
+am__depfiles_remade = ./$(DEPDIR)/antfx.Po ./$(DEPDIR)/antfxapp.Po \
+	backends/$(DEPDIR)/fb_engine.Po \
+	backends/$(DEPDIR)/sdl2_engine.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_debug.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_disp.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_group.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_indev.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_obj.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_refr.Po \
+	lib/liblv/lv_core/$(DEPDIR)/lv_style.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_arc.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_basic.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_img.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_label.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_line.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_rect.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_draw_triangle.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_img_cache.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/lv_img_decoder.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_fmt_txt.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_12.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_16.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_22.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_28.Po \
+	lib/liblv/lv_font/$(DEPDIR)/lv_font_unscii_8.Po \
+	lib/liblv/lv_hal/$(DEPDIR)/lv_hal_disp.Po \
+	lib/liblv/lv_hal/$(DEPDIR)/lv_hal_indev.Po \
+	lib/liblv/lv_hal/$(DEPDIR)/lv_hal_tick.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_anim.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_area.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_async.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_bidi.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_circ.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_color.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_fs.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_gc.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_ll.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_log.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_math.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_mem.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_printf.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_task.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_txt.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/lv_utils.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_arc.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_bar.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_btn.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_btnm.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_calendar.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_canvas.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_cb.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_chart.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_cont.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_cpicker.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_ddlist.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_gauge.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_img.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_imgbtn.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_kb.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_label.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_led.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_line.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_list.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_lmeter.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_mbox.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_page.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_preload.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_roller.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_slider.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_spinbox.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_sw.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_ta.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_table.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_tabview.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_tileview.Po \
+	lib/liblv/lv_objx/$(DEPDIR)/lv_win.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_alien.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_default.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_material.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_mono.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_nemo.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_night.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_templ.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/lv_theme_zen.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
 am__v_CC_1 = 
 CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libantfx_la_SOURCES) $(antfly_SOURCES) $(antfx_SOURCES)
-DIST_SOURCES = $(am__libantfx_la_SOURCES_DIST) $(antfly_SOURCES) \
-	$(antfx_SOURCES)
-RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
-	ctags-recursive dvi-recursive html-recursive info-recursive \
-	install-data-recursive install-dvi-recursive \
-	install-exec-recursive install-html-recursive \
-	install-info-recursive install-pdf-recursive \
-	install-ps-recursive install-recursive installcheck-recursive \
-	installdirs-recursive pdf-recursive ps-recursive \
-	tags-recursive uninstall-recursive
+SOURCES = $(antfx_SOURCES)
+DIST_SOURCES = $(am__antfx_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-HEADERS = $(pkginclude_HEADERS)
-RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
-  distclean-recursive maintainer-clean-recursive
-am__recursive_targets = \
-  $(RECURSIVE_TARGETS) \
-  $(RECURSIVE_CLEAN_TARGETS) \
-  $(am__extra_recursive_targets)
-AM_RECURSIVE_TARGETS = $(am__recursive_targets:-recursive=) TAGS CTAGS \
-	cscope distdir distdir-am dist dist-all distcheck
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -245,7 +392,7 @@ am__define_uniq_tagged_files = \
 ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
-DIST_SUBDIRS = $(SUBDIRS)
+AM_RECURSIVE_TARGETS = cscope
 am__DIST_COMMON = $(srcdir)/Makefile.in compile config.guess \
 	config.sub depcomp install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -258,31 +405,6 @@ am__remove_distdir = \
       || { sleep 5 && rm -rf "$(distdir)"; }; \
   else :; fi
 am__post_remove_distdir = $(am__remove_distdir)
-am__relativize = \
-  dir0=`pwd`; \
-  sed_first='s,^\([^/]*\)/.*$$,\1,'; \
-  sed_rest='s,^[^/]*/*,,'; \
-  sed_last='s,^.*/\([^/]*\)$$,\1,'; \
-  sed_butlast='s,/*[^/]*$$,,'; \
-  while test -n "$$dir1"; do \
-    first=`echo "$$dir1" | sed -e "$$sed_first"`; \
-    if test "$$first" != "."; then \
-      if test "$$first" = ".."; then \
-        dir2=`echo "$$dir0" | sed -e "$$sed_last"`/"$$dir2"; \
-        dir0=`echo "$$dir0" | sed -e "$$sed_butlast"`; \
-      else \
-        first2=`echo "$$dir2" | sed -e "$$sed_first"`; \
-        if test "$$first2" = "$$first"; then \
-          dir2=`echo "$$dir2" | sed -e "$$sed_rest"`; \
-        else \
-          dir2="../$$dir2"; \
-        fi; \
-        dir0="$$dir0"/"$$first"; \
-      fi; \
-    fi; \
-    dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-  done; \
-  reldir="$$dir2"
 DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 DIST_TARGETS = dist-gzip
@@ -293,7 +415,6 @@ distcleancheck_listfiles = find . -type f -print
 ACLOCAL = ${SHELL} "/Users/mrsang/Google Drive/ushare/cwp/antfx/missing" aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AR = ar
 AUTOCONF = ${SHELL} "/Users/mrsang/Google Drive/ushare/cwp/antfx/missing" autoconf
 AUTOHEADER = ${SHELL} "/Users/mrsang/Google Drive/ushare/cwp/antfx/missing" autoheader
 AUTOMAKE = ${SHELL} "/Users/mrsang/Google Drive/ushare/cwp/antfx/missing" automake-1.16
@@ -304,41 +425,26 @@ CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEBUG=1 -DUSE_BUFFER=1 -DUSE_SDL2=1 -DMACOS=1
+DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DDEBUG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DUSE_SDL2=1 -DHAVE_LIBSDL2=1 -D_GNU_SOURCE=1 -DMACOS=1
 DEPDIR = .deps
-DLLTOOL = false
-DSYMUTIL = dsymutil
-DUMPBIN = 
 ECHO_C = \c
 ECHO_N = 
 ECHO_T = 
 EGREP = /usr/bin/grep -E
 EXEEXT = 
-FGREP = /usr/bin/grep -F
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
 LDFLAGS = 
 LIBOBJS = 
-LIBS = 
-LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIPO = lipo
-LN_S = ln -s
+LIBS = -lSDL2 
 LTLIBOBJS = 
-LT_SYS_LIBRARY_PATH = 
 MAKEINFO = ${SHELL} "/Users/mrsang/Google Drive/ushare/cwp/antfx/missing" makeinfo
-MANIFEST_TOOL = :
 MKDIR_P = ./install-sh -c -d
-NM = /usr/bin/nm -B
-NMEDIT = nmedit
-OBJDUMP = objdump
 OBJEXT = o
-OTOOL = otool
-OTOOL64 = :
 PACKAGE = antfx
 PACKAGE_BUGREPORT = xsang.le@gmail.com
 PACKAGE_NAME = antfx
@@ -347,19 +453,15 @@ PACKAGE_TARNAME = antfx
 PACKAGE_URL = 
 PACKAGE_VERSION = 1.0.0b
 PATH_SEPARATOR = :
-RANLIB = ranlib
-SED = /usr/local/bin/gsed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = strip
+STRIP = 
 VERSION = 1.0.0b
 abs_builddir = /Users/mrsang/Google Drive/ushare/cwp/antfx
 abs_srcdir = /Users/mrsang/Google Drive/ushare/cwp/antfx
 abs_top_builddir = /Users/mrsang/Google Drive/ushare/cwp/antfx
 abs_top_srcdir = /Users/mrsang/Google Drive/ushare/cwp/antfx
-ac_ct_AR = ar
 ac_ct_CC = gcc
-ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -394,7 +496,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /Users/mrsang/build/usr
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -407,33 +509,68 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
 AM_CPPFLAGS = -W  -Wall -g -std=c99
-SUBDIRS = lib/ .
 
-# dynamic library
-lib_LTLIBRARIES = libantfx.la
-libantfx_la_SOURCES = supports.c list.c widgets/window.c \
-	widgets/image.c widgets/font.c antfx.c $(am__append_1) \
-	$(am__append_2)
-pkginclude_HEADERS = list.h \
-            types.h\
-			supports.h \
-			antfx.h \
-			backend.h \
-			widgets/widgets.h \
-			widgets/window.h \
-			widgets/image.h \
-			widgets/font.h
-
+# SUBDIRS =  lib/ .
 EXTRA_DIST = README.md
 # lib source files
-antfx_SOURCES = antfxapp.c
-antfx_LDADD = libantfx.la $(am__append_3)
-antfly_SOURCES = antfly.c
-antfly_LDADD = libantfx.la lib/lua-5.3.4/liblua.a $(am__append_4)
-all: all-recursive
+antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
+	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
+	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
+	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
+	lib/liblv/lv_core/lv_debug.c lib/liblv/lv_draw/lv_draw_basic.c \
+	lib/liblv/lv_draw/lv_draw.c lib/liblv/lv_draw/lv_draw_rect.c \
+	lib/liblv/lv_draw/lv_draw_label.c \
+	lib/liblv/lv_draw/lv_draw_line.c \
+	lib/liblv/lv_draw/lv_draw_img.c \
+	lib/liblv/lv_draw/lv_draw_arc.c \
+	lib/liblv/lv_draw/lv_draw_triangle.c \
+	lib/liblv/lv_draw/lv_img_decoder.c \
+	lib/liblv/lv_draw/lv_img_cache.c lib/liblv/lv_font/lv_font.c \
+	lib/liblv/lv_font/lv_font_fmt_txt.c \
+	lib/liblv/lv_font/lv_font_roboto_12.c \
+	lib/liblv/lv_font/lv_font_roboto_16.c \
+	lib/liblv/lv_font/lv_font_roboto_22.c \
+	lib/liblv/lv_font/lv_font_roboto_28.c \
+	lib/liblv/lv_font/lv_font_unscii_8.c \
+	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
+	lib/liblv/lv_hal/lv_hal_tick.c lib/liblv/lv_misc/lv_circ.c \
+	lib/liblv/lv_misc/lv_area.c lib/liblv/lv_misc/lv_task.c \
+	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_anim.c \
+	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_ll.c \
+	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_txt.c \
+	lib/liblv/lv_misc/lv_math.c lib/liblv/lv_misc/lv_log.c \
+	lib/liblv/lv_misc/lv_gc.c lib/liblv/lv_misc/lv_utils.c \
+	lib/liblv/lv_misc/lv_async.c lib/liblv/lv_misc/lv_printf.c \
+	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_objx/lv_arc.c \
+	lib/liblv/lv_objx/lv_bar.c lib/liblv/lv_objx/lv_cb.c \
+	lib/liblv/lv_objx/lv_cpicker.c lib/liblv/lv_objx/lv_ddlist.c \
+	lib/liblv/lv_objx/lv_kb.c lib/liblv/lv_objx/lv_line.c \
+	lib/liblv/lv_objx/lv_mbox.c lib/liblv/lv_objx/lv_preload.c \
+	lib/liblv/lv_objx/lv_roller.c lib/liblv/lv_objx/lv_table.c \
+	lib/liblv/lv_objx/lv_tabview.c lib/liblv/lv_objx/lv_tileview.c \
+	lib/liblv/lv_objx/lv_btn.c lib/liblv/lv_objx/lv_calendar.c \
+	lib/liblv/lv_objx/lv_chart.c lib/liblv/lv_objx/lv_canvas.c \
+	lib/liblv/lv_objx/lv_gauge.c lib/liblv/lv_objx/lv_label.c \
+	lib/liblv/lv_objx/lv_list.c lib/liblv/lv_objx/lv_slider.c \
+	lib/liblv/lv_objx/lv_ta.c lib/liblv/lv_objx/lv_spinbox.c \
+	lib/liblv/lv_objx/lv_btnm.c lib/liblv/lv_objx/lv_cont.c \
+	lib/liblv/lv_objx/lv_img.c lib/liblv/lv_objx/lv_imgbtn.c \
+	lib/liblv/lv_objx/lv_led.c lib/liblv/lv_objx/lv_lmeter.c \
+	lib/liblv/lv_objx/lv_page.c lib/liblv/lv_objx/lv_sw.c \
+	lib/liblv/lv_objx/lv_win.c \
+	lib/liblv/lv_themes/lv_theme_alien.c \
+	lib/liblv/lv_themes/lv_theme.c \
+	lib/liblv/lv_themes/lv_theme_default.c \
+	lib/liblv/lv_themes/lv_theme_night.c \
+	lib/liblv/lv_themes/lv_theme_templ.c \
+	lib/liblv/lv_themes/lv_theme_zen.c \
+	lib/liblv/lv_themes/lv_theme_material.c \
+	lib/liblv/lv_themes/lv_theme_nemo.c \
+	lib/liblv/lv_themes/lv_theme_mono.c
+all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .lo .o .obj
+.SUFFIXES: .c .o .obj
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -477,7 +614,6 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	for p in $$list; do echo "$$p $$p"; done | \
 	sed 's/$(EXEEXT)$$//' | \
 	while read p p1; do if test -f $$p \
-	 || test -f $$p1 \
 	  ; then echo "$$p"; echo "$$p"; else :; fi; \
 	done | \
 	sed -e 'p;s,.*/,,;n;h' \
@@ -492,8 +628,8 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	while read type dir files; do \
 	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
 	    test -z "$$files" || { \
-	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
+	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
 	    } \
 	; done
 
@@ -509,77 +645,294 @@ uninstall-binPROGRAMS:
 	cd "$(DESTDIR)$(bindir)" && rm -f $$files
 
 clean-binPROGRAMS:
-	@list='$(bin_PROGRAMS)'; test -n "$$list" || exit 0; \
-	echo " rm -f" $$list; \
-	rm -f $$list || exit $$?; \
-	test -n "$(EXEEXT)" || exit 0; \
-	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
-	echo " rm -f" $$list; \
-	rm -f $$list
-
-install-libLTLIBRARIES: $(lib_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(libdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(libdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
-	}
-
-uninstall-libLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
-	done
-
-clean-libLTLIBRARIES:
-	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
-	@list='$(lib_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-widgets/$(am__dirstamp):
-	@$(MKDIR_P) widgets
-	@: > widgets/$(am__dirstamp)
-widgets/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) widgets/$(DEPDIR)
-	@: > widgets/$(DEPDIR)/$(am__dirstamp)
-widgets/window.lo: widgets/$(am__dirstamp) \
-	widgets/$(DEPDIR)/$(am__dirstamp)
-widgets/image.lo: widgets/$(am__dirstamp) \
-	widgets/$(DEPDIR)/$(am__dirstamp)
-widgets/font.lo: widgets/$(am__dirstamp) \
-	widgets/$(DEPDIR)/$(am__dirstamp)
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 backends/$(am__dirstamp):
 	@$(MKDIR_P) backends
 	@: > backends/$(am__dirstamp)
 backends/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) backends/$(DEPDIR)
 	@: > backends/$(DEPDIR)/$(am__dirstamp)
-backends/sdl2_engine.lo: backends/$(am__dirstamp) \
+backends/sdl2_engine.$(OBJEXT): backends/$(am__dirstamp) \
 	backends/$(DEPDIR)/$(am__dirstamp)
-backends/fb_engine.lo: backends/$(am__dirstamp) \
+backends/fb_engine.$(OBJEXT): backends/$(am__dirstamp) \
 	backends/$(DEPDIR)/$(am__dirstamp)
-
-libantfx.la: $(libantfx_la_OBJECTS) $(libantfx_la_DEPENDENCIES) $(EXTRA_libantfx_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libantfx_la_OBJECTS) $(libantfx_la_LIBADD) $(LIBS)
-
-antfly$(EXEEXT): $(antfly_OBJECTS) $(antfly_DEPENDENCIES) $(EXTRA_antfly_DEPENDENCIES) 
-	@rm -f antfly$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(antfly_OBJECTS) $(antfly_LDADD) $(LIBS)
+lib/liblv/lv_core/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_core
+	@: > lib/liblv/lv_core/$(am__dirstamp)
+lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_core/$(DEPDIR)
+	@: > lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_group.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_indev.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_disp.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_obj.$(OBJEXT): lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_refr.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_style.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/lv_debug.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_draw
+	@: > lib/liblv/lv_draw/$(am__dirstamp)
+lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_draw/$(DEPDIR)
+	@: > lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_basic.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_rect.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_label.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_line.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_img.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_arc.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_draw_triangle.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_img_decoder.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/lv_img_cache.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_font
+	@: > lib/liblv/lv_font/$(am__dirstamp)
+lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_font/$(DEPDIR)
+	@: > lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_fmt_txt.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_roboto_12.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_roboto_16.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_roboto_22.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_roboto_28.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/lv_font_unscii_8.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_hal/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_hal
+	@: > lib/liblv/lv_hal/$(am__dirstamp)
+lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_hal/$(DEPDIR)
+	@: > lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_hal/lv_hal_disp.$(OBJEXT):  \
+	lib/liblv/lv_hal/$(am__dirstamp) \
+	lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_hal/lv_hal_indev.$(OBJEXT):  \
+	lib/liblv/lv_hal/$(am__dirstamp) \
+	lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_hal/lv_hal_tick.$(OBJEXT):  \
+	lib/liblv/lv_hal/$(am__dirstamp) \
+	lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_misc
+	@: > lib/liblv/lv_misc/$(am__dirstamp)
+lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_misc/$(DEPDIR)
+	@: > lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_circ.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_area.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_task.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_fs.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_anim.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_mem.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_ll.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_color.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_txt.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_math.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_log.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_gc.$(OBJEXT): lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_utils.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_async.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_printf.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/lv_bidi.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_objx
+	@: > lib/liblv/lv_objx/$(am__dirstamp)
+lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_objx/$(DEPDIR)
+	@: > lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_arc.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_bar.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_cb.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_cpicker.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_ddlist.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_kb.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_line.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_mbox.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_preload.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_roller.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_table.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_tabview.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_tileview.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_btn.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_calendar.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_chart.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_canvas.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_gauge.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_label.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_list.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_slider.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_ta.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_spinbox.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_btnm.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_cont.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_img.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_imgbtn.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_led.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_lmeter.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_page.$(OBJEXT):  \
+	lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_sw.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_objx/lv_win.$(OBJEXT): lib/liblv/lv_objx/$(am__dirstamp) \
+	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_themes
+	@: > lib/liblv/lv_themes/$(am__dirstamp)
+lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_themes/$(DEPDIR)
+	@: > lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_alien.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_default.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_night.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_templ.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_zen.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_material.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_nemo.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/lv_theme_mono.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
 
 antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIES) 
 	@rm -f antfx$(EXEEXT)
@@ -588,23 +941,105 @@ antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIE
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f backends/*.$(OBJEXT)
-	-rm -f backends/*.lo
-	-rm -f widgets/*.$(OBJEXT)
-	-rm -f widgets/*.lo
+	-rm -f lib/liblv/lv_core/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_draw/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_font/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_hal/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_misc/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_objx/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_themes/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/antfly.Po # am--include-marker
-include ./$(DEPDIR)/antfx.Plo # am--include-marker
+include ./$(DEPDIR)/antfx.Po # am--include-marker
 include ./$(DEPDIR)/antfxapp.Po # am--include-marker
-include ./$(DEPDIR)/list.Plo # am--include-marker
-include ./$(DEPDIR)/supports.Plo # am--include-marker
-include backends/$(DEPDIR)/fb_engine.Plo # am--include-marker
-include backends/$(DEPDIR)/sdl2_engine.Plo # am--include-marker
-include widgets/$(DEPDIR)/font.Plo # am--include-marker
-include widgets/$(DEPDIR)/image.Plo # am--include-marker
-include widgets/$(DEPDIR)/window.Plo # am--include-marker
+include backends/$(DEPDIR)/fb_engine.Po # am--include-marker
+include backends/$(DEPDIR)/sdl2_engine.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_debug.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_disp.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_group.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_indev.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_obj.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_refr.Po # am--include-marker
+include lib/liblv/lv_core/$(DEPDIR)/lv_style.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_arc.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_basic.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_img.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_label.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_line.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_rect.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_draw_triangle.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_img_cache.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/lv_img_decoder.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_fmt_txt.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_12.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_16.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_22.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_28.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/lv_font_unscii_8.Po # am--include-marker
+include lib/liblv/lv_hal/$(DEPDIR)/lv_hal_disp.Po # am--include-marker
+include lib/liblv/lv_hal/$(DEPDIR)/lv_hal_indev.Po # am--include-marker
+include lib/liblv/lv_hal/$(DEPDIR)/lv_hal_tick.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_anim.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_area.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_async.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_bidi.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_circ.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_color.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_fs.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_gc.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_ll.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_log.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_math.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_mem.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_printf.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_task.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_txt.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/lv_utils.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_arc.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_bar.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_btn.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_btnm.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_calendar.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_canvas.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_cb.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_chart.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_cont.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_cpicker.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_ddlist.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_gauge.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_img.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_imgbtn.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_kb.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_label.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_led.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_line.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_list.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_lmeter.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_mbox.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_page.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_preload.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_roller.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_slider.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_spinbox.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_sw.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_ta.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_table.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_tabview.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_tileview.Po # am--include-marker
+include lib/liblv/lv_objx/$(DEPDIR)/lv_win.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_alien.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_default.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_material.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_mono.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_nemo.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_night.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_templ.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/lv_theme_zen.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -628,101 +1063,14 @@ am--depfiles: $(am__depfiles_remade)
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-.c.lo:
-	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
-	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-	$(am__mv) $$depbase.Tpo $$depbase.Plo
-#	$(AM_V_CC)source='$<' object='$@' libtool=yes \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
-
-mostlyclean-libtool:
-	-rm -f *.lo
-
-clean-libtool:
-	-rm -rf .libs _libs
-	-rm -rf backends/.libs backends/_libs
-	-rm -rf widgets/.libs widgets/_libs
-
-distclean-libtool:
-	-rm -f libtool config.lt
-install-pkgincludeHEADERS: $(pkginclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	@list='$(pkginclude_HEADERS)'; test -n "$(pkgincludedir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgincludedir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(pkgincludedir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(pkgincludedir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(pkgincludedir)" || exit $$?; \
-	done
-
-uninstall-pkgincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkginclude_HEADERS)'; test -n "$(pkgincludedir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(pkgincludedir)'; $(am__uninstall_files_from_dir)
-
-# This directory's subdirectories are mostly independent; you can cd
-# into them and run 'make' without going through this Makefile.
-# To change the values of 'make' variables: instead of editing Makefiles,
-# (1) if the variable is set in 'config.status', edit 'config.status'
-#     (which will cause the Makefiles to be regenerated when you run 'make');
-# (2) otherwise, pass the desired values on the 'make' command line.
-$(am__recursive_targets):
-	@fail=; \
-	if $(am__make_keepgoing); then \
-	  failcom='fail=yes'; \
-	else \
-	  failcom='exit 1'; \
-	fi; \
-	dot_seen=no; \
-	target=`echo $@ | sed s/-recursive//`; \
-	case "$@" in \
-	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
-	  *) list='$(SUBDIRS)' ;; \
-	esac; \
-	for subdir in $$list; do \
-	  echo "Making $$target in $$subdir"; \
-	  if test "$$subdir" = "."; then \
-	    dot_seen=yes; \
-	    local_target="$$target-am"; \
-	  else \
-	    local_target="$$target"; \
-	  fi; \
-	  ($(am__cd) $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
-	  || eval $$failcom; \
-	done; \
-	if test "$$dot_seen" = "no"; then \
-	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
-	fi; test -z "$$fail"
-
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
-tags: tags-recursive
+tags: tags-am
 TAGS: tags
 
 tags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
 	set x; \
 	here=`pwd`; \
-	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
-	  include_option=--etags-include; \
-	  empty_fix=.; \
-	else \
-	  include_option=--include; \
-	  empty_fix=; \
-	fi; \
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    test ! -f $$subdir/TAGS || \
-	      set "$$@" "$$include_option=$$here/$$subdir/TAGS"; \
-	  fi; \
-	done; \
 	$(am__define_uniq_tagged_files); \
 	shift; \
 	if test -z "$(ETAGS_ARGS)$$*$$unique"; then :; else \
@@ -735,7 +1083,7 @@ tags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
 	      $$unique; \
 	  fi; \
 	fi
-ctags: ctags-recursive
+ctags: ctags-am
 
 CTAGS: ctags
 ctags-am: $(TAGS_DEPENDENCIES) $(am__tagged_files)
@@ -754,7 +1102,7 @@ cscope: cscope.files
 clean-cscope:
 	-rm -f cscope.files
 cscope.files: clean-cscope cscopelist
-cscopelist: cscopelist-recursive
+cscopelist: cscopelist-am
 
 cscopelist-am: $(am__tagged_files)
 	list='$(am__tagged_files)'; \
@@ -807,31 +1155,6 @@ distdir-am: $(DISTFILES)
 	    test -f "$(distdir)/$$file" \
 	    || cp -p $$d/$$file "$(distdir)/$$file" \
 	    || exit 1; \
-	  fi; \
-	done
-	@list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    $(am__make_dryrun) \
-	      || test -d "$(distdir)/$$subdir" \
-	      || $(MKDIR_P) "$(distdir)/$$subdir" \
-	      || exit 1; \
-	    dir1=$$subdir; dir2="$(distdir)/$$subdir"; \
-	    $(am__relativize); \
-	    new_distdir=$$reldir; \
-	    dir1=$$subdir; dir2="$(top_distdir)"; \
-	    $(am__relativize); \
-	    new_top_distdir=$$reldir; \
-	    echo " (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir="$$new_top_distdir" distdir="$$new_distdir" \\"; \
-	    echo "     am__remove_distdir=: am__skip_length_check=: am__skip_mode_fix=: distdir)"; \
-	    ($(am__cd) $$subdir && \
-	      $(MAKE) $(AM_MAKEFLAGS) \
-	        top_distdir="$$new_top_distdir" \
-	        distdir="$$new_distdir" \
-		am__remove_distdir=: \
-		am__skip_length_check=: \
-		am__skip_mode_fix=: \
-	        distdir) \
-	      || exit 1; \
 	  fi; \
 	done
 	-test -n "$(am__skip_mode_fix)" \
@@ -966,24 +1289,21 @@ distcleancheck: distclean
 	       $(distcleancheck_listfiles) ; \
 	       exit 1; } >&2
 check-am: all-am
-check: check-recursive
-all-am: Makefile $(PROGRAMS) $(LTLIBRARIES) $(HEADERS)
-install-binPROGRAMS: install-libLTLIBRARIES
-
-installdirs: installdirs-recursive
-installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"; do \
+check: check-am
+all-am: Makefile $(PROGRAMS)
+installdirs:
+	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
-install: install-recursive
-install-exec: install-exec-recursive
-install-data: install-data-recursive
-uninstall: uninstall-recursive
+install: install-am
+install-exec: install-exec-am
+install-data: install-data-am
+uninstall: uninstall-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-recursive
+installcheck: installcheck-am
 install-strip:
 	if test -z '$(STRIP)'; then \
 	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
@@ -1003,127 +1323,287 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f backends/$(DEPDIR)/$(am__dirstamp)
 	-rm -f backends/$(am__dirstamp)
-	-rm -f widgets/$(DEPDIR)/$(am__dirstamp)
-	-rm -f widgets/$(am__dirstamp)
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_core/$(am__dirstamp)
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_draw/$(am__dirstamp)
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_font/$(am__dirstamp)
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_hal/$(am__dirstamp)
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_misc/$(am__dirstamp)
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_objx/$(am__dirstamp)
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_themes/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-recursive
+clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
-distclean: distclean-recursive
+distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f ./$(DEPDIR)/antfly.Po
-	-rm -f ./$(DEPDIR)/antfx.Plo
+		-rm -f ./$(DEPDIR)/antfx.Po
 	-rm -f ./$(DEPDIR)/antfxapp.Po
-	-rm -f ./$(DEPDIR)/list.Plo
-	-rm -f ./$(DEPDIR)/supports.Plo
-	-rm -f backends/$(DEPDIR)/fb_engine.Plo
-	-rm -f backends/$(DEPDIR)/sdl2_engine.Plo
-	-rm -f widgets/$(DEPDIR)/font.Plo
-	-rm -f widgets/$(DEPDIR)/image.Plo
-	-rm -f widgets/$(DEPDIR)/window.Plo
+	-rm -f backends/$(DEPDIR)/fb_engine.Po
+	-rm -f backends/$(DEPDIR)/sdl2_engine.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_debug.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_disp.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_group.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_indev.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_obj.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_refr.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_style.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_arc.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_basic.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_img.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_label.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_line.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_rect.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_triangle.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_img_cache.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_img_decoder.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_fmt_txt.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_12.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_16.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_22.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_unscii_8.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_disp.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_indev.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_tick.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_anim.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_area.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_async.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_bidi.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_circ.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_color.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_fs.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_gc.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_ll.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_log.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_math.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_mem.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_printf.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_task.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_txt.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_utils.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_arc.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_bar.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_btn.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_btnm.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_calendar.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_canvas.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cb.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_chart.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cont.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cpicker.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_ddlist.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_gauge.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_img.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_imgbtn.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_kb.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_label.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_led.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_line.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_list.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_lmeter.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_mbox.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_page.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_preload.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_roller.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_slider.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_spinbox.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_sw.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_ta.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_table.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_tabview.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_tileview.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_win.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_alien.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_default.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_material.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_mono.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_nemo.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_night.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_templ.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_zen.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-libtool distclean-tags
+	distclean-tags
 
-dvi: dvi-recursive
+dvi: dvi-am
 
 dvi-am:
 
-html: html-recursive
+html: html-am
 
 html-am:
 
-info: info-recursive
+info: info-am
 
 info-am:
 
-install-data-am: install-pkgincludeHEADERS
+install-data-am:
 
-install-dvi: install-dvi-recursive
+install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
+install-exec-am: install-binPROGRAMS
 
-install-html: install-html-recursive
+install-html: install-html-am
 
 install-html-am:
 
-install-info: install-info-recursive
+install-info: install-info-am
 
 install-info-am:
 
 install-man:
 
-install-pdf: install-pdf-recursive
+install-pdf: install-pdf-am
 
 install-pdf-am:
 
-install-ps: install-ps-recursive
+install-ps: install-ps-am
 
 install-ps-am:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-recursive
+maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f ./$(DEPDIR)/antfly.Po
-	-rm -f ./$(DEPDIR)/antfx.Plo
+		-rm -f ./$(DEPDIR)/antfx.Po
 	-rm -f ./$(DEPDIR)/antfxapp.Po
-	-rm -f ./$(DEPDIR)/list.Plo
-	-rm -f ./$(DEPDIR)/supports.Plo
-	-rm -f backends/$(DEPDIR)/fb_engine.Plo
-	-rm -f backends/$(DEPDIR)/sdl2_engine.Plo
-	-rm -f widgets/$(DEPDIR)/font.Plo
-	-rm -f widgets/$(DEPDIR)/image.Plo
-	-rm -f widgets/$(DEPDIR)/window.Plo
+	-rm -f backends/$(DEPDIR)/fb_engine.Po
+	-rm -f backends/$(DEPDIR)/sdl2_engine.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_debug.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_disp.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_group.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_indev.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_obj.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_refr.Po
+	-rm -f lib/liblv/lv_core/$(DEPDIR)/lv_style.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_arc.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_basic.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_img.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_label.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_line.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_rect.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_draw_triangle.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_img_cache.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/lv_img_decoder.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_fmt_txt.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_12.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_16.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_22.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_roboto_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/lv_font_unscii_8.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_disp.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_indev.Po
+	-rm -f lib/liblv/lv_hal/$(DEPDIR)/lv_hal_tick.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_anim.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_area.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_async.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_bidi.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_circ.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_color.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_fs.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_gc.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_ll.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_log.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_math.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_mem.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_printf.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_task.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_txt.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/lv_utils.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_arc.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_bar.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_btn.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_btnm.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_calendar.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_canvas.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cb.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_chart.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cont.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_cpicker.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_ddlist.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_gauge.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_img.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_imgbtn.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_kb.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_label.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_led.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_line.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_list.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_lmeter.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_mbox.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_page.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_preload.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_roller.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_slider.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_spinbox.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_sw.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_ta.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_table.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_tabview.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_tileview.Po
+	-rm -f lib/liblv/lv_objx/$(DEPDIR)/lv_win.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_alien.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_default.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_material.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_mono.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_nemo.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_night.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_templ.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/lv_theme_zen.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-recursive
+mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool
+mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
-pdf: pdf-recursive
+pdf: pdf-am
 
 pdf-am:
 
-ps: ps-recursive
+ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
-	uninstall-pkgincludeHEADERS
+uninstall-am: uninstall-binPROGRAMS
 
-.MAKE: $(am__recursive_targets) install-am install-strip
+.MAKE: install-am install-strip
 
-.PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
-	am--depfiles am--refresh check check-am clean \
-	clean-binPROGRAMS clean-cscope clean-generic \
-	clean-libLTLIBRARIES clean-libtool cscope cscopelist-am ctags \
-	ctags-am dist dist-all dist-bzip2 dist-gzip dist-lzip \
-	dist-shar dist-tarZ dist-xz dist-zip distcheck distclean \
-	distclean-compile distclean-generic distclean-libtool \
+.PHONY: CTAGS GTAGS TAGS all all-am am--depfiles am--refresh check \
+	check-am clean clean-binPROGRAMS clean-cscope clean-generic \
+	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+	distcheck distclean distclean-compile distclean-generic \
 	distclean-tags distcleancheck distdir distuninstallcheck dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-pkgincludeHEADERS install-ps install-ps-am \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
-	uninstall-pkgincludeHEADERS
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS
 
 .PRECIOUS: Makefile
 

@@ -353,8 +353,16 @@ int load_font(const char* file, afx_font_t* font)
         font->loaded = 0;
         LOG("Cannot read all bitmap data %d/%d\n",v,font->size);
         fclose(fp);
-        if(font->glyphs) free(font->glyphs);
-        if(font->data) free(font->data);
+        if(font->glyphs) 
+        {
+            free(font->glyphs);
+            font->glyphs = NULL;
+        }
+
+        if(font->data){
+            free(font->data);
+            font->data = NULL;
+        }
         return 0;
     }
     font->loaded = 1;
@@ -362,6 +370,15 @@ int load_font(const char* file, afx_font_t* font)
 }
 void font_release(afx_font_t* font)
 {
-    if(font->glyphs) free(font->glyphs);
-    if(font->data) free(font->data);
+    font->loaded = 0;
+    if(font->glyphs)
+    {
+        free(font->glyphs);
+        font->glyphs = NULL;
+    }
+    if(font->data)
+    {
+        free(font->data);
+        font->data = NULL;
+    }
 }
