@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
     conf.default_w = 640;
     conf.default_h = 480;
     conf.defaut_bbp = 16;
-    conf.dev = "/dev/fb1";
+    conf.dev = "/dev/fb0";
     // start display engine
     antfx_init(conf);
 
