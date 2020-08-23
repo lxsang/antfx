@@ -64,9 +64,7 @@ void display_release(engine_frame_t* frame)
     printf("release successful\n");
 }
 
-antfx_event_t get_pointer_input(uint16_t* data)
+void get_pointer_input(antfx_event_t* evt)
 {
-    antfx_event_t event;
-    event.type = AFX_EVT_NONE;
-    return event;
+   // TODO: to be implemented
 }
