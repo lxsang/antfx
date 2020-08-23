@@ -320,10 +320,10 @@ int main(int argc, char *argv[])
     signal(SIGABRT, SIG_IGN);
     signal(SIGINT, shutdown);
     engine_config_t conf;
-    conf.default_w = 640;
-    conf.default_h = 480;
+    conf.default_w = 480;
+    conf.default_h = 320;
     conf.defaut_bbp = 16;
-    conf.dev = "/dev/fb0";
+    conf.dev = "/dev/fb1";
     // start display engine
     antfx_init(conf);
 
