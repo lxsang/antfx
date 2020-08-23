@@ -66,5 +66,7 @@ void display_release(engine_frame_t* frame)
 
 antfx_event_t get_pointer_input(uint16_t* data)
 {
-    return AFX_EVT_NONE;
+    antfx_event_t event;
+    event.type = AFX_EVT_NONE;
+    return event;
 }
