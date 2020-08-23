@@ -1,9 +1,5 @@
 #include <signal.h>
-#ifdef __unix__
-#include <linux/time.h>
-#else
 #include <time.h>
-#endif
 
 #include "antfx.h"
 
