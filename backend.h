@@ -6,8 +6,9 @@
 #include <string.h>
 #include <math.h>
 #include "lib/lvgl.h"
+#include <tslib.h>
+#include "log.h"
 
-#define LOG(a,...) do{}while(0)
 #define UNUSED(c) (void)(c)
 
 #define AFX_EVT_NONE    0x0
@@ -39,7 +40,8 @@ typedef struct{
     uint16_t line_length;
     uint8_t* buffer;
     int handle;
-    uint32_t size;
+    int t_handle;
+    struct tsdev *ts;
     /*LV element*/
     lv_disp_buf_t disp_buf;
     lv_color_t color_buf[LV_HOR_RES_MAX * LV_VER_RES_MAX];
@@ -56,6 +58,7 @@ typedef struct{
     uint16_t default_h;
     uint8_t defaut_bbp;
     char* dev;
+    char* tdev;
  } engine_config_t;
  
 void display_init(engine_frame_t*, engine_config_t);

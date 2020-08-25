@@ -1,9 +1,5 @@
 #include <signal.h>
-#ifdef __unix__
-#include <linux/time.h>
-#else
 #include <time.h>
-#endif
 
 #include "antfx.h"
 
@@ -328,6 +324,7 @@ int main(int argc, char *argv[])
     conf.default_h = 480;
     conf.defaut_bbp = 16;
     conf.dev = "/dev/fb1";
+    conf.tdev = "/dev/input/event1";
     // start display engine
     antfx_init(conf);
 
