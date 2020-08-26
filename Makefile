@@ -109,12 +109,16 @@ am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
 	backends/fb_engine.c widgets/image.c widgets/default_wp.c \
 	widgets/icons/radio.c widgets/icons/alarm.c \
 	widgets/icons/calendar.c widgets/icons/camera.c \
-	widgets/fonts/roboto_bold_50.c lib/liblv/lv_core/lv_group.c \
-	lib/liblv/lv_core/lv_indev.c lib/liblv/lv_core/lv_disp.c \
-	lib/liblv/lv_core/lv_obj.c lib/liblv/lv_core/lv_refr.c \
-	lib/liblv/lv_core/lv_style.c lib/liblv/lv_core/lv_debug.c \
-	lib/liblv/lv_draw/lv_draw_basic.c lib/liblv/lv_draw/lv_draw.c \
-	lib/liblv/lv_draw/lv_draw_rect.c \
+	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
+	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
+	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
+	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
+	widgets/icons/w13d.c widgets/icons/w50d.c \
+	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
+	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
+	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
+	lib/liblv/lv_core/lv_debug.c lib/liblv/lv_draw/lv_draw_basic.c \
+	lib/liblv/lv_draw/lv_draw.c lib/liblv/lv_draw/lv_draw_rect.c \
 	lib/liblv/lv_draw/lv_draw_label.c \
 	lib/liblv/lv_draw/lv_draw_line.c \
 	lib/liblv/lv_draw/lv_draw_img.c \
@@ -175,6 +179,18 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	widgets/icons/antfx-calendar.$(OBJEXT) \
 	widgets/icons/antfx-camera.$(OBJEXT) \
 	widgets/fonts/antfx-roboto_bold_50.$(OBJEXT) \
+	widgets/icons/antfx-w01d.$(OBJEXT) \
+	widgets/icons/antfx-w01n.$(OBJEXT) \
+	widgets/icons/antfx-w02d.$(OBJEXT) \
+	widgets/icons/antfx-w02n.$(OBJEXT) \
+	widgets/icons/antfx-w03d.$(OBJEXT) \
+	widgets/icons/antfx-w04d.$(OBJEXT) \
+	widgets/icons/antfx-w09d.$(OBJEXT) \
+	widgets/icons/antfx-w10d.$(OBJEXT) \
+	widgets/icons/antfx-w10n.$(OBJEXT) \
+	widgets/icons/antfx-w11d.$(OBJEXT) \
+	widgets/icons/antfx-w13d.$(OBJEXT) \
+	widgets/icons/antfx-w50d.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_group.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_indev.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_disp.$(OBJEXT) \
@@ -370,7 +386,19 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	widgets/icons/$(DEPDIR)/antfx-alarm.Po \
 	widgets/icons/$(DEPDIR)/antfx-calendar.Po \
 	widgets/icons/$(DEPDIR)/antfx-camera.Po \
-	widgets/icons/$(DEPDIR)/antfx-radio.Po
+	widgets/icons/$(DEPDIR)/antfx-radio.Po \
+	widgets/icons/$(DEPDIR)/antfx-w01d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w01n.Po \
+	widgets/icons/$(DEPDIR)/antfx-w02d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w02n.Po \
+	widgets/icons/$(DEPDIR)/antfx-w03d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w04d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w09d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w10d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w10n.Po \
+	widgets/icons/$(DEPDIR)/antfx-w11d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w13d.Po \
+	widgets/icons/$(DEPDIR)/antfx-w50d.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -448,7 +476,7 @@ CFLAGS =  -O2 -pipe -g -feliminate-unused-debug-types
 CPP = arm-poky-linux-gnueabi-gcc -E  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -D_GNU_SOURCE=1 -DLINUX=1
+DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -D_GNU_SOURCE=1 -DLINUX=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
@@ -463,7 +491,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed -Wl,-z,relro,-z,now
 LIBOBJS = 
-LIBS = -lwiringPi -lm -lts 
+LIBS = -lpthread -lcurl -lwiringPi -lm -lts 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/mrsang/workspace/antfx/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
@@ -540,6 +568,10 @@ antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
 	widgets/image.c widgets/default_wp.c widgets/icons/radio.c \
 	widgets/icons/alarm.c widgets/icons/calendar.c \
 	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
+	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
+	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
+	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
+	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -716,6 +748,30 @@ widgets/fonts/$(DEPDIR)/$(am__dirstamp):
 widgets/fonts/antfx-roboto_bold_50.$(OBJEXT):  \
 	widgets/fonts/$(am__dirstamp) \
 	widgets/fonts/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w01d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w01n.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w02d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w02n.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w03d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w04d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w09d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w10d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w10n.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w11d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w13d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+widgets/icons/antfx-w50d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
+	widgets/icons/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_core/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_core
 	@: > lib/liblv/lv_core/$(am__dirstamp)
@@ -1127,6 +1183,18 @@ include widgets/icons/$(DEPDIR)/antfx-alarm.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-calendar.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-camera.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-radio.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w01d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w01n.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w02d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w02n.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w03d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w04d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w09d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w10d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w10n.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w11d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w13d.Po # am--include-marker
+include widgets/icons/$(DEPDIR)/antfx-w50d.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -1303,6 +1371,174 @@ widgets/fonts/antfx-roboto_bold_50.obj: widgets/fonts/roboto_bold_50.c
 #	$(AM_V_CC)source='widgets/fonts/roboto_bold_50.c' object='widgets/fonts/antfx-roboto_bold_50.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/fonts/antfx-roboto_bold_50.obj `if test -f 'widgets/fonts/roboto_bold_50.c'; then $(CYGPATH_W) 'widgets/fonts/roboto_bold_50.c'; else $(CYGPATH_W) '$(srcdir)/widgets/fonts/roboto_bold_50.c'; fi`
+
+widgets/icons/antfx-w01d.o: widgets/icons/w01d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w01d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w01d.Tpo -c -o widgets/icons/antfx-w01d.o `test -f 'widgets/icons/w01d.c' || echo '$(srcdir)/'`widgets/icons/w01d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w01d.Tpo widgets/icons/$(DEPDIR)/antfx-w01d.Po
+#	$(AM_V_CC)source='widgets/icons/w01d.c' object='widgets/icons/antfx-w01d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w01d.o `test -f 'widgets/icons/w01d.c' || echo '$(srcdir)/'`widgets/icons/w01d.c
+
+widgets/icons/antfx-w01d.obj: widgets/icons/w01d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w01d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w01d.Tpo -c -o widgets/icons/antfx-w01d.obj `if test -f 'widgets/icons/w01d.c'; then $(CYGPATH_W) 'widgets/icons/w01d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w01d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w01d.Tpo widgets/icons/$(DEPDIR)/antfx-w01d.Po
+#	$(AM_V_CC)source='widgets/icons/w01d.c' object='widgets/icons/antfx-w01d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w01d.obj `if test -f 'widgets/icons/w01d.c'; then $(CYGPATH_W) 'widgets/icons/w01d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w01d.c'; fi`
+
+widgets/icons/antfx-w01n.o: widgets/icons/w01n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w01n.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w01n.Tpo -c -o widgets/icons/antfx-w01n.o `test -f 'widgets/icons/w01n.c' || echo '$(srcdir)/'`widgets/icons/w01n.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w01n.Tpo widgets/icons/$(DEPDIR)/antfx-w01n.Po
+#	$(AM_V_CC)source='widgets/icons/w01n.c' object='widgets/icons/antfx-w01n.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w01n.o `test -f 'widgets/icons/w01n.c' || echo '$(srcdir)/'`widgets/icons/w01n.c
+
+widgets/icons/antfx-w01n.obj: widgets/icons/w01n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w01n.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w01n.Tpo -c -o widgets/icons/antfx-w01n.obj `if test -f 'widgets/icons/w01n.c'; then $(CYGPATH_W) 'widgets/icons/w01n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w01n.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w01n.Tpo widgets/icons/$(DEPDIR)/antfx-w01n.Po
+#	$(AM_V_CC)source='widgets/icons/w01n.c' object='widgets/icons/antfx-w01n.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w01n.obj `if test -f 'widgets/icons/w01n.c'; then $(CYGPATH_W) 'widgets/icons/w01n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w01n.c'; fi`
+
+widgets/icons/antfx-w02d.o: widgets/icons/w02d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w02d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w02d.Tpo -c -o widgets/icons/antfx-w02d.o `test -f 'widgets/icons/w02d.c' || echo '$(srcdir)/'`widgets/icons/w02d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w02d.Tpo widgets/icons/$(DEPDIR)/antfx-w02d.Po
+#	$(AM_V_CC)source='widgets/icons/w02d.c' object='widgets/icons/antfx-w02d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w02d.o `test -f 'widgets/icons/w02d.c' || echo '$(srcdir)/'`widgets/icons/w02d.c
+
+widgets/icons/antfx-w02d.obj: widgets/icons/w02d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w02d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w02d.Tpo -c -o widgets/icons/antfx-w02d.obj `if test -f 'widgets/icons/w02d.c'; then $(CYGPATH_W) 'widgets/icons/w02d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w02d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w02d.Tpo widgets/icons/$(DEPDIR)/antfx-w02d.Po
+#	$(AM_V_CC)source='widgets/icons/w02d.c' object='widgets/icons/antfx-w02d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w02d.obj `if test -f 'widgets/icons/w02d.c'; then $(CYGPATH_W) 'widgets/icons/w02d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w02d.c'; fi`
+
+widgets/icons/antfx-w02n.o: widgets/icons/w02n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w02n.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w02n.Tpo -c -o widgets/icons/antfx-w02n.o `test -f 'widgets/icons/w02n.c' || echo '$(srcdir)/'`widgets/icons/w02n.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w02n.Tpo widgets/icons/$(DEPDIR)/antfx-w02n.Po
+#	$(AM_V_CC)source='widgets/icons/w02n.c' object='widgets/icons/antfx-w02n.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w02n.o `test -f 'widgets/icons/w02n.c' || echo '$(srcdir)/'`widgets/icons/w02n.c
+
+widgets/icons/antfx-w02n.obj: widgets/icons/w02n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w02n.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w02n.Tpo -c -o widgets/icons/antfx-w02n.obj `if test -f 'widgets/icons/w02n.c'; then $(CYGPATH_W) 'widgets/icons/w02n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w02n.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w02n.Tpo widgets/icons/$(DEPDIR)/antfx-w02n.Po
+#	$(AM_V_CC)source='widgets/icons/w02n.c' object='widgets/icons/antfx-w02n.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w02n.obj `if test -f 'widgets/icons/w02n.c'; then $(CYGPATH_W) 'widgets/icons/w02n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w02n.c'; fi`
+
+widgets/icons/antfx-w03d.o: widgets/icons/w03d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w03d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w03d.Tpo -c -o widgets/icons/antfx-w03d.o `test -f 'widgets/icons/w03d.c' || echo '$(srcdir)/'`widgets/icons/w03d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w03d.Tpo widgets/icons/$(DEPDIR)/antfx-w03d.Po
+#	$(AM_V_CC)source='widgets/icons/w03d.c' object='widgets/icons/antfx-w03d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w03d.o `test -f 'widgets/icons/w03d.c' || echo '$(srcdir)/'`widgets/icons/w03d.c
+
+widgets/icons/antfx-w03d.obj: widgets/icons/w03d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w03d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w03d.Tpo -c -o widgets/icons/antfx-w03d.obj `if test -f 'widgets/icons/w03d.c'; then $(CYGPATH_W) 'widgets/icons/w03d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w03d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w03d.Tpo widgets/icons/$(DEPDIR)/antfx-w03d.Po
+#	$(AM_V_CC)source='widgets/icons/w03d.c' object='widgets/icons/antfx-w03d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w03d.obj `if test -f 'widgets/icons/w03d.c'; then $(CYGPATH_W) 'widgets/icons/w03d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w03d.c'; fi`
+
+widgets/icons/antfx-w04d.o: widgets/icons/w04d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w04d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w04d.Tpo -c -o widgets/icons/antfx-w04d.o `test -f 'widgets/icons/w04d.c' || echo '$(srcdir)/'`widgets/icons/w04d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w04d.Tpo widgets/icons/$(DEPDIR)/antfx-w04d.Po
+#	$(AM_V_CC)source='widgets/icons/w04d.c' object='widgets/icons/antfx-w04d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w04d.o `test -f 'widgets/icons/w04d.c' || echo '$(srcdir)/'`widgets/icons/w04d.c
+
+widgets/icons/antfx-w04d.obj: widgets/icons/w04d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w04d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w04d.Tpo -c -o widgets/icons/antfx-w04d.obj `if test -f 'widgets/icons/w04d.c'; then $(CYGPATH_W) 'widgets/icons/w04d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w04d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w04d.Tpo widgets/icons/$(DEPDIR)/antfx-w04d.Po
+#	$(AM_V_CC)source='widgets/icons/w04d.c' object='widgets/icons/antfx-w04d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w04d.obj `if test -f 'widgets/icons/w04d.c'; then $(CYGPATH_W) 'widgets/icons/w04d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w04d.c'; fi`
+
+widgets/icons/antfx-w09d.o: widgets/icons/w09d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w09d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w09d.Tpo -c -o widgets/icons/antfx-w09d.o `test -f 'widgets/icons/w09d.c' || echo '$(srcdir)/'`widgets/icons/w09d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w09d.Tpo widgets/icons/$(DEPDIR)/antfx-w09d.Po
+#	$(AM_V_CC)source='widgets/icons/w09d.c' object='widgets/icons/antfx-w09d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w09d.o `test -f 'widgets/icons/w09d.c' || echo '$(srcdir)/'`widgets/icons/w09d.c
+
+widgets/icons/antfx-w09d.obj: widgets/icons/w09d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w09d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w09d.Tpo -c -o widgets/icons/antfx-w09d.obj `if test -f 'widgets/icons/w09d.c'; then $(CYGPATH_W) 'widgets/icons/w09d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w09d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w09d.Tpo widgets/icons/$(DEPDIR)/antfx-w09d.Po
+#	$(AM_V_CC)source='widgets/icons/w09d.c' object='widgets/icons/antfx-w09d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w09d.obj `if test -f 'widgets/icons/w09d.c'; then $(CYGPATH_W) 'widgets/icons/w09d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w09d.c'; fi`
+
+widgets/icons/antfx-w10d.o: widgets/icons/w10d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w10d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w10d.Tpo -c -o widgets/icons/antfx-w10d.o `test -f 'widgets/icons/w10d.c' || echo '$(srcdir)/'`widgets/icons/w10d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w10d.Tpo widgets/icons/$(DEPDIR)/antfx-w10d.Po
+#	$(AM_V_CC)source='widgets/icons/w10d.c' object='widgets/icons/antfx-w10d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w10d.o `test -f 'widgets/icons/w10d.c' || echo '$(srcdir)/'`widgets/icons/w10d.c
+
+widgets/icons/antfx-w10d.obj: widgets/icons/w10d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w10d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w10d.Tpo -c -o widgets/icons/antfx-w10d.obj `if test -f 'widgets/icons/w10d.c'; then $(CYGPATH_W) 'widgets/icons/w10d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w10d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w10d.Tpo widgets/icons/$(DEPDIR)/antfx-w10d.Po
+#	$(AM_V_CC)source='widgets/icons/w10d.c' object='widgets/icons/antfx-w10d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w10d.obj `if test -f 'widgets/icons/w10d.c'; then $(CYGPATH_W) 'widgets/icons/w10d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w10d.c'; fi`
+
+widgets/icons/antfx-w10n.o: widgets/icons/w10n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w10n.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w10n.Tpo -c -o widgets/icons/antfx-w10n.o `test -f 'widgets/icons/w10n.c' || echo '$(srcdir)/'`widgets/icons/w10n.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w10n.Tpo widgets/icons/$(DEPDIR)/antfx-w10n.Po
+#	$(AM_V_CC)source='widgets/icons/w10n.c' object='widgets/icons/antfx-w10n.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w10n.o `test -f 'widgets/icons/w10n.c' || echo '$(srcdir)/'`widgets/icons/w10n.c
+
+widgets/icons/antfx-w10n.obj: widgets/icons/w10n.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w10n.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w10n.Tpo -c -o widgets/icons/antfx-w10n.obj `if test -f 'widgets/icons/w10n.c'; then $(CYGPATH_W) 'widgets/icons/w10n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w10n.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w10n.Tpo widgets/icons/$(DEPDIR)/antfx-w10n.Po
+#	$(AM_V_CC)source='widgets/icons/w10n.c' object='widgets/icons/antfx-w10n.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w10n.obj `if test -f 'widgets/icons/w10n.c'; then $(CYGPATH_W) 'widgets/icons/w10n.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w10n.c'; fi`
+
+widgets/icons/antfx-w11d.o: widgets/icons/w11d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w11d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w11d.Tpo -c -o widgets/icons/antfx-w11d.o `test -f 'widgets/icons/w11d.c' || echo '$(srcdir)/'`widgets/icons/w11d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w11d.Tpo widgets/icons/$(DEPDIR)/antfx-w11d.Po
+#	$(AM_V_CC)source='widgets/icons/w11d.c' object='widgets/icons/antfx-w11d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w11d.o `test -f 'widgets/icons/w11d.c' || echo '$(srcdir)/'`widgets/icons/w11d.c
+
+widgets/icons/antfx-w11d.obj: widgets/icons/w11d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w11d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w11d.Tpo -c -o widgets/icons/antfx-w11d.obj `if test -f 'widgets/icons/w11d.c'; then $(CYGPATH_W) 'widgets/icons/w11d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w11d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w11d.Tpo widgets/icons/$(DEPDIR)/antfx-w11d.Po
+#	$(AM_V_CC)source='widgets/icons/w11d.c' object='widgets/icons/antfx-w11d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w11d.obj `if test -f 'widgets/icons/w11d.c'; then $(CYGPATH_W) 'widgets/icons/w11d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w11d.c'; fi`
+
+widgets/icons/antfx-w13d.o: widgets/icons/w13d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w13d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w13d.Tpo -c -o widgets/icons/antfx-w13d.o `test -f 'widgets/icons/w13d.c' || echo '$(srcdir)/'`widgets/icons/w13d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w13d.Tpo widgets/icons/$(DEPDIR)/antfx-w13d.Po
+#	$(AM_V_CC)source='widgets/icons/w13d.c' object='widgets/icons/antfx-w13d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w13d.o `test -f 'widgets/icons/w13d.c' || echo '$(srcdir)/'`widgets/icons/w13d.c
+
+widgets/icons/antfx-w13d.obj: widgets/icons/w13d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w13d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w13d.Tpo -c -o widgets/icons/antfx-w13d.obj `if test -f 'widgets/icons/w13d.c'; then $(CYGPATH_W) 'widgets/icons/w13d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w13d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w13d.Tpo widgets/icons/$(DEPDIR)/antfx-w13d.Po
+#	$(AM_V_CC)source='widgets/icons/w13d.c' object='widgets/icons/antfx-w13d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w13d.obj `if test -f 'widgets/icons/w13d.c'; then $(CYGPATH_W) 'widgets/icons/w13d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w13d.c'; fi`
+
+widgets/icons/antfx-w50d.o: widgets/icons/w50d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w50d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w50d.Tpo -c -o widgets/icons/antfx-w50d.o `test -f 'widgets/icons/w50d.c' || echo '$(srcdir)/'`widgets/icons/w50d.c
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w50d.Tpo widgets/icons/$(DEPDIR)/antfx-w50d.Po
+#	$(AM_V_CC)source='widgets/icons/w50d.c' object='widgets/icons/antfx-w50d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w50d.o `test -f 'widgets/icons/w50d.c' || echo '$(srcdir)/'`widgets/icons/w50d.c
+
+widgets/icons/antfx-w50d.obj: widgets/icons/w50d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w50d.obj -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w50d.Tpo -c -o widgets/icons/antfx-w50d.obj `if test -f 'widgets/icons/w50d.c'; then $(CYGPATH_W) 'widgets/icons/w50d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w50d.c'; fi`
+	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w50d.Tpo widgets/icons/$(DEPDIR)/antfx-w50d.Po
+#	$(AM_V_CC)source='widgets/icons/w50d.c' object='widgets/icons/antfx-w50d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w50d.obj `if test -f 'widgets/icons/w50d.c'; then $(CYGPATH_W) 'widgets/icons/w50d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w50d.c'; fi`
 
 lib/liblv/lv_core/antfx-lv_group.o: lib/liblv/lv_core/lv_group.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_group.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo -c -o lib/liblv/lv_core/antfx-lv_group.o `test -f 'lib/liblv/lv_core/lv_group.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_group.c
@@ -2871,6 +3107,18 @@ distclean: distclean-am
 	-rm -f widgets/icons/$(DEPDIR)/antfx-calendar.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-camera.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-radio.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w01d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w01n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w02d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w02n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w03d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w04d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w09d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w10d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w10n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w11d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w13d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w50d.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -3013,6 +3261,18 @@ maintainer-clean: maintainer-clean-am
 	-rm -f widgets/icons/$(DEPDIR)/antfx-calendar.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-camera.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-radio.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w01d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w01n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w02d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w02n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w03d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w04d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w09d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w10d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w10n.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w11d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w13d.Po
+	-rm -f widgets/icons/$(DEPDIR)/antfx-w50d.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

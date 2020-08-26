@@ -25,7 +25,19 @@ antfx_SOURCES +=    widgets/image.c \
                     widgets/icons/alarm.c \
                     widgets/icons/calendar.c \
                     widgets/icons/camera.c \
-                    widgets/fonts/roboto_bold_50.c
+                    widgets/fonts/roboto_bold_50.c \
+                    widgets/icons/w01d.c \
+                    widgets/icons/w01n.c \
+                    widgets/icons/w02d.c \
+                    widgets/icons/w02n.c \
+                    widgets/icons/w03d.c \
+                    widgets/icons/w04d.c \
+                    widgets/icons/w09d.c \
+                    widgets/icons/w10d.c \
+                    widgets/icons/w10n.c \
+                    widgets/icons/w11d.c \
+                    widgets/icons/w13d.c \
+                    widgets/icons/w50d.c
 
 antfx_SOURCES += lib/liblv/lv_core/lv_group.c
 antfx_SOURCES += lib/liblv/lv_core/lv_indev.c

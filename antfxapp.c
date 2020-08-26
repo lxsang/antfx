@@ -8,29 +8,49 @@
 #include <sys/wait.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <pthread.h>
+#include <curl/curl.h>
+#include <regex.h>
 #include "antfx.h"
 
 #define FB_DEV "/dev/fb1"
 #define TS_DEV "/dev/input/event0"
 #define I2C_DELDEV_FILE "/sys/class/i2c-adapter/i2c-1/delete_device"
 #define I2C_NEWDEV_FILE "/sys/class/i2c-adapter/i2c-1/new_device"
+#define FORECAST_URI "http://api.openweathermap.org/data/2.5/weather?q=Grenoble&APPID=3e1941f1164b6111bff6f2c3f5ad32d9&&units=metric"
 #define HW_CLOCK_ADDR 0x68
 #define FM_RADIO_CTL_ADDR 0x60
+#define WEATHER_CHECK_TO 60 * 3 //
+#define MAX_CURL_PAGE_LENGTH 2048
+#define LOCATION "Grenoble"
 
 typedef struct
 {
-    lv_obj_t* lbl_time;
-    lv_obj_t* lbl_date;
-    lv_obj_t* lbl_weather;
-    lv_obj_t* lbl_status;
+    lv_obj_t *lbl_time;
+    lv_obj_t *lbl_date;
+    lv_obj_t *lbl_weather;
+    lv_obj_t *lbl_status;
+    lv_obj_t *lbl_location;
+    lv_obj_t *lbl_weather_img;
 } antfx_screen_info_t;
-
 
 LV_IMG_DECLARE(default_wp);
 LV_IMG_DECLARE(radio);
 LV_IMG_DECLARE(alarm_clock);
 LV_IMG_DECLARE(calendar);
 LV_IMG_DECLARE(camera);
+LV_IMG_DECLARE(w01d);
+LV_IMG_DECLARE(w01n);
+LV_IMG_DECLARE(w02d);
+LV_IMG_DECLARE(w02n);
+LV_IMG_DECLARE(w03d);
+LV_IMG_DECLARE(w04d);
+LV_IMG_DECLARE(w09d);
+LV_IMG_DECLARE(w10n);
+LV_IMG_DECLARE(w10d);
+LV_IMG_DECLARE(w11d);
+LV_IMG_DECLARE(w13d);
+LV_IMG_DECLARE(w50d);
 LV_FONT_DECLARE(roboto_bold_50);
 
 static int running = 0;
@@ -46,7 +66,11 @@ static void init_hw_clock();
 static void fm_set_freq(double f);
 static void fm_mute();
 static double fm_get_freq();
-static void screen_update();
+static void time_update();
+static void weather_update();
+static void *weather_thread_handler(void *data);
+static int regex_match(const char *expr, const char *search, int msize, regmatch_t *matches);
+static size_t curl_callback(void *ptr, size_t size, size_t nmemb, void *buff);
 static void create_tab1(lv_obj_t *parent);
 static void create_tab2(lv_obj_t *parent);
 static void create_tab3(lv_obj_t *parent);
@@ -83,10 +107,10 @@ static void antfx_ui(lv_theme_t *th)
     lv_list_add_btn(list, &camera, NULL);
     lv_list_add_btn(list, LV_SYMBOL_SETTINGS, NULL);
 
-    lv_obj_t* cont = lv_cont_create(scr, NULL);
-    lv_cont_set_layout(cont, LV_LAYOUT_COL_R);
+    lv_obj_t *cont = lv_cont_create(scr, NULL);
+    lv_cont_set_layout(cont, LV_LAYOUT_COL_M);
     g_scr_info.lbl_time = lv_label_create(cont, NULL);
-    lv_label_set_align(g_scr_info.lbl_time, LV_LABEL_ALIGN_RIGHT);
+    lv_label_set_align(g_scr_info.lbl_time, LV_LABEL_ALIGN_CENTER);
     static lv_style_t time_style;
     static lv_style_t status_style;
     style = lv_obj_get_style(cont);
@@ -95,22 +119,30 @@ static void antfx_ui(lv_theme_t *th)
     time_style.text.font = &roboto_bold_50;
     lv_obj_set_style(g_scr_info.lbl_time, &time_style);
     lv_obj_set_pos(cont, lv_disp_get_hor_res(NULL) / 2 - 10, 10);
-    lv_obj_set_size(cont, lv_disp_get_hor_res(NULL) / 2, 170);
+    lv_obj_set_size(cont, lv_disp_get_hor_res(NULL) / 2, lv_disp_get_ver_res(NULL) - 20);
     g_scr_info.lbl_date = lv_label_create(cont, NULL);
     style->text.font = &lv_font_roboto_28;
     style->body.opa = LV_OPA_40;
     style->body.radius = 20;
+    status_style.text.font = &lv_font_roboto_22;
+
+    g_scr_info.lbl_location = lv_label_create(cont, NULL);
+    lv_label_set_text(g_scr_info.lbl_location, LOCATION);
+
+    g_scr_info.lbl_weather_img = lv_img_create(cont, NULL);
+    //lv_img_set_src(g_scr_info.lbl_location, &w50d);
+    lv_img_set_src(g_scr_info.lbl_weather_img, LV_SYMBOL_DUMMY);
 
     g_scr_info.lbl_weather = lv_label_create(cont, NULL);
     lv_label_set_text(g_scr_info.lbl_weather, "");
+    lv_obj_set_style(g_scr_info.lbl_weather, &status_style);
 
     g_scr_info.lbl_status = lv_label_create(cont, NULL);
     lv_label_set_text(g_scr_info.lbl_status, "");
-    status_style.text.font = &lv_font_roboto_22;
     lv_obj_set_style(g_scr_info.lbl_status, &status_style);
 }
 
-static void screen_update()
+static void time_update()
 {
     time_t rawtime;
     struct tm *timeinfo;
@@ -123,6 +155,186 @@ static void screen_update()
     lv_label_set_text(g_scr_info.lbl_time, buffer);
     strftime(buffer, sizeof(buffer), "%a %b %Y", timeinfo);
     lv_label_set_text(g_scr_info.lbl_date, buffer);
+}
+static size_t curl_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+    int dlen = size * nmemb;
+    int total_len = 0;
+    char *buffer = (char *)stream;
+    total_len = strlen(buffer) + dlen;
+    if (total_len > MAX_CURL_PAGE_LENGTH - 1)
+    {
+        ERROR("Buffer overflow: page data is too long");
+        return -1;
+    }
+    (void)memcpy(buffer + strlen(buffer), ptr, dlen);
+    buffer[total_len] = '\0';
+    return total_len;
+}
+
+static int regex_match(const char *expr, const char *search, int msize, regmatch_t *matches)
+{
+    regex_t regex;
+    int reti;
+    char msgbuf[100];
+    int ret;
+    /* Compile regular expression */
+    reti = regcomp(&regex, expr, REG_ICASE | REG_EXTENDED);
+    if (reti)
+    {
+        //ERROR("Could not compile regex: %s",expr);
+        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+        ERROR("Regex match failed: %s", msgbuf);
+        //return 0;
+    }
+
+    /* Execute regular expression */
+    reti = regexec(&regex, search, msize, matches, 0);
+    if (!reti)
+    {
+        //LOG("Match");
+        ret = 1;
+    }
+    else if (reti == REG_NOMATCH)
+    {
+        //LOG("No match");
+        ret = 0;
+    }
+    else
+    {
+        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+        ERROR("Regex match failed: %s", msgbuf);
+        ret = 0;
+    }
+
+    regfree(&regex);
+    return ret;
+}
+
+static void *weather_thread_handler(void *data)
+{
+    UNUSED(data);
+    char buffer[MAX_CURL_PAGE_LENGTH];
+    char x_text[64];
+    float temperature;
+    regex_t regex;
+    regmatch_t matches[2];
+    int ret;
+    LOG("Fetching weather infomation");
+    CURL *curl_handle;
+    CURLcode res;
+    (void)memset(buffer, 0, MAX_CURL_PAGE_LENGTH);
+    curl_handle = curl_easy_init();
+    curl_easy_setopt(curl_handle, CURLOPT_URL, FORECAST_URI);
+    curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 0L);
+    curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, curl_callback);
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, buffer);
+
+    res = curl_easy_perform(curl_handle);
+    curl_easy_cleanup(curl_handle);
+
+    if (res != CURLE_OK)
+    {
+        ERROR("Unable to fetch weather from url: %s", curl_easy_strerror(res));
+        return NULL;
+    }
+    // now parse the temperature
+    if (!regex_match("\\s*\"temp\":\\s*([0-9.]+),?\\s*", buffer, 2, matches))
+    {
+        ERROR("Unable to match temperature value");
+        return NULL;
+    }
+
+    memset(x_text, '\0', sizeof(x_text));
+    memcpy(x_text, buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
+    strcat(x_text, " C, ");
+
+    // description
+    if (!regex_match("\\s*\"main\":\\s*\"([a-zA-Z]+)\",?\\s*", buffer, 2, matches))
+    {
+        ERROR("Unable to match wheather description value");
+        return NULL;
+    }
+    memcpy(x_text + strlen(x_text), buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
+    lv_label_set_text(g_scr_info.lbl_weather, x_text);
+
+    // icons
+    if (!regex_match("\\s*\"icon\":\\s*\"([a-zA-Z0-9]+)\",?\\s*", buffer, 2, matches))
+    {
+        ERROR("Unable to match wheather icon value");
+        return NULL;
+    }
+
+    memset(x_text, '\0', sizeof(x_text));
+    memcpy(x_text, buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
+    LOG("Icon: '%s'", x_text);
+    // show icon
+
+    if (strcmp(x_text, "01d") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w01d);
+    }
+    else if (strcmp(x_text, "01n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w01n);
+    }
+    else if (strcmp(x_text, "02d") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w02d);
+    }
+    else if (strcmp(x_text, "02n") == 0)
+    {
+        printf("icon set\n");
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w02n);
+    }
+    else if (strcmp(x_text, "03d") == 0 || strcmp(x_text, "03n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w03d);
+    }
+    else if (strcmp(x_text, "04d") == 0 || strcmp(x_text, "04n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w04d);
+    }
+    else if (strcmp(x_text, "09d") == 0 || strcmp(x_text, "09n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w09d);
+    }
+    else if (strcmp(x_text, "10n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w10n);
+    }
+    else if (strcmp(x_text, "10d") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w10d);
+    }
+    else if (strcmp(x_text, "11d") == 0 || strcmp(x_text, "11n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w11d);
+    }
+    else if (strcmp(x_text, "13d") == 0 || strcmp(x_text, "13n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w13d);
+    }
+    else if (strcmp(x_text, "50d") == 0 || strcmp(x_text, "50n") == 0)
+    {
+        lv_img_set_src(g_scr_info.lbl_weather_img, &w50d);
+    }
+}
+static void weather_update()
+{
+    pthread_t th;
+    if (pthread_create(&th, NULL, weather_thread_handler, NULL) != 0)
+    {
+
+        ERROR("Error creating weather thread: %s", strerror(errno));
+        return;
+    }
+
+    if (pthread_detach(th) != 0)
+    {
+        ERROR("Unable to detach weather thread: %s", strerror(errno));
+    }
 }
 
 /**********************
@@ -403,12 +615,16 @@ int main(int argc, char *argv[])
     signal(SIGPIPE, SIG_IGN);
     signal(SIGABRT, SIG_IGN);
     signal(SIGINT, stop);
+    signal(SIGTERM, stop);
     engine_config_t conf;
     conf.default_w = 480;
     conf.default_h = 320;
     conf.defaut_bbp = 16;
     conf.dev = FB_DEV;
     conf.tdev = TS_DEV;
+    time_t last_weather_check = 0;
+    time_t now;
+    curl_global_init(CURL_GLOBAL_ALL);
     // start the hardware clock
     init_hw_clock();
     // start display engine
@@ -422,13 +638,20 @@ int main(int argc, char *argv[])
     running = 1;
     while (running)
     {
-        screen_update();
+        now = time(NULL);
+        if (difftime(now, last_weather_check) > WEATHER_CHECK_TO)
+        {
+            weather_update();
+            last_weather_check = now;
+        }
+        time_update();
         lv_task_handler();
         lv_tick_inc(5);
         usleep(5000);
     }
     fm_mute();
     antfx_release();
+    curl_global_cleanup();
 }
 
 static void init_hw_clock()
@@ -498,7 +721,7 @@ static void fm_set_freq(double f)
     }
     close(fd);
     LOG("FM RADIO on at frequency: %f", fm_get_freq());
-    snprintf(buff,32, "FM: %.2f Mhz", fm_get_freq());
+    snprintf(buff, 32, "FM: %.2f Mhz", fm_get_freq());
     lv_label_set_text(g_scr_info.lbl_status, buff);
 }
 static void fm_mute()

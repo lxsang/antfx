@@ -42,6 +42,22 @@ AC_CHECK_LIB([wiringPi],[wiringPiI2CSetup],[],[
     fi
 ])
 
+
+AC_CHECK_HEADER([curl/curl.h],[],[
+    AC_MSG_ERROR([Unable to find curl lib header])
+])
+
+AC_CHECK_LIB([curl],[curl_global_init],[],[
+        AC_MSG_ERROR([Unable to find libcurl])
+])
+
+AC_CHECK_HEADER([pthread.h],[],[
+    AC_MSG_ERROR([Unable to find pthread lib header])
+])
+
+AC_CHECK_LIB([pthread],[pthread_create],[],[
+        AC_MSG_ERROR([Unable to find libpthread])
+])
 # debug option
 AC_ARG_ENABLE([debug],
     [  --enable-debug    Turn on debugging],
