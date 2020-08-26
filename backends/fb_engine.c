@@ -96,7 +96,6 @@ void get_pointer_input(engine_frame_t* frame)
     ret = ts_read_mt(frame->ts, sample_mt, 1, 1);
     if(ret < 0)
     {
-        LOG("no touch event");
         frame->pointer.evt.type = AFX_EVT_NONE;
         return;
     }

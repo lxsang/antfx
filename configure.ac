@@ -24,6 +24,20 @@ AC_CHECK_LIB([ts],[ts_setup],[],[
     fi
 ])
 
+has_wpi=no
+# check for lib antd
+AC_CHECK_HEADER([wiringPiI2C.h],[
+    has_wpi=yes
+    # check if the library exists
+],[
+    AC_MSG_ERROR([Unable to find wiringPi header])
+])
+AC_CHECK_LIB([wiringPi],[wiringPiI2CSetup],[],[
+    if test "$has_wpi" = "yes"; then
+        AC_MSG_ERROR([Unable to find libwringPi])
+    fi
+])
+
 # debug option
 AC_ARG_ENABLE([debug],
     [  --enable-debug    Turn on debugging],
