@@ -10,12 +10,32 @@
 #include <wiringPiI2C.h>
 #include "antfx.h"
 
+#define FB_DEV "/dev/fb1"
+#define TS_DEV "/dev/input/event0"
 #define I2C_DELDEV_FILE "/sys/class/i2c-adapter/i2c-1/delete_device"
 #define I2C_NEWDEV_FILE "/sys/class/i2c-adapter/i2c-1/new_device"
 #define HW_CLOCK_ADDR 0x68
 #define FM_RADIO_CTL_ADDR 0x60
 
+typedef struct
+{
+    lv_obj_t* lbl_time;
+    lv_obj_t* lbl_date;
+    lv_obj_t* lbl_weather;
+    lv_obj_t* lbl_status;
+} antfx_screen_info_t;
+
+
+LV_IMG_DECLARE(default_wp);
+LV_IMG_DECLARE(radio);
+LV_IMG_DECLARE(alarm_clock);
+LV_IMG_DECLARE(calendar);
+LV_IMG_DECLARE(camera);
+LV_FONT_DECLARE(roboto_bold_50);
+
 static int running = 0;
+static antfx_screen_info_t g_scr_info;
+
 void stop(int sig)
 {
     UNUSED(sig);
@@ -26,18 +46,18 @@ static void init_hw_clock();
 static void fm_set_freq(double f);
 static void fm_mute();
 static double fm_get_freq();
+static void screen_update();
 static void create_tab1(lv_obj_t *parent);
 static void create_tab2(lv_obj_t *parent);
 static void create_tab3(lv_obj_t *parent);
 
-void lv_test_theme_1(lv_theme_t *th)
+static void antfx_ui(lv_theme_t *th)
 {
     lv_theme_set_current(th);
     th = lv_theme_get_current(); /*If `LV_THEME_LIVE_UPDATE  1` `th` is not used directly so get the real theme after set*/
     lv_obj_t *scr = lv_cont_create(NULL, NULL);
     lv_disp_load_scr(scr);
-
-    lv_obj_t *tv = lv_tabview_create(scr, NULL);
+    /*lv_obj_t *tv = lv_tabview_create(scr, NULL);
     lv_obj_set_size(tv, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
     lv_obj_t *tab1 = lv_tabview_add_tab(tv, "Tab 1");
     lv_obj_t *tab2 = lv_tabview_add_tab(tv, "Tab 2");
@@ -45,7 +65,64 @@ void lv_test_theme_1(lv_theme_t *th)
 
     create_tab1(tab1);
     create_tab2(tab2);
-    create_tab3(tab3);
+    create_tab3(tab3);*/
+    lv_obj_t *img = lv_img_create(scr, NULL);
+    lv_img_set_src(img, &default_wp);
+
+    lv_obj_t *list = lv_list_create(scr, NULL);
+    lv_style_t *style = lv_obj_get_style(list);
+    //lv_obj_set_style(list, &lv_style_transp);
+    style->body.opa = LV_OPA_60;
+    lv_obj_set_size(list, 48, lv_disp_get_ver_res(NULL));
+    //list_btn = lv_list_add_btn(list, LV_SYMBOL_GPS, NULL);
+    //lv_btn_set_toggle(list_btn, true);
+    lv_list_add_btn(list, &radio, NULL);
+    lv_list_add_btn(list, LV_SYMBOL_AUDIO, NULL);
+    lv_list_add_btn(list, &alarm_clock, NULL);
+    lv_list_add_btn(list, &calendar, NULL);
+    lv_list_add_btn(list, &camera, NULL);
+    lv_list_add_btn(list, LV_SYMBOL_SETTINGS, NULL);
+
+    lv_obj_t* cont = lv_cont_create(scr, NULL);
+    lv_cont_set_layout(cont, LV_LAYOUT_COL_R);
+    g_scr_info.lbl_time = lv_label_create(cont, NULL);
+    lv_label_set_align(g_scr_info.lbl_time, LV_LABEL_ALIGN_RIGHT);
+    static lv_style_t time_style;
+    static lv_style_t status_style;
+    style = lv_obj_get_style(cont);
+    lv_style_copy(&time_style, style);
+    lv_style_copy(&status_style, style);
+    time_style.text.font = &roboto_bold_50;
+    lv_obj_set_style(g_scr_info.lbl_time, &time_style);
+    lv_obj_set_pos(cont, lv_disp_get_hor_res(NULL) / 2 - 10, 10);
+    lv_obj_set_size(cont, lv_disp_get_hor_res(NULL) / 2, 170);
+    g_scr_info.lbl_date = lv_label_create(cont, NULL);
+    style->text.font = &lv_font_roboto_28;
+    style->body.opa = LV_OPA_40;
+    style->body.radius = 20;
+
+    g_scr_info.lbl_weather = lv_label_create(cont, NULL);
+    lv_label_set_text(g_scr_info.lbl_weather, "");
+
+    g_scr_info.lbl_status = lv_label_create(cont, NULL);
+    lv_label_set_text(g_scr_info.lbl_status, "");
+    status_style.text.font = &lv_font_roboto_22;
+    lv_obj_set_style(g_scr_info.lbl_status, &status_style);
+}
+
+static void screen_update()
+{
+    time_t rawtime;
+    struct tm *timeinfo;
+    char buffer[80];
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer, sizeof(buffer), "%H:%M:%S", timeinfo);
+    lv_label_set_text(g_scr_info.lbl_time, buffer);
+    strftime(buffer, sizeof(buffer), "%a %b %Y", timeinfo);
+    lv_label_set_text(g_scr_info.lbl_date, buffer);
 }
 
 /**********************
@@ -330,22 +407,22 @@ int main(int argc, char *argv[])
     conf.default_w = 480;
     conf.default_h = 320;
     conf.defaut_bbp = 16;
-    conf.dev = "/dev/fb1";
-    conf.tdev = "/dev/input/event0";
+    conf.dev = FB_DEV;
+    conf.tdev = TS_DEV;
     // start the hardware clock
     init_hw_clock();
     // start display engine
     antfx_init(conf);
-    fm_set_freq(102.8); // RFM
-    printf("Frequency is %f\n", fm_get_freq());
     /* Initialize and set a theme. `LV_THEME_NIGHT` needs to enabled in lv_conf.h. */
     lv_theme_t *th = lv_theme_night_init(20, NULL);
     lv_theme_set_current(th);
 
-    lv_test_theme_1(th);
+    antfx_ui(th);
+    fm_set_freq(94.1); // RFM
     running = 1;
     while (running)
     {
+        screen_update();
         lv_task_handler();
         lv_tick_inc(5);
         usleep(5000);
@@ -391,6 +468,7 @@ static void init_hw_clock()
 static void fm_set_freq(double f)
 {
     uint8_t radio[5] = {0};
+    char buff[32];
     uint8_t freq_h = 0;
     uint8_t freq_l = 0;
     int fd;
@@ -419,6 +497,9 @@ static void fm_set_freq(double f)
         ERROR("Unable to write i2c set freq command to radio control: %s", strerror(errno));
     }
     close(fd);
+    LOG("FM RADIO on at frequency: %f", fm_get_freq());
+    snprintf(buff,32, "FM: %.2f Mhz", fm_get_freq());
+    lv_label_set_text(g_scr_info.lbl_status, buff);
 }
 static void fm_mute()
 {
@@ -441,9 +522,9 @@ static void fm_mute()
     //load the above into the array
     radio[0] = freq_h; //FREQUENCY H
     radio[1] = freq_l; //FREQUENCY L
-    radio[2] = 0xB0;       //3 byte (0xB0): high side LO injection is on,.
-    radio[3] = 0x10;       //4 byte (0x10) : Xtal is 32.768 kHz
-    radio[4] = 0x00;       //5 byte0x00)
+    radio[2] = 0xB0;   //3 byte (0xB0): high side LO injection is on,.
+    radio[3] = 0x10;   //4 byte (0x10) : Xtal is 32.768 kHz
+    radio[4] = 0x00;   //5 byte0x00)
 
     if ((fd = wiringPiI2CSetup(FM_RADIO_CTL_ADDR)) < 0)
     {
@@ -455,6 +536,8 @@ static void fm_mute()
         ERROR("Unable to write i2c mute command to radio control: %s", strerror(errno));
     }
     close(fd);
+    LOG("FM RADIO off at frequency: %f", frequency);
+    lv_label_set_text(g_scr_info.lbl_status, "");
 }
 static double fm_get_freq()
 {

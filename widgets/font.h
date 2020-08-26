@@ -3,7 +3,7 @@
 
 #define MAGIC_HEADER 0xAF8D
 
-#include "../supports.h"
+#include <stdint.h>
 
 #define BIT0 (1 << 0)
 #define BIT1 (1 << 1)
@@ -35,8 +35,6 @@ typedef struct{
 } afx_font_t;
 
 extern afx_font_t SYS_FONT;
-
-void _put_text(const char*,point_t, color_t, afx_font_t);
 
 int load_font(const char* file, afx_font_t*);
 void font_release(afx_font_t*);

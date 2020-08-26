@@ -1,4 +1,7 @@
 #include "image.h"
+#include "log.h"
+#include <stdlib.h>
+#include <stdio.h>
 int read_bitmap_file(const char* file, afx_bitmap_t* bmp)
 {
     uint8_t header[14];
@@ -73,23 +76,4 @@ void dump_bitmap(const char* file)
     LOG("bbp: %d\n", bmp.header.bbp);
     LOG("compression %d \n",bmp.header.compression);
     LOG("size %d \n", bmp.header.size);
-}
-
-void _draw_bitmap(afx_bitmap_t bmp,point_t tr)
-{
-    int i;
-    color_t c;
-    point_t p;
-    //int line_length = bmp.header.width*3;
-    for(i=0;i < (int)bmp.header.size;i+=3)
-    {
-        c.b = bmp.data[i];
-        c.g = bmp.data[i+1];
-        c.r = bmp.data[i+2];
-        p.x = bmp.header.width - ((i/3) % bmp.header.width) -1;
-        p.y = bmp.header.height - ((i/3) / bmp.header.width) - 1;
-        //LOG("x %d  y %d : %d\n", p.x,p.y);
-        //break;
-        _put_pixel(_T(tr,p),COLOR(c));
-    }
 }

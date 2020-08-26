@@ -1,5 +1,5 @@
 #include "font.h"
-
+#include <stdio.h>
 static uint8_t _sys_bitmap_font[] = {
   0x55, 0x50, 0x3C, 0x99, 0x99, 0x49, 0x2F, 0xD2, 0x49, 0x24, 0xBF, 0x49,
   0x20, 0x21, 0xEA, 0x68, 0xF8, 0xA2, 0x69, 0x78, 0x80, 0x62, 0xA4, 0xA4,
@@ -275,46 +275,6 @@ static int _put_char_with_sys_font(char c, point_t p,color_code_t code)
     return 9;
 }
 */
-uint8_t _put_char(char c, point_t p, color_code_t code, afx_font_t font)
-{
-    if(c < font.first || c > font.last) return 0;
-    afx_font_glyph_t glyph = font.glyphs[c - font.first];
-
-    uint8_t  xx, yy, bits = 0, bit = 0;
-    uint16_t bo = glyph.bitmapOffset;
-    for(yy=0; yy< glyph.height; yy++) {
-        for(xx=0; xx< glyph.width; xx++) {
-            if(!(bit++ & 7)) {
-                bits = font.data[bo++];
-            }
-            if(bits & 0x80) {
-                _put_pixel(_T(p, _P(glyph.xOffset+xx, glyph.yOffset+yy)),code);
-            }
-            bits <<= 1;
-        }
-    }        
-    return glyph.xAdvance;
-}
-
-void _put_text(const char* s,point_t p, color_t color, afx_font_t font)
-{
-    color_code_t code = COLOR(color);
-    char* c;
-    point_t px = p;//_T(p,_P(0,font.yAdvance));
-    for(c=(char*)s;*c!='\0';c++)
-    {
-        if(*c == '\n') // new line
-        {
-            px.y += font.yAdvance;
-            continue;
-        }
-        if(font.loaded == 1)
-            px.x += _put_char(*c,px,code,font);
-        else 
-            px.x += _put_char(*c,px,code,SYS_FONT);
-        //px.x += 8;
-    }
-}
 
 int load_font(const char* file, afx_font_t* font)
 {

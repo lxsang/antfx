@@ -11,12 +11,21 @@ EXTRA_DIST = README.md
 bin_PROGRAMS = antfx
 # lib source files
 antfx_SOURCES = antfxapp.c  antfx.c
+antfx_CPPFLAGS=-I./lib/
 
 if USE_SDL2
 antfx_SOURCES += backends/sdl2_engine.c
 else
 antfx_SOURCES += backends/fb_engine.c
 endif
+
+antfx_SOURCES +=    widgets/image.c \
+                    widgets/default_wp.c \
+                    widgets/icons/radio.c \
+                    widgets/icons/alarm.c \
+                    widgets/icons/calendar.c \
+                    widgets/icons/camera.c \
+                    widgets/fonts/roboto_bold_50.c
 
 antfx_SOURCES += lib/liblv/lv_core/lv_group.c
 antfx_SOURCES += lib/liblv/lv_core/lv_indev.c

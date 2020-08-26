@@ -1,6 +1,7 @@
 #ifndef AFX_IMAGE_H
 #define AFX_IMAGE_H
-#include "../supports.h"
+
+#include <stdint.h>
 
 #define draw_bitmap(x) (_draw_bitmap(x,ORIGIN))
 
@@ -27,6 +28,5 @@ typedef struct
 } afx_bitmap_t;
 
 int read_bitmap_file(const char*, afx_bitmap_t*);
-void _draw_bitmap(afx_bitmap_t,point_t tr);
 void release_bitmap(afx_bitmap_t*);
 #endif
