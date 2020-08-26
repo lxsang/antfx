@@ -31,7 +31,7 @@ static void render(lv_disp_t * disp, const lv_area_t * area, lv_color_t * color_
 static bool pointer_input(lv_indev_drv_t * indev_driver, lv_indev_data_t * data)
 {
     uint8_t last_type = _screen.pointer.evt.type;
-    get_pointer_input(&_screen.pointer.evt);
+    get_pointer_input(&_screen);
 
     switch (_screen.pointer.evt.type)
     {

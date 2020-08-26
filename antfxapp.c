@@ -1,12 +1,13 @@
 #include <signal.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "antfx.h"
 
-void shutdown(int sig)
+static int running = 0;
+void stop(int sig)
 {
-    antfx_release();
-    exit(0);
+    running = 0;
 }
 
 static void create_tab1(lv_obj_t * parent);
@@ -318,13 +319,13 @@ int main(int argc, char *argv[])
 
     signal(SIGPIPE, SIG_IGN);
     signal(SIGABRT, SIG_IGN);
-    signal(SIGINT, shutdown);
+    signal(SIGINT, stop);
     engine_config_t conf;
     conf.default_w = 480;
     conf.default_h = 320;
     conf.defaut_bbp = 16;
     conf.dev = "/dev/fb1";
-    conf.tdev = "/dev/input/event1";
+    conf.tdev = "/dev/input/event0";
     // start display engine
     antfx_init(conf);
 
@@ -334,10 +335,12 @@ int main(int argc, char *argv[])
     lv_theme_set_current(th);
 
     lv_test_theme_1(th);
-
-    while (1)
+    running = 1;
+    while (running)
     {
         lv_task_handler();
-        lv_tick_inc(10);
+        lv_tick_inc(5);
+        usleep(5000);
     }
+    antfx_release();
 }

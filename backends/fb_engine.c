@@ -60,10 +60,10 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
     // now open the touch device
     if(conf.tdev != NULL)
     {
-        frame->handle = open(conf.dev, O_RDONLY);
-        if(frame->handle == -1)
+        frame->ts = ts_setup(conf.tdev, 1);
+        if(frame->ts == NULL)
         {
-            ERROR("Unable to open touch device, touch is disabled: %s", strerror(errno));
+            ERROR("Unable to setup touch device. Touch will be disabled"); 
         }
     }
     
@@ -81,7 +81,39 @@ void display_release(engine_frame_t* frame)
     LOG("release successful");
 }
 
-void get_pointer_input(antfx_event_t* event)
+void get_pointer_input(engine_frame_t* frame)
 {
-    event->type = AFX_EVT_NONE;
+    int ret;
+    struct ts_sample_mt* sample_mt[1];
+    struct ts_sample_mt sample[1];
+    static uint8_t last_type = AFX_EVT_NONE;
+    sample_mt[0] = sample;
+    if(frame->ts == NULL)
+    {
+        frame->pointer.evt.type = AFX_EVT_NONE;
+        return;
+    }
+    ret = ts_read_mt(frame->ts, sample_mt, 1, 1);
+    if(ret < 0)
+    {
+        LOG("no touch event");
+        frame->pointer.evt.type = AFX_EVT_NONE;
+        return;
+    }
+    if (!(sample[0].valid & TSLIB_MT_VALID))
+    {
+        frame->pointer.evt.type = AFX_EVT_NONE;
+        return;
+    }
+    frame->pointer.evt.data[0] = sample[0].x;
+    frame->pointer.evt.data[1] = sample[0].y;
+    if(sample[0].pressure > 0)
+    {
+        frame->pointer.evt.type = AFX_EVT_DOWN;
+    }
+    else
+    {
+        frame->pointer.evt.type = AFX_EVT_RELEASE;
+    }
+    last_type = frame->pointer.evt.type;
 }

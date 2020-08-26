@@ -10,6 +10,20 @@ AC_PROG_CC
 # libtool for linking
 # AC_PROG_LIBTOOL
 
+has_ts=no
+# check for lib antd
+AC_CHECK_HEADER([tslib.h],[
+    has_ts=yes
+    # check if the library exists
+],[
+    AC_MSG_ERROR([Unable to find ts header])
+])
+AC_CHECK_LIB([ts],[ts_setup],[],[
+    if test "$has_ts" = "yes"; then
+        AC_MSG_ERROR([Unable to find libts])
+    fi
+])
+
 # debug option
 AC_ARG_ENABLE([debug],
     [  --enable-debug    Turn on debugging],

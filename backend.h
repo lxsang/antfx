@@ -34,6 +34,7 @@ typedef struct{
 typedef struct{
     uint16_t width;
     uint16_t height;
+    uint32_t size;
     uint8_t bbp;
     int16_t xoffset;
     int16_t yoffset;
@@ -67,5 +68,5 @@ void display_update(engine_frame_t* frame);
 #endif
 void display_release(engine_frame_t*);
 
-void get_pointer_input(antfx_event_t* evt);
+void get_pointer_input(engine_frame_t*);
 #endif

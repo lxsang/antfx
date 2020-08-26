@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <time.h>
 #include <signal.h>
 static int ds_pipe_fd[2];
 static int pt_pipe_fd[2];
@@ -11,18 +12,18 @@ static int scr_h;
 static int scr_bbp;
 static pid_t pid;
 
-
-void display_init(engine_frame_t* frame, engine_config_t conf)
+void display_init(engine_frame_t *frame, engine_config_t conf)
 {
-    frame->size = conf.default_h*conf.default_w*(conf.defaut_bbp/8);
+    frame->size = conf.default_h * conf.default_w * (conf.defaut_bbp / 8);
     frame->width = conf.default_w;
     frame->height = conf.default_h;
     frame->bbp = conf.defaut_bbp;
     frame->xoffset = 0;
     frame->yoffset = 0;
-    frame->line_length = conf.default_w*(conf.defaut_bbp/8);
-    frame->buffer = (uint8_t*) malloc(frame->size);;
-    memset(frame->buffer, 0,frame->size);
+    frame->line_length = conf.default_w * (conf.defaut_bbp / 8);
+    frame->buffer = (uint8_t *)malloc(frame->size);
+    ;
+    memset(frame->buffer, 0, frame->size);
     scr_w = frame->width;
     scr_h = frame->height;
     scr_bbp = frame->bbp;
@@ -36,44 +37,45 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
         //dup2(outpipefd[0], STDIN_FILENO);
         //dup2(inpipefd[1], STDOUT_FILENO);
         //dup2(inpipefd[1], STDERR_FILENO);
-        int buff_size = scr_w*scr_h*(scr_bbp/8);
-        int line_length = scr_w*(scr_bbp/8);
+        int buff_size = scr_w * scr_h * (scr_bbp / 8);
+        int line_length = scr_w * (scr_bbp / 8);
         LOG("Buffsize is %d", buff_size);
-        uint8_t* buff = (uint8_t*)malloc(buff_size);
+        uint8_t *buff = (uint8_t *)malloc(buff_size);
         fd_set fd_in;
-        struct timeval timeout;      
+        struct timeval timeout;
         timeout.tv_sec = 0;
         timeout.tv_usec = 500;
         // create window
         static uint8_t __on = 0;
-        static SDL_Window * window = NULL;
-        static SDL_Renderer * renderer = NULL;
-        SDL_Texture * texture = NULL; 
+        static SDL_Window *window = NULL;
+        static SDL_Renderer *renderer = NULL;
+        SDL_Texture *texture = NULL;
         SDL_Event event;
         antfx_event_t pipe_data_out;
         pipe_data_out.data[0] = 0;
         pipe_data_out.data[1] = 0;
         SDL_Init(SDL_INIT_VIDEO);
         __on = 1;
-        window = SDL_CreateWindow("SDL2 engine",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, scr_w, scr_h, SDL_WINDOW_SHOWN);
-        if(!window) {
-            LOG("Error could not create window: %s\n",SDL_GetError());
-        return;
-        }
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        if(!renderer)
+        window = SDL_CreateWindow("SDL2 engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, scr_w, scr_h, SDL_WINDOW_SHOWN);
+        if (!window)
         {
-            LOG("Error could not create renderer: %s\n",SDL_GetError());
+            ERROR("Error could not create window: %s\n", SDL_GetError());
             return;
         }
-        if(scr_bbp == 32)
-            texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, scr_w, scr_h);
-        else
-            texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, scr_w, scr_h);
-        
-        if(!texture)
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        if (!renderer)
         {
-            LOG("Error could not create texture: %s\n",SDL_GetError());
+            ERROR("Error could not create renderer: %s\n", SDL_GetError());
+            return;
+        }
+        if (scr_bbp == 32)
+            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, scr_w, scr_h);
+        else
+            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, scr_w, scr_h);
+
+        if (!texture)
+        {
+            ERROR("Error could not create texture: %s\n", SDL_GetError());
             return;
         }
         LOG("engine init successful\n");
@@ -82,6 +84,7 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
             SDL_PollEvent(&event);
             if (event.type == SDL_QUIT)
             {
+                LOG("Quit event");
                 break;
             }
             else
@@ -90,24 +93,24 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
                 {
                 case SDL_MOUSEBUTTONDOWN:
                     pipe_data_out.type = AFX_EVT_DOWN;
-                    pipe_data_out.data[0] = (uint16_t) event.motion.x;
-                    pipe_data_out.data[1] = (uint16_t) event.motion.y;
-                    write(pt_pipe_fd[1], (uint8_t*)(&pipe_data_out), sizeof(pipe_data_out) );
+                    pipe_data_out.data[0] = (uint16_t)event.motion.x;
+                    pipe_data_out.data[1] = (uint16_t)event.motion.y;
+                    write(pt_pipe_fd[1], (uint8_t *)(&pipe_data_out), sizeof(pipe_data_out));
                     break;
 
                 case SDL_MOUSEBUTTONUP:
                     pipe_data_out.type = AFX_EVT_RELEASE;
-                    pipe_data_out.data[0] = (uint16_t) event.motion.x;
-                    pipe_data_out.data[1] = (uint16_t) event.motion.y;
-                    write(pt_pipe_fd[1], (uint8_t*)(&pipe_data_out), sizeof(pipe_data_out) );
+                    pipe_data_out.data[0] = (uint16_t)event.motion.x;
+                    pipe_data_out.data[1] = (uint16_t)event.motion.y;
+                    write(pt_pipe_fd[1], (uint8_t *)(&pipe_data_out), sizeof(pipe_data_out));
                     break;
                 case SDL_MOUSEMOTION:
-                    if(abs(event.motion.x - pipe_data_out.data[0]) > 5 || abs(event.motion.y - pipe_data_out.data[1]) > 5)
+                    if (abs(event.motion.x - pipe_data_out.data[0]) > 5 || abs(event.motion.y - pipe_data_out.data[1]) > 5)
                     {
                         pipe_data_out.type = AFX_EVT_MOVE;
-                        pipe_data_out.data[0] = (uint16_t) event.motion.x;
-                        pipe_data_out.data[1] = (uint16_t) event.motion.y;
-                        write(pt_pipe_fd[1], (uint8_t*)(&pipe_data_out), sizeof(pipe_data_out) );
+                        pipe_data_out.data[0] = (uint16_t)event.motion.x;
+                        pipe_data_out.data[1] = (uint16_t)event.motion.y;
+                        write(pt_pipe_fd[1], (uint8_t *)(&pipe_data_out), sizeof(pipe_data_out));
                     }
                     break;
 
@@ -118,32 +121,32 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
 
             FD_ZERO(&fd_in);
             FD_SET(ds_pipe_fd[0], &fd_in);
-            int rc = select(ds_pipe_fd[0]+1, &fd_in, NULL, NULL, &timeout);
-            if( FD_ISSET(ds_pipe_fd[0], &fd_in) )
+            int rc = select(ds_pipe_fd[0] + 1, &fd_in, NULL, NULL, &timeout);
+            if (FD_ISSET(ds_pipe_fd[0], &fd_in))
             {
                 int recv = 0;
-                while ((rc = read(ds_pipe_fd[0], buff + recv,buff_size-recv)) > 0)
+                while ((rc = read(ds_pipe_fd[0], buff + recv, buff_size - recv)) > 0)
                 {
                     recv += rc;
                 }
             }
             int stat;
             stat = SDL_UpdateTexture(texture, NULL, buff, line_length);
-            if(stat == -1)
+            if (stat == -1)
             {
-                LOG("Could not update texture: %s\n",SDL_GetError());
+                LOG("Could not update texture: %s\n", SDL_GetError());
                 break;
             }
             stat = SDL_RenderClear(renderer);
-            if(stat == -1)
+            if (stat == -1)
             {
-                LOG("Could not clear renderer: %s\n",SDL_GetError());
+                LOG("Could not clear renderer: %s\n", SDL_GetError());
                 break;
             }
             stat = SDL_RenderCopy(renderer, texture, NULL, NULL);
-            if(stat == -1)
+            if (stat == -1)
             {
-                LOG("Could not copy texture to renderer: %s\n",SDL_GetError());
+                LOG("Could not copy texture to renderer: %s\n", SDL_GetError());
                 break;
             }
             SDL_RenderPresent(renderer);
@@ -151,16 +154,16 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
             //sleep(1);
             nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
         }
-        if(texture)
+        if (texture)
             SDL_DestroyTexture(texture);
-        if(renderer)
+        if (renderer)
             SDL_DestroyRenderer(renderer);
-        if(window)
+        if (window)
             SDL_DestroyWindow(window);
-        if(__on)
+        if (__on)
             SDL_Quit();
         __on = 0;
-        if(buff)
+        if (buff)
             free(buff);
         _exit(1);
     }
@@ -170,38 +173,37 @@ void display_init(engine_frame_t* frame, engine_config_t conf)
     close(kb_pipe_fd[1]);
 }
 
-
-void display_update(engine_frame_t* frame)
+void display_update(engine_frame_t *frame)
 {
-    int rc = write(ds_pipe_fd[1], frame->buffer, frame->size);
+    UNUSED(write(ds_pipe_fd[1], frame->buffer, frame->size));
 }
 
-void display_release(engine_frame_t* frame)
+void display_release(engine_frame_t *frame)
 {
 
-    if(pid > 0)
-        kill(pid,SIGKILL);   
-    if(frame->buffer) free(frame->buffer);
+    if (pid > 0)
+        kill(pid, SIGKILL);
+    if (frame->buffer)
+        free(frame->buffer);
     frame->buffer = NULL;
-    LOG("Engine release successful\n");
+    LOG("Engine release successful");
 }
 
-
-void get_pointer_input(antfx_event_t* pdata)
+void get_pointer_input(engine_frame_t *screen)
 {
     fd_set fd_in;
-    struct timeval timeout;      
+    struct timeval timeout;
     timeout.tv_sec = 0;
     timeout.tv_usec = 10;
-    int size = sizeof(*pdata);
-    uint8_t* ptr = (uint8_t*)(pdata);
+    int size = sizeof(screen->pointer.evt);
+    uint8_t *ptr = (uint8_t *)(&screen->pointer.evt);
     FD_ZERO(&fd_in);
     FD_SET(pt_pipe_fd[0], &fd_in);
-    int rc = select(pt_pipe_fd[0]+1, &fd_in, NULL, NULL, &timeout);
-    if( FD_ISSET(pt_pipe_fd[0], &fd_in) )
+    int rc = select(pt_pipe_fd[0] + 1, &fd_in, NULL, NULL, &timeout);
+    if (FD_ISSET(pt_pipe_fd[0], &fd_in))
     {
         int recv = 0;
-        while (recv != size && (rc = read(pt_pipe_fd[0], ptr + recv,size-recv)) > 0)
+        while (recv != size && (rc = read(pt_pipe_fd[0], ptr + recv, size - recv)) > 0)
         {
             recv += rc;
         }
