@@ -13,7 +13,7 @@
 #define I2C_DELDEV_FILE "/sys/class/i2c-adapter/i2c-1/delete_device"
 #define I2C_NEWDEV_FILE "/sys/class/i2c-adapter/i2c-1/new_device"
 #define HW_CLOCK_ADDR 0x68
-#define FM_RADIO_CTL_ADDR 0x57
+#define FM_RADIO_CTL_ADDR 0x60
 
 static int running = 0;
 void stop(int sig)
@@ -23,7 +23,9 @@ void stop(int sig)
 }
 
 static void init_hw_clock();
-static void set_fm_freq(double f);
+static void fm_set_freq(double f);
+static void fm_mute();
+static double fm_get_freq();
 static void create_tab1(lv_obj_t *parent);
 static void create_tab2(lv_obj_t *parent);
 static void create_tab3(lv_obj_t *parent);
@@ -334,8 +336,8 @@ int main(int argc, char *argv[])
     init_hw_clock();
     // start display engine
     antfx_init(conf);
-    set_fm_freq(94.1); // RFM
-
+    fm_set_freq(102.8); // RFM
+    printf("Frequency is %f\n", fm_get_freq());
     /* Initialize and set a theme. `LV_THEME_NIGHT` needs to enabled in lv_conf.h. */
     lv_theme_t *th = lv_theme_night_init(20, NULL);
     lv_theme_set_current(th);
@@ -348,6 +350,7 @@ int main(int argc, char *argv[])
         lv_tick_inc(5);
         usleep(5000);
     }
+    fm_mute();
     antfx_release();
 }
 
@@ -360,7 +363,7 @@ static void init_hw_clock()
     if (fd != -1)
     {
         snprintf(buf, 32, "0x%02X", HW_CLOCK_ADDR);
-        UNUSED(write(fd, buf, strlen(buf)));
+        ret = write(fd, buf, strlen(buf));
         close(fd);
     }
     fd = open(I2C_NEWDEV_FILE, O_WRONLY);
@@ -370,7 +373,6 @@ static void init_hw_clock()
         return;
     }
     snprintf(buf, 32, "%s 0x%02X", "ds1307", HW_CLOCK_ADDR);
-    printf("command %s\n", buf);
     ret = write(fd, buf, strlen(buf));
     close(fd);
     if (ret != (int)strlen(buf))
@@ -386,11 +388,13 @@ static void init_hw_clock()
         return;
     }
 }
-static void set_fm_freq(double f)
+static void fm_set_freq(double f)
 {
     uint8_t radio[5] = {0};
     uint8_t freq_h = 0;
     uint8_t freq_l = 0;
+    int fd;
+    ssize_t ret;
     unsigned int freq_b;
     freq_b = 4 * (f * 1000000 + 225000) / 32768; //calculating PLL word
     freq_h = freq_b >> 8;
@@ -409,6 +413,71 @@ static void set_fm_freq(double f)
     {
         ERROR("error opening i2c channel");
     }
-    write(fd, radio, 5);
+    ret = write(fd, radio, 5);
+    if (ret == -1 || ret != 5)
+    {
+        ERROR("Unable to write i2c set freq command to radio control: %s", strerror(errno));
+    }
     close(fd);
+}
+static void fm_mute()
+{
+    uint8_t radio[5] = {0};
+    uint8_t freq_h = 0;
+    uint8_t freq_l = 0;
+    int fd;
+    ssize_t ret;
+    unsigned int freq_b;
+    double frequency = fm_get_freq();
+    if (frequency == -1)
+    {
+        return;
+    }
+    freq_b = 4 * (frequency * 1000000 + 225000) / 32768; //calculating PLL word
+    freq_h = freq_b >> 8;
+    freq_h = freq_h | 0x80; // mutes the radio
+    freq_l = freq_b & 0XFF;
+
+    //load the above into the array
+    radio[0] = freq_h; //FREQUENCY H
+    radio[1] = freq_l; //FREQUENCY L
+    radio[2] = 0xB0;       //3 byte (0xB0): high side LO injection is on,.
+    radio[3] = 0x10;       //4 byte (0x10) : Xtal is 32.768 kHz
+    radio[4] = 0x00;       //5 byte0x00)
+
+    if ((fd = wiringPiI2CSetup(FM_RADIO_CTL_ADDR)) < 0)
+    {
+        ERROR("error opening i2c channel");
+    }
+    ret = write(fd, radio, 5);
+    if (ret == -1 || ret != 5)
+    {
+        ERROR("Unable to write i2c mute command to radio control: %s", strerror(errno));
+    }
+    close(fd);
+}
+static double fm_get_freq()
+{
+    uint8_t radio[5] = {0};
+    ssize_t ret;
+    int fd;
+    double frequency;
+
+    if ((fd = wiringPiI2CSetup(FM_RADIO_CTL_ADDR)) < 0)
+    {
+        ERROR("error opening i2c channel");
+    }
+    ret = read(fd, radio, 5);
+    close(fd);
+    if (ret == -1 || ret != 5)
+    {
+        ERROR("Unable to read i2c command from radio control: %s", strerror(errno));
+        return -1;
+    }
+
+    frequency = ((((radio[0] & 0x3F) << 8) + radio[1]) * 32768 / 4 - 225000) / 10000;
+    frequency = round(frequency * 10.0) / 1000.0;
+    frequency = round(frequency * 10.0) / 10.0;
+
+    return frequency;
 }

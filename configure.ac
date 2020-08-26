@@ -24,6 +24,10 @@ AC_CHECK_LIB([ts],[ts_setup],[],[
     fi
 ])
 
+AC_CHECK_LIB([m],[round],[],[
+    AC_MSG_ERROR([Unable to find libts])
+])
+
 has_wpi=no
 # check for lib antd
 AC_CHECK_HEADER([wiringPiI2C.h],[
