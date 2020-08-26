@@ -11,7 +11,7 @@ EXTRA_DIST = README.md
 bin_PROGRAMS = antfx
 # lib source files
 antfx_SOURCES = antfxapp.c  antfx.c
-antfx_CPPFLAGS=-I./lib/
+antfx_CPPFLAGS=-I$(srcdir)/lib
 
 if USE_SDL2
 antfx_SOURCES += backends/sdl2_engine.c

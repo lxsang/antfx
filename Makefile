@@ -593,7 +593,7 @@ antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
 	lib/liblv/lv_themes/lv_theme_material.c \
 	lib/liblv/lv_themes/lv_theme_nemo.c \
 	lib/liblv/lv_themes/lv_theme_mono.c
-antfx_CPPFLAGS = -I./lib/
+antfx_CPPFLAGS = -I$(srcdir)/lib
 all: all-am
 
 .SUFFIXES:
