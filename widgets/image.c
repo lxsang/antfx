@@ -5,13 +5,14 @@
 int read_bitmap_file(const char* file, afx_bitmap_t* bmp)
 {
     uint8_t header[14];
+    int ret;
     FILE *fp;  
     bmp->loaded = 0;
     fp = fopen(file,"rb");
     if (fp == NULL)
         return 0;
 
-    fread(header, 14,1,fp);
+    ret = fread(header, 14,1,fp);
     
     if(*((uint16_t*)header) !=0x4D42)
     {
@@ -21,7 +22,7 @@ int read_bitmap_file(const char* file, afx_bitmap_t* bmp)
     }
 
     //read the bitmap info header
-    fread(&bmp->header, sizeof(afx_bitmap_tag_t),1,fp); 
+    ret = fread(&bmp->header, sizeof(afx_bitmap_tag_t),1,fp); 
 
     //move file point to the begging of bitmap data
     //LOG("data offset is %d\n",*((uint32_t*)(header+10)));
@@ -38,7 +39,7 @@ int read_bitmap_file(const char* file, afx_bitmap_t* bmp)
     }
 
     //read in the bitmap image data
-    fread(bmp->data,bmp->header.size,1,fp);
+    ret = fread(bmp->data,bmp->header.size,1,fp);
 
 
     //swap the r and b values to get RGB (bitmap is BGR)

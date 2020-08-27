@@ -1,5 +1,12 @@
 #ifndef LOG_H
 #define LOG_H
+#ifdef LOG
+#undef LOG
+#endif
+
+#ifdef ERROR
+#undef ERROR
+#endif
 
 #include <syslog.h>
 

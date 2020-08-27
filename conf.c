@@ -37,6 +37,14 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         config->i2c_hw_radio_addr = (unsigned int)strtol(value, NULL, 0);
     }
+    else if (EQU(section, "hardware") && EQU(name, "ts_calibrate_cmd"))
+    {
+        strncpy(config->ts_calibrate_cmd,value, MAX_CONF_SIZE);
+    }
+    else if (EQU(section, "hardware") && EQU(name, "ts_calibrate_file"))
+    {
+        strncpy(config->ts_calibrate_file,value, MAX_CONF_SIZE);
+    }
     else if (EQU(section, "weather") && EQU(name, "location"))
     {
         strncpy(config->location,value, MAX_CONF_SIZE);
@@ -57,19 +65,6 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         ERROR("Unknow config: [%s] %s = %s", section, name, value);
     }
-
-    printf("Configuration: \n");
-    printf("db %s\n", config->db_path);
-    printf("fb %s\n", config->fb_dev);
-    printf("d %s\n", config->i2c_dev_del);
-    printf("n %s\n", config->i2c_dev_new);
-    printf("clock %d\n", config->i2c_hw_clock_addr);
-    printf("radio %d\n", config->i2c_hw_radio_addr);
-    printf("loc %s\n", config->location);
-    printf("start %s\n", config->startup_cmd);
-    printf("ts %s\n", config->ts_dev);
-    printf("wuri %s\n", config->weather_api_uri);
-    printf("wperiod %d\n", config->weather_check_period);
     return 1;
 }
 

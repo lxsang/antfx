@@ -10,6 +10,8 @@ typedef struct
     char ts_dev[MAX_CONF_SIZE];
     char i2c_dev_del[MAX_CONF_SIZE];
     char i2c_dev_new[MAX_CONF_SIZE];
+    char ts_calibrate_cmd[MAX_CONF_SIZE];
+    char ts_calibrate_file[MAX_CONF_SIZE];
     unsigned int i2c_hw_clock_addr;
     unsigned int i2c_hw_radio_addr;
     char location[MAX_CONF_SIZE];

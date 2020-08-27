@@ -11,15 +11,14 @@
 #include <pthread.h>
 #include <curl/curl.h>
 #include <regex.h>
+#include <antd/utils.h>
 #include "conf.h"
 #include "gui.h"
 
 #define MAX_CURL_PAGE_LENGTH 2048
 
-
 static int running = 0;
 static antfx_conf_t g_config;
-
 
 void stop(int sig)
 {
@@ -33,10 +32,7 @@ static void fm_mute();
 static double fm_get_freq();
 static void weather_update();
 static void *weather_thread_handler(void *data);
-static int regex_match(const char *expr, const char *search, int msize, regmatch_t *matches);
 static size_t curl_callback(void *ptr, size_t size, size_t nmemb, void *buff);
-
-
 
 static size_t curl_callback(void *ptr, size_t size, size_t nmemb, void *stream)
 {
@@ -52,45 +48,6 @@ static size_t curl_callback(void *ptr, size_t size, size_t nmemb, void *stream)
     (void)memcpy(buffer + strlen(buffer), ptr, dlen);
     buffer[total_len] = '\0';
     return total_len;
-}
-
-static int regex_match(const char *expr, const char *search, int msize, regmatch_t *matches)
-{
-    regex_t regex;
-    int reti;
-    char msgbuf[100];
-    int ret;
-    /* Compile regular expression */
-    reti = regcomp(&regex, expr, REG_ICASE | REG_EXTENDED);
-    if (reti)
-    {
-        //ERROR("Could not compile regex: %s",expr);
-        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
-        ERROR("Regex match failed: %s", msgbuf);
-        //return 0;
-    }
-
-    /* Execute regular expression */
-    reti = regexec(&regex, search, msize, matches, 0);
-    if (!reti)
-    {
-        //LOG("Match");
-        ret = 1;
-    }
-    else if (reti == REG_NOMATCH)
-    {
-        //LOG("No match");
-        ret = 0;
-    }
-    else
-    {
-        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
-        ERROR("Regex match failed: %s", msgbuf);
-        ret = 0;
-    }
-
-    regfree(&regex);
-    return ret;
 }
 
 static void *weather_thread_handler(void *data)
@@ -153,7 +110,6 @@ static void *weather_thread_handler(void *data)
     LOG("Icon: '%s'", x_text);
     // show icon
     antfx_ui_update_weather_icon(x_text);
-    
 }
 static void weather_update()
 {
@@ -171,7 +127,6 @@ static void weather_update()
     }
 }
 
-
 int main(int argc, char *argv[])
 {
     engine_config_t conf;
@@ -182,10 +137,10 @@ int main(int argc, char *argv[])
     signal(SIGTERM, stop);
     int ret;
 
-    if(argc == 2)
+    if (argc == 2)
     {
         ret = antfx_read_config(argv[1], &g_config);
-        if(ret == -1)
+        if (ret == -1)
         {
             LOG("Unable to read config file: %s. Try to read default config file: %s", argv[1], DEFAULT_CONF);
             ret = antfx_read_config(DEFAULT_CONF, &g_config);
@@ -196,11 +151,34 @@ int main(int argc, char *argv[])
         ret = antfx_read_config(DEFAULT_CONF, &g_config);
     }
 
-    if(ret == -1)
+    if (ret == -1)
     {
         ERROR("Unable to read config file. Quit.");
         exit(1);
     }
+    // verify if we should calibrate the display
+    if (!is_file(g_config.ts_calibrate_file))
+    {
+        ret = system(g_config.ts_calibrate_cmd);
+        if (ret != -1 && WEXITSTATUS(ret) != 127)
+        {
+            ret = open(g_config.ts_calibrate_file, O_WRONLY);
+            if(ret != -1)
+            {
+                close(ret);
+            }
+            else
+            {
+                ERROR("Unable to create calibarion file: %s", g_config.ts_calibrate_file);
+            }
+        }
+        else
+        {
+            ERROR("Unable to calibrate screen, touch may not be used: %s", g_config.ts_calibrate_cmd);
+        }
+        
+    }
+    // init the display
     conf.default_w = 480;
     conf.default_h = 320;
     conf.defaut_bbp = 16;
