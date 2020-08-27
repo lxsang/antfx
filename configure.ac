@@ -10,36 +10,24 @@ AC_PROG_CC
 # libtool for linking
 # AC_PROG_LIBTOOL
 
-has_ts=no
 # check for lib antd
-AC_CHECK_HEADER([tslib.h],[
-    has_ts=yes
-    # check if the library exists
-],[
+AC_CHECK_HEADER([tslib.h],[],[
     AC_MSG_ERROR([Unable to find ts header])
 ])
 AC_CHECK_LIB([ts],[ts_setup],[],[
-    if test "$has_ts" = "yes"; then
-        AC_MSG_ERROR([Unable to find libts])
-    fi
+    AC_MSG_ERROR([Unable to find libts])
 ])
 
 AC_CHECK_LIB([m],[round],[],[
     AC_MSG_ERROR([Unable to find libts])
 ])
 
-has_wpi=no
 # check for lib antd
-AC_CHECK_HEADER([wiringPiI2C.h],[
-    has_wpi=yes
-    # check if the library exists
-],[
+AC_CHECK_HEADER([wiringPiI2C.h],[],[
     AC_MSG_ERROR([Unable to find wiringPi header])
 ])
 AC_CHECK_LIB([wiringPi],[wiringPiI2CSetup],[],[
-    if test "$has_wpi" = "yes"; then
-        AC_MSG_ERROR([Unable to find libwringPi])
-    fi
+    AC_MSG_ERROR([Unable to find libwringPi])
 ])
 
 
@@ -58,6 +46,15 @@ AC_CHECK_HEADER([pthread.h],[],[
 AC_CHECK_LIB([pthread],[pthread_create],[],[
         AC_MSG_ERROR([Unable to find libpthread])
 ])
+
+AC_CHECK_HEADER([antd/dbhelper.h],[],[
+    AC_MSG_ERROR([Unable to find antd lib header])
+])
+
+AC_CHECK_LIB([antd],[dbquery],[],[
+        AC_MSG_ERROR([Unable to find libantd])
+])
+
 # debug option
 AC_ARG_ENABLE([debug],
     [  --enable-debug    Turn on debugging],

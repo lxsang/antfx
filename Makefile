@@ -106,14 +106,14 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
-	backends/fb_engine.c widgets/image.c widgets/default_wp.c \
-	widgets/icons/radio.c widgets/icons/alarm.c \
-	widgets/icons/calendar.c widgets/icons/camera.c \
-	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
-	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
-	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
-	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
-	widgets/icons/w13d.c widgets/icons/w50d.c \
+	backends/fb_engine.c gui.c conf.c widgets/image.c \
+	widgets/default_wp.c widgets/icons/radio.c \
+	widgets/icons/alarm.c widgets/icons/calendar.c \
+	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
+	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
+	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
+	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
+	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -171,8 +171,8 @@ am__dirstamp = $(am__leading_dot)dirstamp
 #am__objects_1 = backends/antfx-sdl2_engine.$(OBJEXT)
 am__objects_2 = backends/antfx-fb_engine.$(OBJEXT)
 am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
-	$(am__objects_1) $(am__objects_2) \
-	widgets/antfx-image.$(OBJEXT) \
+	$(am__objects_1) $(am__objects_2) antfx-gui.$(OBJEXT) \
+	antfx-conf.$(OBJEXT) widgets/antfx-image.$(OBJEXT) \
 	widgets/antfx-default_wp.$(OBJEXT) \
 	widgets/icons/antfx-radio.$(OBJEXT) \
 	widgets/icons/antfx-alarm.$(OBJEXT) \
@@ -293,8 +293,8 @@ DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
-	./$(DEPDIR)/antfx-antfxapp.Po \
-	backends/$(DEPDIR)/antfx-fb_engine.Po \
+	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-conf.Po \
+	./$(DEPDIR)/antfx-gui.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po \
@@ -476,7 +476,7 @@ CFLAGS =  -O2 -pipe -g -feliminate-unused-debug-types
 CPP = arm-poky-linux-gnueabi-gcc -E  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -D_GNU_SOURCE=1 -DLINUX=1
+DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -DHAVE_LIBANTD=1 -D_GNU_SOURCE=1 -DLINUX=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
@@ -491,7 +491,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed -Wl,-z,relro,-z,now
 LIBOBJS = 
-LIBS = -lpthread -lcurl -lwiringPi -lm -lts 
+LIBS = -lantd -lpthread -lcurl -lwiringPi -lm -lts 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/mrsang/workspace/antfx/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
@@ -562,16 +562,17 @@ AUTOMAKE_OPTIONS = foreign
 AM_CPPFLAGS = -W  -Wall -g -std=c99
 
 # SUBDIRS =  lib/ .
-EXTRA_DIST = README.md
+EXTRA_DIST = README.md LICENSE ./*.h widgets/*.h lib/lvgl.h lib/liblv/* config.ini
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
-	widgets/image.c widgets/default_wp.c widgets/icons/radio.c \
-	widgets/icons/alarm.c widgets/icons/calendar.c \
-	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
-	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
-	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
-	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
-	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
+	gui.c conf.c widgets/image.c widgets/default_wp.c \
+	widgets/icons/radio.c widgets/icons/alarm.c \
+	widgets/icons/calendar.c widgets/icons/camera.c \
+	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
+	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
+	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
+	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
+	widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -1090,6 +1091,8 @@ distclean-compile:
 
 include ./$(DEPDIR)/antfx-antfx.Po # am--include-marker
 include ./$(DEPDIR)/antfx-antfxapp.Po # am--include-marker
+include ./$(DEPDIR)/antfx-conf.Po # am--include-marker
+include ./$(DEPDIR)/antfx-gui.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-fb_engine.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-sdl2_engine.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po # am--include-marker
@@ -1273,6 +1276,34 @@ backends/antfx-fb_engine.obj: backends/fb_engine.c
 #	$(AM_V_CC)source='backends/fb_engine.c' object='backends/antfx-fb_engine.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backends/antfx-fb_engine.obj `if test -f 'backends/fb_engine.c'; then $(CYGPATH_W) 'backends/fb_engine.c'; else $(CYGPATH_W) '$(srcdir)/backends/fb_engine.c'; fi`
+
+antfx-gui.o: gui.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-gui.o -MD -MP -MF $(DEPDIR)/antfx-gui.Tpo -c -o antfx-gui.o `test -f 'gui.c' || echo '$(srcdir)/'`gui.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-gui.Tpo $(DEPDIR)/antfx-gui.Po
+#	$(AM_V_CC)source='gui.c' object='antfx-gui.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-gui.o `test -f 'gui.c' || echo '$(srcdir)/'`gui.c
+
+antfx-gui.obj: gui.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-gui.obj -MD -MP -MF $(DEPDIR)/antfx-gui.Tpo -c -o antfx-gui.obj `if test -f 'gui.c'; then $(CYGPATH_W) 'gui.c'; else $(CYGPATH_W) '$(srcdir)/gui.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-gui.Tpo $(DEPDIR)/antfx-gui.Po
+#	$(AM_V_CC)source='gui.c' object='antfx-gui.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-gui.obj `if test -f 'gui.c'; then $(CYGPATH_W) 'gui.c'; else $(CYGPATH_W) '$(srcdir)/gui.c'; fi`
+
+antfx-conf.o: conf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-conf.o -MD -MP -MF $(DEPDIR)/antfx-conf.Tpo -c -o antfx-conf.o `test -f 'conf.c' || echo '$(srcdir)/'`conf.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-conf.Tpo $(DEPDIR)/antfx-conf.Po
+#	$(AM_V_CC)source='conf.c' object='antfx-conf.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-conf.o `test -f 'conf.c' || echo '$(srcdir)/'`conf.c
+
+antfx-conf.obj: conf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-conf.obj -MD -MP -MF $(DEPDIR)/antfx-conf.Tpo -c -o antfx-conf.obj `if test -f 'conf.c'; then $(CYGPATH_W) 'conf.c'; else $(CYGPATH_W) '$(srcdir)/conf.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-conf.Tpo $(DEPDIR)/antfx-conf.Po
+#	$(AM_V_CC)source='conf.c' object='antfx-conf.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-conf.obj `if test -f 'conf.c'; then $(CYGPATH_W) 'conf.c'; else $(CYGPATH_W) '$(srcdir)/conf.c'; fi`
 
 widgets/antfx-image.o: widgets/image.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/antfx-image.o -MD -MP -MF widgets/$(DEPDIR)/antfx-image.Tpo -c -o widgets/antfx-image.o `test -f 'widgets/image.c' || echo '$(srcdir)/'`widgets/image.c
@@ -3014,6 +3045,8 @@ distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-conf.Po
+	-rm -f ./$(DEPDIR)/antfx-gui.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
@@ -3168,6 +3201,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-conf.Po
+	-rm -f ./$(DEPDIR)/antfx-gui.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
