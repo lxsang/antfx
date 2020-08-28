@@ -5,7 +5,14 @@ AM_CPPFLAGS = -W  -Wall -g -std=c99
 # SUBDIRS =  lib/ .
 
 
-EXTRA_DIST = README.md LICENSE ./*.h widgets/*.h lib/lvgl.h lib/liblv/* config.ini
+EXTRA_DIST =    README.md \
+                LICENSE \
+                ./*.h \
+                widgets/*.h \
+                lib/lvgl.h \
+                lib/liblv/* \
+                config.ini \
+                lib/ini/ini.h
 
 # bin
 bin_PROGRAMS = antfx
@@ -20,8 +27,12 @@ antfx_SOURCES += backends/fb_engine.c
 endif
 
 antfx_SOURCES +=    gui.c \
-                    conf.c
-                    
+                    conf.c \
+                    db.c \
+                    utils.c \
+                    hw.c \
+                    lib/ini/ini.c
+
 antfx_SOURCES +=    widgets/image.c \
                     widgets/default_wp.c \
                     widgets/icons/radio.c \

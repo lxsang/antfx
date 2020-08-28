@@ -1,9 +1,10 @@
-#include <antd/ini.h>
-#include <antd/utils.h>
 #include <string.h>
-#include <stdlib.h> 
+#include <stdlib.h>
+#include "ini/ini.h"
 #include "conf.h"
 #include "log.h"
+
+#define EQU(a,b) (strcmp(a,b) == 0)
 
 static int ini_handle(void *user_data, const char *section, const char *name,
                       const char *value)

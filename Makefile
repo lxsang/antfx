@@ -106,14 +106,15 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
-	backends/fb_engine.c gui.c conf.c widgets/image.c \
-	widgets/default_wp.c widgets/icons/radio.c \
-	widgets/icons/alarm.c widgets/icons/calendar.c \
-	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
-	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
-	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
-	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
-	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
+	backends/fb_engine.c gui.c conf.c db.c utils.c hw.c \
+	lib/ini/ini.c widgets/image.c widgets/default_wp.c \
+	widgets/icons/radio.c widgets/icons/alarm.c \
+	widgets/icons/calendar.c widgets/icons/camera.c \
+	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
+	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
+	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
+	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
+	widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -172,7 +173,9 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_2 = backends/antfx-fb_engine.$(OBJEXT)
 am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	$(am__objects_1) $(am__objects_2) antfx-gui.$(OBJEXT) \
-	antfx-conf.$(OBJEXT) widgets/antfx-image.$(OBJEXT) \
+	antfx-conf.$(OBJEXT) antfx-db.$(OBJEXT) antfx-utils.$(OBJEXT) \
+	antfx-hw.$(OBJEXT) lib/ini/antfx-ini.$(OBJEXT) \
+	widgets/antfx-image.$(OBJEXT) \
 	widgets/antfx-default_wp.$(OBJEXT) \
 	widgets/icons/antfx-radio.$(OBJEXT) \
 	widgets/icons/antfx-alarm.$(OBJEXT) \
@@ -294,8 +297,11 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-conf.Po \
-	./$(DEPDIR)/antfx-gui.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
+	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
+	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-utils.Po \
+	backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
+	lib/ini/$(DEPDIR)/antfx-ini.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po \
@@ -476,7 +482,7 @@ CFLAGS =  -O2 -pipe -g -feliminate-unused-debug-types
 CPP = arm-poky-linux-gnueabi-gcc -E  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -DHAVE_LIBANTD=1 -D_GNU_SOURCE=1 -DLINUX=1
+DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -DHAVE_LIBSQLITE3=1 -D_GNU_SOURCE=1 -DLINUX=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
@@ -491,7 +497,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed -Wl,-z,relro,-z,now
 LIBOBJS = 
-LIBS = -lantd -lpthread -lcurl -lwiringPi -lm -lts 
+LIBS = -lsqlite3 -lpthread -lcurl -lwiringPi -lm -lts 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/mrsang/workspace/antfx/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
@@ -562,17 +568,25 @@ AUTOMAKE_OPTIONS = foreign
 AM_CPPFLAGS = -W  -Wall -g -std=c99
 
 # SUBDIRS =  lib/ .
-EXTRA_DIST = README.md LICENSE ./*.h widgets/*.h lib/lvgl.h lib/liblv/* config.ini
+EXTRA_DIST = README.md \
+                LICENSE \
+                ./*.h \
+                widgets/*.h \
+                lib/lvgl.h \
+                lib/liblv/* \
+                config.ini \
+                lib/ini/ini.h
+
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
-	gui.c conf.c widgets/image.c widgets/default_wp.c \
-	widgets/icons/radio.c widgets/icons/alarm.c \
-	widgets/icons/calendar.c widgets/icons/camera.c \
-	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
-	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
-	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
-	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
-	widgets/icons/w13d.c widgets/icons/w50d.c \
+	gui.c conf.c db.c utils.c hw.c lib/ini/ini.c widgets/image.c \
+	widgets/default_wp.c widgets/icons/radio.c \
+	widgets/icons/alarm.c widgets/icons/calendar.c \
+	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
+	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
+	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
+	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
+	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -716,6 +730,14 @@ backends/antfx-sdl2_engine.$(OBJEXT): backends/$(am__dirstamp) \
 	backends/$(DEPDIR)/$(am__dirstamp)
 backends/antfx-fb_engine.$(OBJEXT): backends/$(am__dirstamp) \
 	backends/$(DEPDIR)/$(am__dirstamp)
+lib/ini/$(am__dirstamp):
+	@$(MKDIR_P) lib/ini
+	@: > lib/ini/$(am__dirstamp)
+lib/ini/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/ini/$(DEPDIR)
+	@: > lib/ini/$(DEPDIR)/$(am__dirstamp)
+lib/ini/antfx-ini.$(OBJEXT): lib/ini/$(am__dirstamp) \
+	lib/ini/$(DEPDIR)/$(am__dirstamp)
 widgets/$(am__dirstamp):
 	@$(MKDIR_P) widgets
 	@: > widgets/$(am__dirstamp)
@@ -1075,6 +1097,7 @@ antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIE
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f backends/*.$(OBJEXT)
+	-rm -f lib/ini/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_core/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_draw/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_font/*.$(OBJEXT)
@@ -1092,9 +1115,13 @@ distclean-compile:
 include ./$(DEPDIR)/antfx-antfx.Po # am--include-marker
 include ./$(DEPDIR)/antfx-antfxapp.Po # am--include-marker
 include ./$(DEPDIR)/antfx-conf.Po # am--include-marker
+include ./$(DEPDIR)/antfx-db.Po # am--include-marker
 include ./$(DEPDIR)/antfx-gui.Po # am--include-marker
+include ./$(DEPDIR)/antfx-hw.Po # am--include-marker
+include ./$(DEPDIR)/antfx-utils.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-fb_engine.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-sdl2_engine.Po # am--include-marker
+include lib/ini/$(DEPDIR)/antfx-ini.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po # am--include-marker
@@ -1304,6 +1331,62 @@ antfx-conf.obj: conf.c
 #	$(AM_V_CC)source='conf.c' object='antfx-conf.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-conf.obj `if test -f 'conf.c'; then $(CYGPATH_W) 'conf.c'; else $(CYGPATH_W) '$(srcdir)/conf.c'; fi`
+
+antfx-db.o: db.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-db.o -MD -MP -MF $(DEPDIR)/antfx-db.Tpo -c -o antfx-db.o `test -f 'db.c' || echo '$(srcdir)/'`db.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-db.Tpo $(DEPDIR)/antfx-db.Po
+#	$(AM_V_CC)source='db.c' object='antfx-db.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-db.o `test -f 'db.c' || echo '$(srcdir)/'`db.c
+
+antfx-db.obj: db.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-db.obj -MD -MP -MF $(DEPDIR)/antfx-db.Tpo -c -o antfx-db.obj `if test -f 'db.c'; then $(CYGPATH_W) 'db.c'; else $(CYGPATH_W) '$(srcdir)/db.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-db.Tpo $(DEPDIR)/antfx-db.Po
+#	$(AM_V_CC)source='db.c' object='antfx-db.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-db.obj `if test -f 'db.c'; then $(CYGPATH_W) 'db.c'; else $(CYGPATH_W) '$(srcdir)/db.c'; fi`
+
+antfx-utils.o: utils.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-utils.o -MD -MP -MF $(DEPDIR)/antfx-utils.Tpo -c -o antfx-utils.o `test -f 'utils.c' || echo '$(srcdir)/'`utils.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-utils.Tpo $(DEPDIR)/antfx-utils.Po
+#	$(AM_V_CC)source='utils.c' object='antfx-utils.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-utils.o `test -f 'utils.c' || echo '$(srcdir)/'`utils.c
+
+antfx-utils.obj: utils.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-utils.obj -MD -MP -MF $(DEPDIR)/antfx-utils.Tpo -c -o antfx-utils.obj `if test -f 'utils.c'; then $(CYGPATH_W) 'utils.c'; else $(CYGPATH_W) '$(srcdir)/utils.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-utils.Tpo $(DEPDIR)/antfx-utils.Po
+#	$(AM_V_CC)source='utils.c' object='antfx-utils.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-utils.obj `if test -f 'utils.c'; then $(CYGPATH_W) 'utils.c'; else $(CYGPATH_W) '$(srcdir)/utils.c'; fi`
+
+antfx-hw.o: hw.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-hw.o -MD -MP -MF $(DEPDIR)/antfx-hw.Tpo -c -o antfx-hw.o `test -f 'hw.c' || echo '$(srcdir)/'`hw.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-hw.Tpo $(DEPDIR)/antfx-hw.Po
+#	$(AM_V_CC)source='hw.c' object='antfx-hw.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-hw.o `test -f 'hw.c' || echo '$(srcdir)/'`hw.c
+
+antfx-hw.obj: hw.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-hw.obj -MD -MP -MF $(DEPDIR)/antfx-hw.Tpo -c -o antfx-hw.obj `if test -f 'hw.c'; then $(CYGPATH_W) 'hw.c'; else $(CYGPATH_W) '$(srcdir)/hw.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-hw.Tpo $(DEPDIR)/antfx-hw.Po
+#	$(AM_V_CC)source='hw.c' object='antfx-hw.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-hw.obj `if test -f 'hw.c'; then $(CYGPATH_W) 'hw.c'; else $(CYGPATH_W) '$(srcdir)/hw.c'; fi`
+
+lib/ini/antfx-ini.o: lib/ini/ini.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/ini/antfx-ini.o -MD -MP -MF lib/ini/$(DEPDIR)/antfx-ini.Tpo -c -o lib/ini/antfx-ini.o `test -f 'lib/ini/ini.c' || echo '$(srcdir)/'`lib/ini/ini.c
+	$(AM_V_at)$(am__mv) lib/ini/$(DEPDIR)/antfx-ini.Tpo lib/ini/$(DEPDIR)/antfx-ini.Po
+#	$(AM_V_CC)source='lib/ini/ini.c' object='lib/ini/antfx-ini.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/ini/antfx-ini.o `test -f 'lib/ini/ini.c' || echo '$(srcdir)/'`lib/ini/ini.c
+
+lib/ini/antfx-ini.obj: lib/ini/ini.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/ini/antfx-ini.obj -MD -MP -MF lib/ini/$(DEPDIR)/antfx-ini.Tpo -c -o lib/ini/antfx-ini.obj `if test -f 'lib/ini/ini.c'; then $(CYGPATH_W) 'lib/ini/ini.c'; else $(CYGPATH_W) '$(srcdir)/lib/ini/ini.c'; fi`
+	$(AM_V_at)$(am__mv) lib/ini/$(DEPDIR)/antfx-ini.Tpo lib/ini/$(DEPDIR)/antfx-ini.Po
+#	$(AM_V_CC)source='lib/ini/ini.c' object='lib/ini/antfx-ini.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/ini/antfx-ini.obj `if test -f 'lib/ini/ini.c'; then $(CYGPATH_W) 'lib/ini/ini.c'; else $(CYGPATH_W) '$(srcdir)/lib/ini/ini.c'; fi`
 
 widgets/antfx-image.o: widgets/image.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/antfx-image.o -MD -MP -MF widgets/$(DEPDIR)/antfx-image.Tpo -c -o widgets/antfx-image.o `test -f 'widgets/image.c' || echo '$(srcdir)/'`widgets/image.c
@@ -3013,6 +3096,8 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f backends/$(DEPDIR)/$(am__dirstamp)
 	-rm -f backends/$(am__dirstamp)
+	-rm -f lib/ini/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/ini/$(am__dirstamp)
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lib/liblv/lv_core/$(am__dirstamp)
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
@@ -3046,9 +3131,13 @@ distclean: distclean-am
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
+	-rm -f ./$(DEPDIR)/antfx-db.Po
 	-rm -f ./$(DEPDIR)/antfx-gui.Po
+	-rm -f ./$(DEPDIR)/antfx-hw.Po
+	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
+	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
@@ -3202,9 +3291,13 @@ maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
+	-rm -f ./$(DEPDIR)/antfx-db.Po
 	-rm -f ./$(DEPDIR)/antfx-gui.Po
+	-rm -f ./$(DEPDIR)/antfx-hw.Po
+	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
+	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po

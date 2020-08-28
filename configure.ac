@@ -47,12 +47,12 @@ AC_CHECK_LIB([pthread],[pthread_create],[],[
         AC_MSG_ERROR([Unable to find libpthread])
 ])
 
-AC_CHECK_HEADER([antd/dbhelper.h],[],[
-    AC_MSG_ERROR([Unable to find antd lib header])
+AC_CHECK_HEADER([sqlite3.h],[],[
+    AC_MSG_ERROR([Unable to find sqlite3 lib header])
 ])
 
-AC_CHECK_LIB([antd],[dbquery],[],[
-        AC_MSG_ERROR([Unable to find libantd])
+AC_CHECK_LIB([sqlite3],[sqlite3_open],[],[
+        AC_MSG_ERROR([Unable to find libsqlite3])
 ])
 
 # debug option

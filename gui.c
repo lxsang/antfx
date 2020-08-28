@@ -1,5 +1,29 @@
 #include <time.h>
 #include "gui.h"
+#include "db.h"
+#include "hw.h"
+
+#define MAX_FIELD_SIZE 255
+typedef struct
+{
+    char field_1[MAX_FIELD_SIZE];
+    char field_2[MAX_FIELD_SIZE];
+    char field_3[MAX_FIELD_SIZE];
+    char field_4[MAX_FIELD_SIZE];
+    char field_5[MAX_FIELD_SIZE];
+} antfx_ui_form_data_t;
+
+typedef struct
+{
+    lv_obj_t *lbl_time;
+    lv_obj_t *lbl_date;
+    lv_obj_t *lbl_weather;
+    lv_obj_t *lbl_status;
+    lv_obj_t *lbl_location;
+    lv_obj_t *lbl_weather_img;
+    lv_obj_t *keyboard;
+    antfx_ui_form_data_t fields;
+} antfx_screen_info_t;
 
 LV_IMG_DECLARE(default_wp);
 LV_IMG_DECLARE(radio);
@@ -22,50 +46,19 @@ LV_FONT_DECLARE(roboto_bold_50);
 
 static antfx_screen_info_t g_scr_info;
 
-void antfx_ui_close_popup(lv_obj_t *obj, lv_event_t event)
-{
-    lv_obj_t *parent = lv_obj_get_parent(obj);
-    if (event == LV_EVENT_RELEASED)
-    {
-        lv_obj_del(parent);
-    }
-}
-void antfx_ui_show_calendar(lv_obj_t *obj, lv_event_t event)
-{
-    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
-
-    if (event == LV_EVENT_CLICKED)
-    {
-        lv_obj_t *win = lv_cont_create(scr, NULL);
-        lv_cont_set_layout(win, LV_LAYOUT_OFF);
-        lv_style_t *style = (lv_style_t *)lv_obj_get_style(win);
-        style->body.opa = LV_OPA_60;
-
-        //lv_obj_set_event_cb(win_btn, lv_win_close_event_cb);
-        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
-        lv_obj_t *cal = lv_calendar_create(win, NULL);
-        lv_obj_set_size(cal, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
-        /*Set today's date*/
-        time_t t = time(NULL);
-        struct tm tm = *localtime(&t);
-        lv_calendar_date_t today;
-        today.year = tm.tm_year + 1900;
-        today.month = tm.tm_mon + 1;
-        today.day = tm.tm_mday;
-
-        lv_calendar_set_today_date(cal, &today);
-        lv_calendar_set_showed_date(cal, &today);
-
-        lv_obj_t *btn = lv_btn_create(win, NULL);
-        lv_obj_set_size(btn, 32, 32);
-        lv_obj_set_pos(btn, lv_disp_get_hor_res(NULL) - 80, 3);
-
-        lv_img_set_src(lv_img_create(btn, NULL), LV_SYMBOL_CLOSE);
-        lv_obj_set_event_cb(btn, antfx_ui_close_popup);
-
-        lv_obj_set_top(win, true);
-    }
-}
+static void antfx_ui_show_calendar(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_close_popup(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_attach_keyboard(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_attach_numpad(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_fm_list_refresh(lv_obj_t *list);
+static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list);
+static void antfx_ui_fm_item_action(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_alert(const char *);
 
 void antfx_ui_update_datetime()
 {
@@ -142,12 +135,12 @@ void antfx_ui_update_weather_icon(const char *x_text)
     }
 }
 
-void antfx_ui_update_status(const char* text)
+void antfx_ui_update_status(const char *text)
 {
     lv_label_set_text(g_scr_info.lbl_status, text);
 }
 
-void antfx_ui_main( engine_config_t conf)
+void antfx_ui_main(engine_config_t conf)
 {
     antfx_init(conf);
     /* Initialize and set a theme. `LV_THEME_NIGHT` needs to enabled in lv_conf.h. */
@@ -157,27 +150,21 @@ void antfx_ui_main( engine_config_t conf)
     th = lv_theme_get_current(); /*If `LV_THEME_LIVE_UPDATE  1` `th` is not used directly so get the real theme after set*/
     lv_obj_t *scr = lv_cont_create(NULL, NULL);
     lv_disp_load_scr(scr);
-    /*lv_obj_t *tv = lv_tabview_create(scr, NULL);
-    lv_obj_set_size(tv, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
-    lv_obj_t *tab1 = lv_tabview_add_tab(tv, "Tab 1");
-    lv_obj_t *tab2 = lv_tabview_add_tab(tv, "Tab 2");
-    lv_obj_t *tab3 = lv_tabview_add_tab(tv, "Tab 3");
 
-    create_tab1(tab1);
-    create_tab2(tab2);
-    create_tab3(tab3);*/
     lv_obj_t *img = lv_img_create(scr, NULL);
     lv_img_set_src(img, &default_wp);
 
     lv_obj_t *list = lv_list_create(scr, NULL);
     lv_style_t *style = (lv_style_t *)lv_obj_get_style(list);
+    static lv_style_t cont_style;
     //lv_obj_set_style(list, &lv_style_transp);
     style->body.opa = LV_OPA_60;
     lv_obj_set_size(list, 48, lv_disp_get_ver_res(NULL));
-    //list_btn = lv_list_add_btn(list, LV_SYMBOL_GPS, NULL);
-    //lv_btn_set_toggle(list_btn, true);
+
     lv_obj_t *btn;
-    lv_list_add_btn(list, &radio, NULL);
+    btn = lv_list_add_btn(list, &radio, NULL);
+    lv_obj_set_event_cb(btn, antfx_ui_show_fm_dialog);
+
     lv_list_add_btn(list, LV_SYMBOL_AUDIO, NULL);
     lv_list_add_btn(list, &alarm_clock, NULL);
 
@@ -193,18 +180,18 @@ void antfx_ui_main( engine_config_t conf)
     lv_label_set_align(g_scr_info.lbl_time, LV_LABEL_ALIGN_CENTER);
     static lv_style_t time_style;
     static lv_style_t status_style;
-    style = (lv_style_t *)lv_obj_get_style(cont);
-    lv_style_copy(&time_style, style);
-    lv_style_copy(&status_style, style);
+    lv_style_copy(&cont_style, lv_cont_get_style(cont, LV_CONT_STYLE_MAIN));
+    lv_style_copy(&time_style, &cont_style);
+    lv_style_copy(&status_style, &cont_style);
     time_style.text.font = &roboto_bold_50;
     lv_obj_set_style(g_scr_info.lbl_time, &time_style);
     lv_obj_set_pos(cont, lv_disp_get_hor_res(NULL) / 2 - 10, 10);
     lv_obj_set_size(cont, lv_disp_get_hor_res(NULL) / 2, lv_disp_get_ver_res(NULL) - 20);
     g_scr_info.lbl_date = lv_label_create(cont, NULL);
-    style->text.font = &lv_font_roboto_28;
-    style->body.opa = LV_OPA_40;
-    style->body.radius = 20;
-    status_style.text.font = &lv_font_roboto_22;
+    cont_style.text.font = &lv_font_roboto_28;
+    cont_style.body.opa = LV_OPA_40;
+    cont_style.body.radius = 20;
+    lv_cont_set_style(cont, LV_CONT_STYLE_MAIN, &cont_style);
 
     g_scr_info.lbl_location = lv_label_create(cont, NULL);
     lv_label_set_text(g_scr_info.lbl_location, "");
@@ -222,14 +209,300 @@ void antfx_ui_main( engine_config_t conf)
     lv_obj_set_style(g_scr_info.lbl_status, &status_style);
 }
 
-
-
-
-
-
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_RELEASED)
+    {
+        fm_mute();
+        antfx_ui_update_status("");
+    }
+}
+static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list)
+{
+    char buff[MAX_FIELD_SIZE * 2];
+    snprintf(buff, MAX_FIELD_SIZE * 2, "%s : %.2f Mhz", r->name, r->freq);
+    lv_obj_t *btn = lv_list_add_btn((lv_obj_t *)list, &radio, buff);
+    r->user_data = (void *)list;
+    lv_obj_set_user_data(btn, r);
+    lv_obj_set_event_cb(btn, antfx_ui_fm_item_action);
+}
+
+static void antfx_ui_fm_item_action(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_CLICKED)
+    {
+        /*Create a Message box*/
+        static const char *mbox_btn_map[] = {"Play", "Delete", "Close", ""};
+        lv_obj_t *mbox = lv_mbox_create(lv_scr_act(), NULL);
+        lv_mbox_set_text(mbox, "Choose action:");
+        lv_mbox_add_btns(mbox, mbox_btn_map);
+        lv_obj_set_event_cb(mbox, antfx_ui_fm_item_action_cb);
+        lv_obj_set_user_data(mbox, lv_obj_get_user_data(obj));
+        lv_obj_set_top(mbox, true);
+    }
+}
+static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event)
+{
+    char buff[32];
+    antfx_fm_record_t *r = NULL;
+    const char *action = NULL;
+    lv_obj_t *list = NULL;
+    if (event == LV_EVENT_VALUE_CHANGED)
+    {
+        r = (antfx_fm_record_t *)lv_obj_get_user_data(obj);
+        action = lv_mbox_get_active_btn_text(obj);
+        if (strcmp(action, "Play") == 0)
+        {
+            fm_set_freq(r->freq);
+            snprintf(buff, 32, "FM: %.2f Mhz", r->freq);
+            antfx_ui_update_status(buff);
+        }
+        else if (strcmp(action, "Delete") == 0)
+        {
+            list = (lv_obj_t *)r->user_data;
+            if (antfx_db_rm_fm_channel(r) == -1)
+            {
+                antfx_ui_alert("Unable to delete channel");
+            }
+            else
+            {
+                antfx_ui_fm_list_refresh(list);
+            }
+        }
+        lv_mbox_start_auto_close(obj, 0);
+    }
+}
+static void antfx_ui_fm_list_refresh(lv_obj_t *list)
+{
+    lv_list_clean(list);
+    int ret = antfx_db_fetch_fm_channels(antfx_ui_fm_list_add, (void *)list);
+    if (ret == -1)
+    {
+        antfx_ui_alert("Unable to load channels list");
+    }
+}
+
+static void antfx_ui_alert(const char *text)
+{
+    /*Create a Message box*/
+    static const char *mbox_btn_map[] = {" ", "OK", " ", ""};
+    lv_obj_t *mbox = lv_mbox_create(lv_scr_act(), NULL);
+    lv_mbox_set_text(mbox, text);
+    lv_mbox_add_btns(mbox, mbox_btn_map);
+    lv_btnm_set_btn_ctrl(lv_mbox_get_btnm(mbox), 0, LV_BTNM_CTRL_HIDDEN);
+    lv_btnm_set_btn_width(lv_mbox_get_btnm(mbox), 1, 7);
+    lv_btnm_set_btn_ctrl(lv_mbox_get_btnm(mbox), 2, LV_BTNM_CTRL_HIDDEN);
+    lv_obj_set_top(mbox, true);
+}
+static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+
+    if (event == LV_EVENT_CLICKED)
+    {
+        lv_obj_t *win = lv_win_create(scr, NULL);
+        lv_obj_t *btn;
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
+        lv_obj_set_event_cb(btn, lv_win_close_event_cb);
+
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_win_set_title(win, "Radio FM");
+        lv_win_set_sb_mode(win, LV_SB_MODE_OFF);
+
+        lv_obj_t *list;
+        list = lv_list_create(win, NULL);
+        lv_obj_set_size(list, lv_disp_get_hor_res(NULL) - 10, lv_disp_get_ver_res(NULL) - 60);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_PLUS);
+        lv_obj_set_user_data(btn, list);
+        lv_obj_set_event_cb(btn, antfx_ui_add_fm_channel_popup);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_MUTE);
+        lv_obj_set_event_cb(btn, antfx_ui_fm_mute_cb);
+
+        antfx_ui_fm_list_refresh(list);
+
+        lv_obj_set_top(win, true);
+    }
+}
+static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *parent = lv_obj_get_parent(obj);
+    parent = lv_obj_get_parent(parent);
+    if (event == LV_EVENT_RELEASED)
+    {
+        antfx_fm_record_t record;
+        trim(g_scr_info.fields.field_2, ' ');
+        trim(g_scr_info.fields.field_1, ' ');
+        record.freq = atof(g_scr_info.fields.field_2);
+        strncpy(record.name, g_scr_info.fields.field_1, MAX_FIELD_SIZE);
+        if (record.freq > 0 && strcmp(record.name, "") != 0)
+        {
+            if (antfx_db_add_fm_channel(&record) == -1)
+            {
+                antfx_ui_alert("Unable to save channel to database");
+            }
+            else
+            {
+                antfx_ui_fm_list_refresh(lv_obj_get_user_data(obj));
+            }
+        }
+        else
+        {
+            antfx_ui_alert("Invalid input data");
+        }
+        lv_obj_del(parent);
+    }
+}
+static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+
+    if (event == LV_EVENT_CLICKED)
+    {
+        lv_obj_t *win = lv_win_create(scr, NULL);
+        lv_obj_t *btn;
+        lv_style_t *style;
+        memset(g_scr_info.fields.field_1, 0, MAX_FIELD_SIZE);
+        memset(g_scr_info.fields.field_2, 0, MAX_FIELD_SIZE);
+        btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
+        lv_obj_set_event_cb(btn, lv_win_close_event_cb);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_OK);
+        lv_obj_set_user_data(btn, lv_obj_get_user_data(obj));
+        lv_obj_set_event_cb(btn, antfx_ui_add_fm_channel);
+
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_win_set_layout(win, LV_LAYOUT_OFF);
+        lv_win_set_title(win, "Add radio channel");
+        lv_win_set_sb_mode(win, LV_SB_MODE_OFF);
+
+        lv_obj_t *ta = lv_ta_create(win, NULL);
+        lv_ta_set_text(ta, "");
+        lv_ta_set_one_line(ta, true);
+        lv_ta_set_cursor_type(ta, LV_CURSOR_HIDDEN);
+        lv_obj_set_width(ta, LV_HOR_RES / 2 - 30);
+        lv_obj_set_pos(ta, 10, 30);
+        lv_obj_set_user_data(ta, g_scr_info.fields.field_1);
+        lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
+
+         /* Create.kea keyboard */
+        g_scr_info.keyboard = lv_kb_create(win, NULL);
+        lv_obj_set_size(g_scr_info.keyboard, LV_HOR_RES - 10, LV_VER_RES / 2);
+        lv_obj_set_pos(g_scr_info.keyboard, 10, LV_VER_RES / 3);
+        lv_obj_set_top(win, true);
+
+        lv_kb_set_ta(g_scr_info.keyboard, ta);
+        /* Create a label and position it above the text box */
+        lv_obj_t *lbl = lv_label_create(win, NULL);
+        lv_label_set_text(lbl, "Name:");
+        lv_obj_align(lbl, ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
+
+        /* Create the one-line mode text area */
+        ta = lv_ta_create(win, ta);
+        lv_ta_set_cursor_type(ta, LV_CURSOR_HIDDEN);
+        lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_RIGHT, -10, 30);
+        lv_obj_set_user_data(ta, g_scr_info.fields.field_2);
+        lv_obj_set_event_cb(ta, antfx_ui_attach_numpad);
+
+        /* Create a label and position it above the text box */
+        lbl = lv_label_create(win, NULL);
+        lv_label_set_text(lbl, "Frequency:");
+        lv_obj_align(lbl, ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
+
+    }
+}
+
+static void antfx_ui_attach_keyboard(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_CLICKED)
+    {
+        if (g_scr_info.keyboard != NULL)
+        {
+            lv_kb_set_mode(g_scr_info.keyboard, LV_KB_MODE_TEXT);
+            lv_kb_set_ta(g_scr_info.keyboard, obj);
+        }
+    }
+    else if (event == LV_EVENT_INSERT)
+    {
+        const char *str = lv_ta_get_text(obj);
+        char *buff = (char *)lv_obj_get_user_data(obj);
+        if (buff)
+        {
+            strncpy(buff, str, MAX_FIELD_SIZE);
+            strcat(buff, (const char *)lv_event_get_data());
+        }
+    }
+}
+static void antfx_ui_attach_numpad(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_CLICKED)
+    {
+        if (g_scr_info.keyboard != NULL)
+        {
+            lv_kb_set_mode(g_scr_info.keyboard, LV_KB_MODE_NUM);
+            lv_kb_set_ta(g_scr_info.keyboard, obj);
+        }
+    }
+    else if (event == LV_EVENT_INSERT)
+    {
+        const char *str = lv_ta_get_text(obj);
+        char *buff = (char *)lv_obj_get_user_data(obj);
+        if (buff)
+        {
+            strncpy(buff, str, MAX_FIELD_SIZE);
+            strcat(buff, (const char *)lv_event_get_data());
+        }
+    }
+}
+static void antfx_ui_close_popup(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *parent = lv_obj_get_parent(obj);
+    if (event == LV_EVENT_RELEASED)
+    {
+        lv_obj_del(parent);
+    }
+}
+static void antfx_ui_show_calendar(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+
+    if (event == LV_EVENT_CLICKED)
+    {
+        lv_obj_t *win = lv_cont_create(scr, NULL);
+        lv_cont_set_layout(win, LV_LAYOUT_OFF);
+        lv_style_t *style = (lv_style_t *)lv_obj_get_style(win);
+
+        //lv_obj_set_event_cb(win_btn, lv_win_close_event_cb);
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_obj_t *cal = lv_calendar_create(win, NULL);
+        lv_obj_set_size(cal, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        /*Set today's date*/
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+        lv_calendar_date_t today;
+        today.year = tm.tm_year + 1900;
+        today.month = tm.tm_mon + 1;
+        today.day = tm.tm_mday;
+
+        lv_calendar_set_today_date(cal, &today);
+        lv_calendar_set_showed_date(cal, &today);
+
+        lv_obj_t *btn = lv_btn_create(win, NULL);
+        lv_obj_set_size(btn, 32, 32);
+        lv_obj_set_pos(btn, lv_disp_get_hor_res(NULL) - 80, 3);
+
+        lv_img_set_src(lv_img_create(btn, NULL), LV_SYMBOL_CLOSE);
+        lv_obj_set_event_cb(btn, antfx_ui_close_popup);
+
+        lv_obj_set_top(win, true);
+    }
+}
+
 static void create_tab1(lv_obj_t *parent)
 {
     lv_page_set_scrl_layout(parent, LV_LAYOUT_PRETTY);

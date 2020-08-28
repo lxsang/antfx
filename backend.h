@@ -8,8 +8,7 @@
 #include "lib/lvgl.h"
 #include <tslib.h>
 #include "log.h"
-
-#define UNUSED(c) (void)(c)
+#include "utils.h"
 
 #define AFX_EVT_NONE    0x0
 #define AFX_EVT_DOWN    0x1
