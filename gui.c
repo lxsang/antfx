@@ -1,7 +1,9 @@
 #include <time.h>
+#include <dirent.h>
 #include "gui.h"
 #include "db.h"
 #include "hw.h"
+#include "media.h"
 
 #define MAX_FIELD_SIZE 255
 typedef struct
@@ -22,6 +24,9 @@ typedef struct
     lv_obj_t *lbl_location;
     lv_obj_t *lbl_weather_img;
     lv_obj_t *keyboard;
+    lv_obj_t *bt_play_pause;
+    lv_obj_t *bt_suffle;
+    lv_obj_t *progress;
     antfx_ui_form_data_t fields;
 } antfx_screen_info_t;
 
@@ -49,21 +54,26 @@ static antfx_screen_info_t g_scr_info;
 static void antfx_ui_show_calendar(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_close_popup(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_show_music_dialog(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event);
+static void  antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_attach_keyboard(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_attach_numpad(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_fm_list_refresh(lv_obj_t *list);
+static void antfx_ui_music_list_refresh(lv_obj_t *list);
 static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list);
 static void antfx_ui_fm_item_action(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_alert(const char *);
 
-void antfx_ui_update_datetime()
+void antfx_ui_update()
 {
     time_t rawtime;
     struct tm *timeinfo;
+    antfx_music_ctl_t * m_ctrl;
     char buffer[80];
 
     time(&rawtime);
@@ -73,6 +83,30 @@ void antfx_ui_update_datetime()
     lv_label_set_text(g_scr_info.lbl_time, buffer);
     strftime(buffer, sizeof(buffer), "%a %b %Y", timeinfo);
     lv_label_set_text(g_scr_info.lbl_date, buffer);
+
+    m_ctrl = antfx_music_get_ctrl();
+    // update play back
+    lv_obj_t *img = lv_list_get_btn_img(g_scr_info.bt_play_pause);
+    if(m_ctrl->status == MUSIC_STOP)
+    {
+        lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
+        lv_img_set_src(img, LV_SYMBOL_PLAY);
+    }
+    else if(m_ctrl->status == MUSIC_PAUSE)
+    {
+        lv_img_set_src(img, LV_SYMBOL_PLAY);
+    }
+    else if(m_ctrl->status == MUSIC_PLAYING)
+    {
+        int percent = (int) m_ctrl->current_frame * 100 / m_ctrl->total_frames;
+        lv_bar_set_value(g_scr_info.progress, percent, LV_ANIM_OFF);
+        lv_img_set_src(img, LV_SYMBOL_PAUSE);
+    }
+    else
+    {
+        lv_img_set_src(img, LV_SYMBOL_PLAY);
+    }
+    // update music play time
 }
 void antfx_ui_update_location(const char *city)
 {
@@ -165,7 +199,9 @@ void antfx_ui_main(engine_config_t conf)
     btn = lv_list_add_btn(list, &radio, NULL);
     lv_obj_set_event_cb(btn, antfx_ui_show_fm_dialog);
 
-    lv_list_add_btn(list, LV_SYMBOL_AUDIO, NULL);
+    btn = lv_list_add_btn(list, LV_SYMBOL_AUDIO, NULL);
+    lv_obj_set_event_cb(btn, antfx_ui_show_music_dialog);
+
     lv_list_add_btn(list, &alarm_clock, NULL);
 
     btn = lv_list_add_btn(list, &calendar, NULL);
@@ -207,11 +243,75 @@ void antfx_ui_main(engine_config_t conf)
     g_scr_info.lbl_status = lv_label_create(cont, NULL);
     lv_label_set_text(g_scr_info.lbl_status, "");
     lv_obj_set_style(g_scr_info.lbl_status, &status_style);
+
+    list = lv_list_create(cont, NULL);
+
+    lv_list_set_layout(list, LV_LAYOUT_ROW_M);
+
+    btn = lv_list_add_btn(list, LV_SYMBOL_PREV, "");
+    lv_obj_set_width(btn, 40);
+
+    g_scr_info.bt_play_pause = lv_list_add_btn(list, LV_SYMBOL_PLAY, "");
+    lv_obj_set_width(g_scr_info.bt_play_pause, 40);
+    lv_obj_set_event_cb(g_scr_info.bt_play_pause, antfx_ui_music_play);
+
+    btn = lv_list_add_btn(list, LV_SYMBOL_STOP, "");
+    lv_obj_set_width(btn, 40);
+    lv_obj_set_event_cb(btn, antfx_ui_music_stop);
+
+    btn = lv_list_add_btn(list, LV_SYMBOL_NEXT, "");
+    lv_obj_set_width(btn, 40);
+
+    g_scr_info.bt_suffle = lv_list_add_btn(list, LV_SYMBOL_SHUFFLE, "");
+    lv_obj_set_width(g_scr_info.bt_suffle, 40);
+    lv_btn_set_toggle(g_scr_info.bt_suffle, true);
+
+    g_scr_info.progress = lv_bar_create(cont, NULL);
+    lv_obj_set_height(g_scr_info.progress, 7);
+    lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
 }
 
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+static void  antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event)
+{
+    if (event == LV_EVENT_RELEASED)
+    {
+        antfx_music_stop();
+    }
+}
+static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event)
+{
+    char buff[MAX_FIELD_SIZE];
+    if (event == LV_EVENT_RELEASED)
+    {
+        antfx_music_ctl_t* ctrl = antfx_music_get_ctrl();
+        antfx_conf_t *conf = antfx_get_config();
+        const char *f_name = lv_list_get_btn_text(obj);
+        snprintf(buff, sizeof(buff), "%s/%s", conf->fav.music_path, f_name);
+        fm_mute();
+        if(strcmp(f_name, "") == 0)
+        {
+            if(ctrl->status == MUSIC_PLAYING)
+            {
+                antfx_music_pause();
+            }
+            else if(ctrl->status == MUSIC_PAUSE)
+            {
+                antfx_music_resume();
+            }
+        }
+        else
+        {
+            antfx_ui_update_status("");
+            if (antfx_music_play(buff) == 0)
+            {
+                antfx_ui_update_status(f_name);
+            }
+        }
+    }
+}
 static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event)
 {
     if (event == LV_EVENT_RELEASED)
@@ -222,8 +322,8 @@ static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event)
 }
 static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list)
 {
-    char buff[MAX_FIELD_SIZE * 2];
-    snprintf(buff, MAX_FIELD_SIZE * 2, "%s : %.2f Mhz", r->name, r->freq);
+    char buff[MAX_FIELD_SIZE];
+    snprintf(buff, MAX_FIELD_SIZE, "%s : %.2f Mhz", r->name, r->freq);
     lv_obj_t *btn = lv_list_add_btn((lv_obj_t *)list, &radio, buff);
     r->user_data = (void *)list;
     lv_obj_set_user_data(btn, r);
@@ -256,6 +356,7 @@ static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event)
         action = lv_mbox_get_active_btn_text(obj);
         if (strcmp(action, "Play") == 0)
         {
+            antfx_music_stop();
             fm_set_freq(r->freq);
             snprintf(buff, 32, "FM: %.2f Mhz", r->freq);
             antfx_ui_update_status(buff);
@@ -273,6 +374,30 @@ static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event)
             }
         }
         lv_mbox_start_auto_close(obj, 0);
+    }
+}
+static void antfx_ui_music_list_refresh(lv_obj_t *list)
+{
+    DIR *d;
+    antfx_conf_t *conf = antfx_get_config();
+    struct dirent *dir;
+    lv_obj_t *btn;
+    d = opendir(conf->fav.music_path);
+    if (d != NULL)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if (regex_match("^.*\\.mp3$", dir->d_name, 0, NULL))
+            {
+                btn = lv_list_add_btn(list, LV_SYMBOL_AUDIO, dir->d_name);
+                lv_obj_set_event_cb(btn, antfx_ui_music_play);
+            }
+        }
+        closedir(d);
+    }
+    else
+    {
+        antfx_ui_alert("Unable to open music library directory");
     }
 }
 static void antfx_ui_fm_list_refresh(lv_obj_t *list)
@@ -296,6 +421,31 @@ static void antfx_ui_alert(const char *text)
     lv_btnm_set_btn_width(lv_mbox_get_btnm(mbox), 1, 7);
     lv_btnm_set_btn_ctrl(lv_mbox_get_btnm(mbox), 2, LV_BTNM_CTRL_HIDDEN);
     lv_obj_set_top(mbox, true);
+}
+static void antfx_ui_show_music_dialog(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+    antfx_conf_t *conf = antfx_get_config();
+    if (event == LV_EVENT_CLICKED)
+    {
+        lv_obj_t *win = lv_win_create(scr, NULL);
+        lv_obj_t *btn;
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
+        lv_obj_set_event_cb(btn, lv_win_close_event_cb);
+
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_win_set_title(win, conf->fav.music_path);
+        lv_win_set_sb_mode(win, LV_SB_MODE_OFF);
+
+        lv_obj_t *list;
+        list = lv_list_create(win, NULL);
+        lv_obj_set_size(list, lv_disp_get_hor_res(NULL) - 10, lv_disp_get_ver_res(NULL) - 60);
+
+        antfx_ui_music_list_refresh(list);
+
+        lv_obj_set_top(win, true);
+    }
 }
 static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event)
 {
@@ -390,7 +540,7 @@ static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event)
         lv_obj_set_user_data(ta, g_scr_info.fields.field_1);
         lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
 
-         /* Create.kea keyboard */
+        /* Create.kea keyboard */
         g_scr_info.keyboard = lv_kb_create(win, NULL);
         lv_obj_set_size(g_scr_info.keyboard, LV_HOR_RES - 10, LV_VER_RES / 2);
         lv_obj_set_pos(g_scr_info.keyboard, 10, LV_VER_RES / 3);
@@ -413,7 +563,6 @@ static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event)
         lbl = lv_label_create(win, NULL);
         lv_label_set_text(lbl, "Frequency:");
         lv_obj_align(lbl, ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
-
     }
 }
 

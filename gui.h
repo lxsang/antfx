@@ -4,7 +4,7 @@
 #include "antfx.h"
 #include "conf.h"
 
-void antfx_ui_update_datetime();
+void antfx_ui_update();
 void antfx_ui_update_location(const char*);
 void antfx_ui_update_weather(const char*);
 void antfx_ui_update_weather_icon(const char*);

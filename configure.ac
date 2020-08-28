@@ -55,6 +55,31 @@ AC_CHECK_LIB([sqlite3],[sqlite3_open],[],[
         AC_MSG_ERROR([Unable to find libsqlite3])
 ])
 
+
+AC_CHECK_HEADER([mpg123.h],[],[
+    AC_MSG_ERROR([Unable to find mpg123 lib header])
+])
+
+AC_CHECK_LIB([mpg123],[mpg123_init],[],[
+        AC_MSG_ERROR([Unable to find libmpg123])
+])
+
+AC_CHECK_HEADER([pulse/error.h],[],[
+    AC_MSG_ERROR([Unable to find pulseaudio lib header])
+])
+
+AC_CHECK_LIB([pulse],[pa_strerror],[],[
+        AC_MSG_ERROR([Unable to find libpulse])
+])
+
+AC_CHECK_HEADER([pulse/simple.h],[],[
+    AC_MSG_ERROR([Unable to find pulseaudio-simple lib header])
+])
+
+AC_CHECK_LIB([pulse-simple],[pa_simple_new],[],[
+        AC_MSG_ERROR([Unable to find libpulse-simple])
+])
+
 # debug option
 AC_ARG_ENABLE([debug],
     [  --enable-debug    Turn on debugging],

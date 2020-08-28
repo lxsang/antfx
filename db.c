@@ -7,8 +7,10 @@
 #include "log.h"
 #include "utils.h"
 
-#define BUFFLEN 1024
 
+#define BUFFLEN 1024
+#define DEFAULT_CITY "Paris"
+#define DEFAULT_M_PATH "/media/music/"
 
 static int antfx_db_query(void* user, int (*call_back)(void *, int, char **, char **), const char *fstring, ...)
 {
@@ -64,6 +66,21 @@ static int antfx_db_fm_cb(void *user, int count, char **data, char **columns)
     return 0;
 }
 
+static int antfx_db_fav_cb(void *user, int count, char **data, char **columns)
+{
+    antfx_user_fav_t* fav = (antfx_user_fav_t*) user;
+    if(count != 4)
+    {
+        ERROR("Number column in returned data is not correct: %d expected 3", count);
+        return -1;
+    }
+    fav->id = atoi(data[0]);
+    strncpy(fav->city,data[1], DB_MAX_TEXT_SIZE);
+    fav->shuffle = atoi(data[2]);
+    strncpy(fav->music_path,data[3], DB_MAX_TEXT_SIZE);
+    return 0;
+}
+
 int antdfx_db_init()
 {
     if(antfx_db_query(NULL,NULL, RADIO_TABLE_SQL) == -1)
@@ -74,6 +91,11 @@ int antdfx_db_init()
     if(antfx_db_query(NULL,NULL, ALARM_TABLE_SQL) == -1)
     {
         ERROR("Unable to create table: alarm");
+        return -1;
+    }
+    if(antfx_db_query(NULL,NULL, FAV_TABLE_SQL) == -1)
+    {
+        ERROR("Unable to create table: fav");
         return -1;
     }
     return 0;
@@ -114,4 +136,16 @@ int antfx_db_fetch_fm_channels(void (*callback)(antfx_fm_record_t *, void*), voi
     data[1] = user;
     ret = antfx_db_query( data, antfx_db_fm_cb, "SELECT * FROM radio");
     return ret;
+}
+
+int antfx_db_get_fav(antfx_user_fav_t* conf)
+{
+    strncpy(conf->city, DEFAULT_CITY, sizeof(conf->city));
+    strncpy(conf->music_path, DEFAULT_M_PATH, sizeof(conf->music_path));
+    conf->shuffle = 0;
+    return antfx_db_query(conf, antfx_db_fav_cb,"SELECT * FROM fav LIMIT 1");
+}
+int antfx_db_save_fav(antfx_user_fav_t* fav)
+{
+    return -1;
 }

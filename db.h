@@ -17,6 +17,13 @@ CREATE TABLE IF NOT EXISTS \"alarm\" (\
 \"type\" INTEGER,\
 \"source\" TEXT);"
 
+#define FAV_TABLE_SQL  "\
+CREATE TABLE IF NOT EXISTS \"fav\" (\
+\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,\
+\"city\" TEXT,\
+\"shuffle\" INTEGER,\
+\"music\" TEXT);"
+
 typedef enum {
     U_FM_FREQ,
     U_MUSIC_NAME
@@ -28,6 +35,13 @@ typedef struct {
     float freq;
     void* user_data;
 } antfx_fm_record_t;
+
+typedef struct {
+    int id;
+    char city[DB_MAX_TEXT_SIZE];
+    int shuffle;
+     char music_path[DB_MAX_TEXT_SIZE];
+} antfx_user_fav_t;
 
 typedef union {
     float freq;
@@ -47,4 +61,6 @@ int antfx_db_save_alarm(antfx_alarm_t*);
 int antfx_db_add_fm_channel(antfx_fm_record_t*);
 int antfx_db_rm_fm_channel(antfx_fm_record_t*);
 int antfx_db_fetch_fm_channels(void (*)(antfx_fm_record_t*, void*), void* );
+int antfx_db_get_fav(antfx_user_fav_t*);
+int antfx_db_save_fav(antfx_user_fav_t*);
 #endif

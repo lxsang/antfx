@@ -10,7 +10,7 @@ static int ini_handle(void *user_data, const char *section, const char *name,
                       const char *value)
 {
     antfx_conf_t* config = (antfx_conf_t*) user_data;
-    if (EQU(section, "db") && EQU(name, "db_path"))
+    if (EQU(section, "antfxd") && EQU(name, "db_path"))
     {
         strncpy(config->db_path,value, MAX_CONF_SIZE);
     }
@@ -46,10 +46,6 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         strncpy(config->ts_calibrate_file,value, MAX_CONF_SIZE);
     }
-    else if (EQU(section, "weather") && EQU(name, "location"))
-    {
-        strncpy(config->location,value, MAX_CONF_SIZE);
-    }
     else if (EQU(section, "weather") && EQU(name, "weather_api_uri"))
     {
         strncpy(config->weather_api_uri,value, MAX_CONF_SIZE);
@@ -58,9 +54,9 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         config->weather_check_period = (int) atoi(value);
     }
-    else if (EQU(section, "antfxd") && EQU(name, "startup"))
+    else if (EQU(section, "antfxd") && EQU(name, "startup_sound"))
     {
-        strncpy(config->startup_cmd,value, MAX_CONF_SIZE);
+        strncpy(config->startup_sound,value, MAX_CONF_SIZE);
     }
     else
     {
@@ -76,6 +72,10 @@ int antfx_read_config(const char* file, antfx_conf_t* config)
     {
         ERROR("Can't load '%s'", file);
         return -1;
+    }
+    if(antfx_db_get_fav(&config->fav) == -1)
+    {
+        ERROR("Can't load user config from database");
     }
     return 0;
 }

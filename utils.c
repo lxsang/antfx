@@ -1,4 +1,5 @@
 #include <regex.h>
+#include <string.h>
 #include "utils.h"
 #include "log.h"
 

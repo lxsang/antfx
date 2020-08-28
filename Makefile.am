@@ -31,6 +31,7 @@ antfx_SOURCES +=    gui.c \
                     db.c \
                     utils.c \
                     hw.c \
+                    media.c \
                     lib/ini/ini.c
 
 antfx_SOURCES +=    widgets/image.c \

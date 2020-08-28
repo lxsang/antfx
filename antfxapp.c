@@ -15,6 +15,7 @@
 #include "db.h"
 #include "utils.h"
 #include "hw.h"
+#include "media.h"
 
 #define MAX_CURL_PAGE_LENGTH 2048
 
@@ -66,7 +67,8 @@ static void *weather_thread_handler(void *data)
     CURLcode res;
     (void)memset(buffer, 0, MAX_CURL_PAGE_LENGTH);
     curl_handle = curl_easy_init();
-    curl_easy_setopt(curl_handle, CURLOPT_URL, g_config.weather_api_uri);
+    sprintf(buffer, MAX_CURL_PAGE_LENGTH, g_config.weather_api_uri, g_config.fav.city);
+    curl_easy_setopt(curl_handle, CURLOPT_URL, buffer);
     curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, curl_callback);
@@ -194,13 +196,17 @@ int main(int argc, char *argv[])
     conf.tdev = g_config.ts_dev;
     time_t last_weather_check = 0;
     time_t now;
-    UNUSED(ret = system(g_config.startup_cmd));
+    anfx_music_init();
+    if(antfx_music_play(g_config.startup_sound) == -1)
+    {
+        ERROR("Unable to play startup sound");
+    }
     curl_global_init(CURL_GLOBAL_ALL);
     // start the hardware clock
     init_hw_clock();
     // start display engine
     antfx_ui_main(conf);
-    antfx_ui_update_location(g_config.location);
+    antfx_ui_update_location(g_config.fav.city);
     running = 1;
     while (running)
     {
@@ -210,12 +216,17 @@ int main(int argc, char *argv[])
             weather_update();
             last_weather_check = now;
         }
-        antfx_ui_update_datetime();
+        antfx_ui_update();
         lv_task_handler();
         lv_tick_inc(5);
         usleep(5000);
     }
     antfx_ui_update_status("");
+    if(antfx_db_save_fav(&g_config.fav) == -1)
+    {
+        ERROR("Unable to save user configuration");
+    }
+    anfx_music_release();
     fm_mute();
     antfx_release();
     curl_global_cleanup();
