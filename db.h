@@ -5,24 +5,24 @@
 
 
 #define RADIO_TABLE_SQL  "\
-CREATE TABLE IF NOT EXISTS \"radio\" (\
-\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,\
-\"name\" TEXT NOT NULL, \
-\"frequency\" NUMERIC );"
+CREATE TABLE IF NOT EXISTS radio (\
+id INTEGER PRIMARY KEY AUTOINCREMENT,\
+name TEXT NOT NULL, \
+frequency NUMERIC );"
 
 #define ALARM_TABLE_SQL  "\
-CREATE TABLE IF NOT EXISTS \"alarm\" (\
-\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,\
-\"timestamp\" INTEGER,\
-\"type\" INTEGER,\
-\"source\" TEXT);"
+CREATE TABLE IF NOT EXISTS alarm (\
+id INTEGER PRIMARY KEY AUTOINCREMENT,\
+timestamp INTEGER,\
+type INTEGER,\
+source TEXT);"
 
 #define FAV_TABLE_SQL  "\
-CREATE TABLE IF NOT EXISTS \"fav\" (\
-\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,\
-\"city\" TEXT,\
-\"shuffle\" INTEGER,\
-\"music\" TEXT);"
+CREATE TABLE IF NOT EXISTS fav (\
+id INTEGER PRIMARY KEY AUTOINCREMENT,\
+city TEXT,\
+shuffle INTEGER,\
+music TEXT);"
 
 typedef enum {
     U_FM_FREQ,

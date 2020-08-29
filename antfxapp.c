@@ -42,10 +42,6 @@ int main(int argc, char *argv[])
 
     struct stat st;
     int ret;
-    if(antdfx_db_init() == -1)
-    {
-        ERROR("Unable to int database: %s", g_config.db_path);
-    }
     if (argc == 2)
     {
         ret = antfx_read_config(argv[1], &g_config);

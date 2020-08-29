@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-pc-linux-gnu
 host_triplet = arm-poky-linux-gnu
-bin_PROGRAMS = antfx$(EXEEXT)
+bin_PROGRAMS = antfx$(EXEEXT) loopback$(EXEEXT)
 #am__append_1 = backends/sdl2_engine.c
 am__append_2 = backends/fb_engine.c
 subdir = .
@@ -281,6 +281,9 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	lib/liblv/lv_themes/antfx-lv_theme_mono.$(OBJEXT)
 antfx_OBJECTS = $(am_antfx_OBJECTS)
 antfx_LDADD = $(LDADD)
+am_loopback_OBJECTS = loopback.$(OBJEXT)
+loopback_OBJECTS = $(am_loopback_OBJECTS)
+loopback_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -301,7 +304,7 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
 	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-media.Po \
 	./$(DEPDIR)/antfx-utils.Po ./$(DEPDIR)/antfx-weather.Po \
-	backends/$(DEPDIR)/antfx-fb_engine.Po \
+	./$(DEPDIR)/loopback.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/ini/$(DEPDIR)/antfx-ini.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
@@ -424,8 +427,8 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(antfx_SOURCES)
-DIST_SOURCES = $(am__antfx_SOURCES_DIST)
+SOURCES = $(antfx_SOURCES) $(loopback_SOURCES)
+DIST_SOURCES = $(am__antfx_SOURCES_DIST) $(loopback_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -578,6 +581,8 @@ EXTRA_DIST = README.md \
                 lib/liblv/* \
                 config.ini \
                 lib/ini/ini.h
+
+loopback_SOURCES = loopback.c
 
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
@@ -1096,6 +1101,10 @@ antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIE
 	@rm -f antfx$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(antfx_OBJECTS) $(antfx_LDADD) $(LIBS)
 
+loopback$(EXEEXT): $(loopback_OBJECTS) $(loopback_DEPENDENCIES) $(EXTRA_loopback_DEPENDENCIES) 
+	@rm -f loopback$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(loopback_OBJECTS) $(loopback_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f backends/*.$(OBJEXT)
@@ -1123,6 +1132,7 @@ include ./$(DEPDIR)/antfx-hw.Po # am--include-marker
 include ./$(DEPDIR)/antfx-media.Po # am--include-marker
 include ./$(DEPDIR)/antfx-utils.Po # am--include-marker
 include ./$(DEPDIR)/antfx-weather.Po # am--include-marker
+include ./$(DEPDIR)/loopback.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-fb_engine.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-sdl2_engine.Po # am--include-marker
 include lib/ini/$(DEPDIR)/antfx-ini.Po # am--include-marker
@@ -3169,6 +3179,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f ./$(DEPDIR)/antfx-weather.Po
+	-rm -f ./$(DEPDIR)/loopback.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
@@ -3331,6 +3342,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f ./$(DEPDIR)/antfx-weather.Po
+	-rm -f ./$(DEPDIR)/loopback.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po

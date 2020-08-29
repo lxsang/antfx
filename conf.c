@@ -73,6 +73,11 @@ int antfx_read_config(const char* file, antfx_conf_t* config)
         ERROR("Can't load '%s'", file);
         return -1;
     }
+    if(antdfx_db_init() == -1)
+    {
+        ERROR("Unable to int database: %s", config->db_path);
+        return -1;
+    }
     if(antfx_db_get_fav(&config->fav) == -1)
     {
         ERROR("Can't load user config from database");

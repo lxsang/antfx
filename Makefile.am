@@ -15,7 +15,10 @@ EXTRA_DIST =    README.md \
                 lib/ini/ini.h
 
 # bin
-bin_PROGRAMS = antfx
+bin_PROGRAMS = antfx loopback
+
+loopback_SOURCES = loopback.c
+
 # lib source files
 antfx_SOURCES = antfxapp.c  antfx.c
 antfx_CPPFLAGS=-I$(srcdir)/lib
