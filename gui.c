@@ -56,8 +56,9 @@ static void antfx_ui_close_popup(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_show_music_dialog(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event);
-static void  antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_fav_setting(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_attach_keyboard(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_attach_numpad(lv_obj_t *obj, lv_event_t event);
@@ -67,13 +68,14 @@ static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list);
 static void antfx_ui_fm_item_action(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event);
+static void antfx_ui_fav_setting_save(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_alert(const char *);
 
 void antfx_ui_update()
 {
     time_t rawtime;
     struct tm *timeinfo;
-    antfx_music_ctl_t * m_ctrl;
+    
     char buffer[80];
 
     time(&rawtime);
@@ -83,14 +85,16 @@ void antfx_ui_update()
     lv_label_set_text(g_scr_info.lbl_time, buffer);
     strftime(buffer, sizeof(buffer), "%a %b %Y", timeinfo);
     lv_label_set_text(g_scr_info.lbl_date, buffer);
-
-    m_ctrl = antfx_music_get_ctrl();
+    antfx_conf_t* conf = antfx_get_config();
+    const antfx_music_ctl_t * m_ctrl = antfx_music_get_ctrl();
     // update play back
     lv_obj_t *img = lv_list_get_btn_img(g_scr_info.bt_play_pause);
     if(m_ctrl->status == MUSIC_STOP)
     {
         lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
         lv_img_set_src(img, LV_SYMBOL_PLAY);
+        if(!conf->fm_on)
+            antfx_ui_update_status("");
     }
     else if(m_ctrl->status == MUSIC_PAUSE)
     {
@@ -106,7 +110,14 @@ void antfx_ui_update()
     {
         lv_img_set_src(img, LV_SYMBOL_PLAY);
     }
-    // update music play time
+    // update weather
+    if(conf->weather.update)
+    {
+        antfx_ui_update_location(conf->fav.city);
+        antfx_ui_update_weather(conf->weather.desc);
+        antfx_ui_update_weather_icon(conf->weather.icon);
+        conf->weather.update = 0;
+    }
 }
 void antfx_ui_update_location(const char *city)
 {
@@ -208,7 +219,9 @@ void antfx_ui_main(engine_config_t conf)
     lv_obj_set_event_cb(btn, antfx_ui_show_calendar);
 
     lv_list_add_btn(list, &camera, NULL);
-    lv_list_add_btn(list, LV_SYMBOL_SETTINGS, NULL);
+
+    btn = lv_list_add_btn(list, LV_SYMBOL_SETTINGS, NULL);
+    lv_obj_set_event_cb(btn, antfx_ui_fav_setting);
 
     lv_obj_t *cont = lv_cont_create(scr, NULL);
     lv_cont_set_layout(cont, LV_LAYOUT_COL_M);
@@ -286,7 +299,7 @@ static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event)
     char buff[MAX_FIELD_SIZE];
     if (event == LV_EVENT_RELEASED)
     {
-        antfx_music_ctl_t* ctrl = antfx_music_get_ctrl();
+        const antfx_music_ctl_t* ctrl = antfx_music_get_ctrl();
         antfx_conf_t *conf = antfx_get_config();
         const char *f_name = lv_list_get_btn_text(obj);
         snprintf(buff, sizeof(buff), "%s/%s", conf->fav.music_path, f_name);
@@ -477,6 +490,92 @@ static void antfx_ui_show_fm_dialog(lv_obj_t *obj, lv_event_t event)
         antfx_ui_fm_list_refresh(list);
 
         lv_obj_set_top(win, true);
+    }
+}
+static void antfx_ui_fav_setting(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+
+    if (event == LV_EVENT_CLICKED)
+    {
+        lv_obj_t *win = lv_win_create(scr, NULL);
+        lv_obj_t *btn;
+        lv_style_t *style;
+        antfx_conf_t* conf = antfx_get_config();
+        memset(g_scr_info.fields.field_1, 0, MAX_FIELD_SIZE);
+        memset(g_scr_info.fields.field_2, 0, MAX_FIELD_SIZE);
+        btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
+        lv_obj_set_event_cb(btn, lv_win_close_event_cb);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_OK);
+        lv_obj_set_user_data(btn, lv_obj_get_user_data(obj));
+        lv_obj_set_event_cb(btn, antfx_ui_fav_setting_save);
+
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_win_set_layout(win, LV_LAYOUT_OFF);
+        lv_win_set_title(win, "User setting");
+        lv_win_set_sb_mode(win, LV_SB_MODE_OFF);
+
+        lv_obj_t *ta = lv_ta_create(win, NULL);
+        lv_ta_set_text(ta, "");
+        lv_ta_set_one_line(ta, true);
+        lv_ta_set_cursor_type(ta, LV_CURSOR_HIDDEN);
+        lv_obj_set_width(ta, LV_HOR_RES / 2 - 30);
+        lv_obj_set_pos(ta, 10, 30);
+        lv_obj_set_user_data(ta, g_scr_info.fields.field_1);
+        lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
+        lv_ta_set_text(ta, conf->fav.city);
+        strncpy(g_scr_info.fields.field_1, conf->fav.city, MAX_FIELD_SIZE);
+
+        /* Create.kea keyboard */
+        g_scr_info.keyboard = lv_kb_create(win, NULL);
+        lv_obj_set_size(g_scr_info.keyboard, LV_HOR_RES - 10, LV_VER_RES / 2);
+        lv_obj_set_pos(g_scr_info.keyboard, 10, LV_VER_RES / 3);
+        lv_obj_set_top(win, true);
+
+        lv_kb_set_ta(g_scr_info.keyboard, ta);
+        /* Create a label and position it above the text box */
+        lv_obj_t *lbl = lv_label_create(win, NULL);
+        lv_label_set_text(lbl, "City:");
+        lv_obj_align(lbl, ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
+
+        /* Create the one-line mode text area */
+        ta = lv_ta_create(win, ta);
+        lv_ta_set_cursor_type(ta, LV_CURSOR_HIDDEN);
+        lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_RIGHT, -10, 30);
+        lv_obj_set_user_data(ta, g_scr_info.fields.field_2);
+        lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
+        lv_ta_set_text(ta, conf->fav.music_path);
+        strncpy(g_scr_info.fields.field_2, conf->fav.music_path, MAX_FIELD_SIZE);
+
+        /* Create a label and position it above the text box */
+        lbl = lv_label_create(win, NULL);
+        lv_label_set_text(lbl, "Music path:");
+        lv_obj_align(lbl, ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
+    }
+}
+static void antfx_ui_fav_setting_save(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *parent = lv_obj_get_parent(obj);
+    parent = lv_obj_get_parent(parent);
+    antfx_conf_t* conf = antfx_get_config();
+    if (event == LV_EVENT_RELEASED)
+    {
+        trim(g_scr_info.fields.field_2, ' ');
+        trim(g_scr_info.fields.field_1, ' ');
+        if((strcmp(g_scr_info.fields.field_1, "") == 0) ||(strcmp(g_scr_info.fields.field_2, "") == 0) )
+        {
+            antfx_ui_alert("Invalid input");
+            return;
+        }
+        strncpy(conf->fav.city, g_scr_info.fields.field_1, MAX_FIELD_SIZE);
+        strncpy(conf->fav.music_path, g_scr_info.fields.field_2, MAX_FIELD_SIZE);
+
+        if (antfx_db_save_fav(&conf->fav, 1) == -1)
+        {
+            antfx_ui_alert("Unable to save user setting to database");
+        }
+        lv_obj_del(parent);
     }
 }
 static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event)

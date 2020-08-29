@@ -1,6 +1,8 @@
 #ifndef CONF_H
 #define CONF_H
+#include <stdint.h>
 #include "db.h"
+#include "weather.h"
 
 #define DEFAULT_CONF "/etc/antfxd/config.ini"
 #define MAX_CONF_SIZE 255
@@ -18,7 +20,9 @@ typedef struct
     char weather_api_uri[MAX_CONF_SIZE];
     int weather_check_period;
     char startup_sound[MAX_CONF_SIZE];
+    uint8_t fm_on;
     antfx_user_fav_t fav;
+    antfx_wt_t weather;
 } antfx_conf_t;
 
 int antfx_read_config(const char*, antfx_conf_t*);

@@ -6,6 +6,7 @@
 #include "db.h"
 #include "log.h"
 #include "utils.h"
+#include "weather.h"
 
 
 #define BUFFLEN 1024
@@ -143,9 +144,36 @@ int antfx_db_get_fav(antfx_user_fav_t* conf)
     strncpy(conf->city, DEFAULT_CITY, sizeof(conf->city));
     strncpy(conf->music_path, DEFAULT_M_PATH, sizeof(conf->music_path));
     conf->shuffle = 0;
+    conf->id = 0;
     return antfx_db_query(conf, antfx_db_fav_cb,"SELECT * FROM fav LIMIT 1");
 }
-int antfx_db_save_fav(antfx_user_fav_t* fav)
+int antfx_db_save_fav(antfx_user_fav_t* fav, int reload)
 {
-    return -1;
+    int ret;
+    antfx_conf_t* conf = antfx_get_config();
+    if(fav->id == 0)
+    {
+        ret = antfx_db_query(
+            NULL,
+            NULL,
+            "INSERT INTO fav(city,shuffle,music) VALUES ('%s',%d, '%s')",
+            fav->city, fav->shuffle, fav->music_path);
+    }
+    else
+    {
+        ret = antfx_db_query(
+            NULL,
+            NULL,
+            "UPDATE fav SET city='%s',shuffle=%d,music='%s' WHERE id=%d",
+            fav->city, fav->shuffle, fav->music_path, fav->id);
+    }
+    if(ret != -1 && reload)
+    {
+        ret = antfx_db_get_fav(fav);
+        if(ret != -1)
+        {
+            weather_update(&conf->weather);
+        }
+    }
+    return ret;
 }

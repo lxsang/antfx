@@ -107,7 +107,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
 	backends/fb_engine.c gui.c conf.c db.c utils.c hw.c media.c \
-	lib/ini/ini.c widgets/image.c widgets/default_wp.c \
+	weather.c lib/ini/ini.c widgets/image.c widgets/default_wp.c \
 	widgets/icons/radio.c widgets/icons/alarm.c \
 	widgets/icons/calendar.c widgets/icons/camera.c \
 	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
@@ -175,7 +175,8 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	$(am__objects_1) $(am__objects_2) antfx-gui.$(OBJEXT) \
 	antfx-conf.$(OBJEXT) antfx-db.$(OBJEXT) antfx-utils.$(OBJEXT) \
 	antfx-hw.$(OBJEXT) antfx-media.$(OBJEXT) \
-	lib/ini/antfx-ini.$(OBJEXT) widgets/antfx-image.$(OBJEXT) \
+	antfx-weather.$(OBJEXT) lib/ini/antfx-ini.$(OBJEXT) \
+	widgets/antfx-image.$(OBJEXT) \
 	widgets/antfx-default_wp.$(OBJEXT) \
 	widgets/icons/antfx-radio.$(OBJEXT) \
 	widgets/icons/antfx-alarm.$(OBJEXT) \
@@ -299,7 +300,7 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-conf.Po \
 	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
 	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-media.Po \
-	./$(DEPDIR)/antfx-utils.Po \
+	./$(DEPDIR)/antfx-utils.Po ./$(DEPDIR)/antfx-weather.Po \
 	backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/ini/$(DEPDIR)/antfx-ini.Po \
@@ -477,10 +478,10 @@ AUTOCONF = ${SHELL} /home/mrsang/workspace/antfx/missing autoconf
 AUTOHEADER = ${SHELL} /home/mrsang/workspace/antfx/missing autoheader
 AUTOMAKE = ${SHELL} /home/mrsang/workspace/antfx/missing automake-1.16
 AWK = gawk
-CC = arm-poky-linux-gnueabi-gcc  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
+CC = arm-poky-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi3-toolchain/sysroots/cortexa7t2hf-neon-vfpv4-poky-linux-gnueabi
 CCDEPMODE = depmode=gcc3
 CFLAGS =  -O2 -pipe -g -feliminate-unused-debug-types 
-CPP = arm-poky-linux-gnueabi-gcc -E  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
+CPP = arm-poky-linux-gnueabi-gcc -E  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi3-toolchain/sysroots/cortexa7t2hf-neon-vfpv4-poky-linux-gnueabi
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -DHAVE_LIBSQLITE3=1 -DHAVE_LIBMPG123=1 -DHAVE_LIBPULSE=1 -DHAVE_LIBPULSE_SIMPLE=1 -D_GNU_SOURCE=1 -DLINUX=1
@@ -580,7 +581,7 @@ EXTRA_DIST = README.md \
 
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
-	gui.c conf.c db.c utils.c hw.c media.c lib/ini/ini.c \
+	gui.c conf.c db.c utils.c hw.c media.c weather.c lib/ini/ini.c \
 	widgets/image.c widgets/default_wp.c widgets/icons/radio.c \
 	widgets/icons/alarm.c widgets/icons/calendar.c \
 	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
@@ -1121,6 +1122,7 @@ include ./$(DEPDIR)/antfx-gui.Po # am--include-marker
 include ./$(DEPDIR)/antfx-hw.Po # am--include-marker
 include ./$(DEPDIR)/antfx-media.Po # am--include-marker
 include ./$(DEPDIR)/antfx-utils.Po # am--include-marker
+include ./$(DEPDIR)/antfx-weather.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-fb_engine.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-sdl2_engine.Po # am--include-marker
 include lib/ini/$(DEPDIR)/antfx-ini.Po # am--include-marker
@@ -1389,6 +1391,20 @@ antfx-media.obj: media.c
 #	$(AM_V_CC)source='media.c' object='antfx-media.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-media.obj `if test -f 'media.c'; then $(CYGPATH_W) 'media.c'; else $(CYGPATH_W) '$(srcdir)/media.c'; fi`
+
+antfx-weather.o: weather.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-weather.o -MD -MP -MF $(DEPDIR)/antfx-weather.Tpo -c -o antfx-weather.o `test -f 'weather.c' || echo '$(srcdir)/'`weather.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-weather.Tpo $(DEPDIR)/antfx-weather.Po
+#	$(AM_V_CC)source='weather.c' object='antfx-weather.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-weather.o `test -f 'weather.c' || echo '$(srcdir)/'`weather.c
+
+antfx-weather.obj: weather.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-weather.obj -MD -MP -MF $(DEPDIR)/antfx-weather.Tpo -c -o antfx-weather.obj `if test -f 'weather.c'; then $(CYGPATH_W) 'weather.c'; else $(CYGPATH_W) '$(srcdir)/weather.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-weather.Tpo $(DEPDIR)/antfx-weather.Po
+#	$(AM_V_CC)source='weather.c' object='antfx-weather.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-weather.obj `if test -f 'weather.c'; then $(CYGPATH_W) 'weather.c'; else $(CYGPATH_W) '$(srcdir)/weather.c'; fi`
 
 lib/ini/antfx-ini.o: lib/ini/ini.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/ini/antfx-ini.o -MD -MP -MF lib/ini/$(DEPDIR)/antfx-ini.Tpo -c -o lib/ini/antfx-ini.o `test -f 'lib/ini/ini.c' || echo '$(srcdir)/'`lib/ini/ini.c
@@ -3152,6 +3168,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/antfx-hw.Po
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
+	-rm -f ./$(DEPDIR)/antfx-weather.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
@@ -3313,6 +3330,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/antfx-hw.Po
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
+	-rm -f ./$(DEPDIR)/antfx-weather.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po

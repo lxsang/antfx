@@ -4,19 +4,19 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include "utils.h"
 #include "log.h"
-#include "gui.h"
-
 
 void init_hw_clock()
 {
     int fd;
     char buf[32];
     int ret;
-    antfx_conf_t* config = antfx_get_config();
+    antfx_conf_t *config = antfx_get_config();
     fd = open(config->i2c_dev_del, O_WRONLY);
     if (fd != -1)
     {
@@ -54,11 +54,10 @@ void fm_set_freq(double f)
     int fd;
     ssize_t ret;
     unsigned int freq_b;
-    antfx_conf_t* config = antfx_get_config();
+    antfx_conf_t *config = antfx_get_config();
     freq_b = 4 * (f * 1000000 + 225000) / 32768; //calculating PLL word
     freq_h = freq_b >> 8;
     freq_l = freq_b & 0XFF;
-
     //printf ("Frequency = "); printf("%f",frequency);
     //printf("\n"); // data to be sent
 
@@ -79,6 +78,7 @@ void fm_set_freq(double f)
     }
     close(fd);
     LOG("FM RADIO on at frequency: %f", f);
+    config->fm_on = 1;
 }
 void fm_mute()
 {
@@ -88,7 +88,7 @@ void fm_mute()
     int fd;
     ssize_t ret;
     unsigned int freq_b;
-    antfx_conf_t* config = antfx_get_config();
+    antfx_conf_t *config = antfx_get_config();
     double frequency = fm_get_freq();
     if (frequency == -1)
     {
@@ -117,6 +117,7 @@ void fm_mute()
     }
     close(fd);
     LOG("FM RADIO off at frequency: %f", frequency);
+    config->fm_on = 0;
 }
 double fm_get_freq()
 {
@@ -124,7 +125,7 @@ double fm_get_freq()
     ssize_t ret;
     int fd;
     double frequency;
-    antfx_conf_t* config = antfx_get_config();
+    antfx_conf_t *config = antfx_get_config();
     if ((fd = wiringPiI2CSetup(config->i2c_hw_radio_addr)) < 0)
     {
         ERROR("error opening i2c channel");

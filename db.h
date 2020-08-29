@@ -62,5 +62,5 @@ int antfx_db_add_fm_channel(antfx_fm_record_t*);
 int antfx_db_rm_fm_channel(antfx_fm_record_t*);
 int antfx_db_fetch_fm_channels(void (*)(antfx_fm_record_t*, void*), void* );
 int antfx_db_get_fav(antfx_user_fav_t*);
-int antfx_db_save_fav(antfx_user_fav_t*);
+int antfx_db_save_fav(antfx_user_fav_t*, int );
 #endif
