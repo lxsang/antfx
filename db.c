@@ -10,8 +10,6 @@
 
 
 #define BUFFLEN 1024
-#define DEFAULT_CITY "Paris"
-#define DEFAULT_M_PATH "/media/music/"
 
 static int antfx_db_query(void* user, int (*call_back)(void *, int, char **, char **), const char *fstring, ...)
 {
@@ -70,15 +68,19 @@ static int antfx_db_fm_cb(void *user, int count, char **data, char **columns)
 static int antfx_db_fav_cb(void *user, int count, char **data, char **columns)
 {
     antfx_user_fav_t* fav = (antfx_user_fav_t*) user;
-    if(count != 4)
+    if(count != 6)
     {
-        ERROR("Number column in returned data is not correct: %d expected 3", count);
+        ERROR("Number column in returned data is not correct: %d expected 6", count);
         return -1;
     }
     fav->id = atoi(data[0]);
     strncpy(fav->city,data[1], ANTFX_MAX_STR_BUFF_SZ);
     fav->shuffle = atoi(data[2]);
     strncpy(fav->music_path,data[3], ANTFX_MAX_STR_BUFF_SZ);
+    if(data[4]!= NULL)
+        strncpy(fav->input,data[4], ANTFX_MAX_STR_BUFF_SZ);
+    if(data[5]!= NULL)
+        strncpy(fav->output,data[5], ANTFX_MAX_STR_BUFF_SZ);
     return 0;
 }
 
@@ -165,7 +167,7 @@ int antfx_db_save_fav(int reload)
             NULL,
             NULL,
             "UPDATE fav SET city='%s',shuffle=%d,music='%s',input='%s',output='%s' WHERE id=%d",
-            conf->fav.city, conf->fav.shuffle, conf->fav.music_path, conf->fav.id, conf->fav.input,conf->fav.output);
+            conf->fav.city, conf->fav.shuffle, conf->fav.music_path, conf->fav.input,conf->fav.output, conf->fav.id);
     }
     if(ret != -1 && reload)
     {

@@ -111,7 +111,6 @@ int main(int argc, char *argv[])
         lv_tick_inc(5);
         usleep(5000);
     }
-    antfx_ui_update_status("");
     if(antfx_db_save_fav(0) == -1)
     {
         ERROR("Unable to save user configuration");

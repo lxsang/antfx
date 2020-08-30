@@ -13,6 +13,8 @@ typedef struct {
     char ts_calibrate_cmd[ANTFX_MAX_STR_BUFF_SZ];
     char ts_calibrate_file[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_display_dev_t;
+
+
 typedef struct
 {
     antfx_i2cdev_t i2c_dev;

@@ -93,7 +93,7 @@ void antfx_ui_update()
     {
         lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
         lv_img_set_src(img, LV_SYMBOL_PLAY);
-        if(!conf->audio.mode != A_FM_MODE)
+        if(conf->audio.mode != A_FM_MODE)
             antfx_ui_update_status("");
     }
     else if(m_ctrl->status == MUSIC_PAUSE)
