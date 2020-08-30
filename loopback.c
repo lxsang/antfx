@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
         NULL,
         "antfx",
         PA_STREAM_RECORD,
-        "antfx_source",
+        "antfx-source",
         //"alsa_input.usb-GeneralPlus_USB_Audio_Device-00.mono-fallback",
         "FM-in",
         &spec,
