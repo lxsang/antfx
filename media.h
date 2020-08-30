@@ -2,12 +2,20 @@
 #define MEDIA_H
 #include <mpg123.h>
 #include <pulse/simple.h>
+#include "default.h"
+#include "bst.h"
 typedef enum
 {
     MUSIC_RND,
     MUSIC_ONCE,
     MUSIC_1B1
 } antfx_music_play_mode_t;
+
+typedef enum{
+    A_MUSIC_MODE,
+    A_FM_MODE,
+    A_NONE
+} antfx_audio_mode_t;
 
 typedef enum
 {
@@ -31,8 +39,18 @@ typedef struct
     pa_sample_spec sample_spec;
     int encoding;
     pthread_mutex_t lock;
-    char current_song[MAX_CONF_SIZE];
+    char current_song[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_music_ctl_t;
+
+
+typedef struct {
+    char startup_sound[ANTFX_MAX_STR_BUFF_SZ];
+    bst_node_t* inputs;
+    bst_node_t* outputs;
+    antfx_audio_mode_t mode;
+    int n_in;
+    int n_out;
+} antfx_audio_t;
 
 int antfx_music_play(const char* song);
 int antfx_music_pause();

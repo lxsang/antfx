@@ -1,8 +1,7 @@
 #ifndef DB_H
 #define DB_H
 
-#define DB_MAX_TEXT_SIZE 255
-
+#include "default.h"
 
 #define RADIO_TABLE_SQL  "\
 CREATE TABLE IF NOT EXISTS radio (\
@@ -22,7 +21,9 @@ CREATE TABLE IF NOT EXISTS fav (\
 id INTEGER PRIMARY KEY AUTOINCREMENT,\
 city TEXT,\
 shuffle INTEGER,\
-music TEXT);"
+music TEXT,\
+input TEXT,\
+output TEXT);"
 
 typedef enum {
     U_FM_FREQ,
@@ -31,21 +32,23 @@ typedef enum {
 
 typedef struct {
     int id;
-    char name[DB_MAX_TEXT_SIZE];
+    char name[ANTFX_MAX_STR_BUFF_SZ];
     float freq;
     void* user_data;
 } antfx_fm_record_t;
 
 typedef struct {
     int id;
-    char city[DB_MAX_TEXT_SIZE];
+    char city[ANTFX_MAX_STR_BUFF_SZ];
     int shuffle;
-     char music_path[DB_MAX_TEXT_SIZE];
+    char music_path[ANTFX_MAX_STR_BUFF_SZ];
+    char input[ANTFX_MAX_STR_BUFF_SZ];
+    char output[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_user_fav_t;
 
 typedef union {
     float freq;
-    char music[DB_MAX_TEXT_SIZE];
+    char music[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_user_data_t;
 
 typedef struct {
@@ -62,5 +65,5 @@ int antfx_db_add_fm_channel(antfx_fm_record_t*);
 int antfx_db_rm_fm_channel(antfx_fm_record_t*);
 int antfx_db_fetch_fm_channels(void (*)(antfx_fm_record_t*, void*), void* );
 int antfx_db_get_fav(antfx_user_fav_t*);
-int antfx_db_save_fav(antfx_user_fav_t*, int );
+int antfx_db_save_fav(int);
 #endif

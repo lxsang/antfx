@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 #include "log.h"
-#include "conf.h"
 #include "media.h"
 
 #define SET_STATUS(s)                 \
@@ -164,7 +163,7 @@ const antfx_music_ctl_t* antfx_music_get_ctrl()
 
 int antfx_music_play(const char *song)
 {
-    strncpy(g_mctl.current_song, song, MAX_CONF_SIZE);
+    strncpy(g_mctl.current_song, song, ANTFX_MAX_STR_BUFF_SZ);
     LOG("Playing %s", g_mctl.current_song);
     if (g_mctl.status == MUSIC_STOP)
     {
@@ -201,7 +200,7 @@ int antfx_music_resume()
 int antfx_music_stop()
 {
     SET_STATUS(MUSIC_STOP);
-    memset(g_mctl.current_song, 0, MAX_CONF_SIZE);
+    memset(g_mctl.current_song, 0, ANTFX_MAX_STR_BUFF_SZ);
 }
 
 void anfx_music_init()

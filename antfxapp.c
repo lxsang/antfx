@@ -8,13 +8,9 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-#include "conf.h"
+#include "antfx.h"
 #include "gui.h"
-#include "db.h"
-#include "utils.h"
-#include "hw.h"
-#include "media.h"
-#include "weather.h"
+#include "conf.h"
 
 
 
@@ -62,37 +58,37 @@ int main(int argc, char *argv[])
         exit(1);
     }
     // verify if we should calibrate the display
-    if ((stat(g_config.ts_calibrate_file, &st) == -1))
+    if ((stat(g_config.display_dev.ts_calibrate_file, &st) == -1))
     {
         LOG("Calibrate the display");
-        ret = system(g_config.ts_calibrate_cmd);
+        ret = system(g_config.display_dev.ts_calibrate_cmd);
         if (ret != -1 && WEXITSTATUS(ret) != 127)
         {
-            ret = open(g_config.ts_calibrate_file, O_CREAT | O_WRONLY, 0644);
+            ret = open(g_config.display_dev.ts_calibrate_file, O_CREAT | O_WRONLY, 0644);
             if (ret != -1)
             {
                 close(ret);
             }
             else
             {
-                ERROR("Unable to create calibarion file: %s", g_config.ts_calibrate_file);
+                ERROR("Unable to create calibarion file: %s", g_config.display_dev.ts_calibrate_file);
             }
         }
         else
         {
-            ERROR("Unable to calibrate screen, touch may not be used: %s", g_config.ts_calibrate_cmd);
+            ERROR("Unable to calibrate screen, touch may not be used: %s", g_config.display_dev.ts_calibrate_cmd);
         }
     }
     // init the display
-    conf.default_w = 480;
-    conf.default_h = 320;
+    conf.default_w = LV_HOR_RES_MAX;
+    conf.default_h = LV_VER_RES_MAX;
     conf.defaut_bbp = 16;
-    conf.dev = g_config.fb_dev;
-    conf.tdev = g_config.ts_dev;
+    conf.dev = g_config.display_dev.fb_dev;
+    conf.tdev = g_config.display_dev.ts_dev;
     time_t last_weather_check = 0;
     time_t now;
     anfx_music_init();
-    if(antfx_music_play(g_config.startup_sound) == -1)
+    if(antfx_music_play(g_config.audio.startup_sound) == -1)
     {
         ERROR("Unable to play startup sound");
     }
@@ -102,12 +98,10 @@ int main(int argc, char *argv[])
     // start display engine
     antfx_ui_main(conf);
     running = 1;
-    g_config.weather.update = 0;
-    g_config.fm_on = 0;
     while (running)
     {
         now = time(NULL);
-        if (difftime(now, last_weather_check) > g_config.weather_check_period)
+        if (difftime(now, last_weather_check) > g_config.weather.weather_check_period)
         {
             weather_update(&g_config.weather);
             last_weather_check = now;
@@ -118,7 +112,7 @@ int main(int argc, char *argv[])
         usleep(5000);
     }
     antfx_ui_update_status("");
-    if(antfx_db_save_fav(&g_config.fav, 0) == -1)
+    if(antfx_db_save_fav(0) == -1)
     {
         ERROR("Unable to save user configuration");
     }

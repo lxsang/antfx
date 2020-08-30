@@ -8,8 +8,8 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "utils.h"
 #include "log.h"
+#include "conf.h"
 
 void init_hw_clock()
 {
@@ -17,20 +17,20 @@ void init_hw_clock()
     char buf[32];
     int ret;
     antfx_conf_t *config = antfx_get_config();
-    fd = open(config->i2c_dev_del, O_WRONLY);
+    fd = open(config->i2c_dev.dev_del, O_WRONLY);
     if (fd != -1)
     {
-        snprintf(buf, 32, "0x%02X", config->i2c_hw_clock_addr);
+        snprintf(buf, 32, "0x%02X", config->i2c_dev.clock_addr);
         ret = write(fd, buf, strlen(buf));
         close(fd);
     }
-    fd = open(config->i2c_dev_new, O_WRONLY);
+    fd = open(config->i2c_dev.dev_new, O_WRONLY);
     if (fd == -1)
     {
         ERROR("Unable to open sys file for registering HW clock: %s", strerror(errno));
         return;
     }
-    snprintf(buf, 32, "%s 0x%02X", "ds1307", config->i2c_hw_clock_addr);
+    snprintf(buf, 32, "%s 0x%02X", "ds1307", config->i2c_dev.clock_addr);
     ret = write(fd, buf, strlen(buf));
     close(fd);
     if (ret != (int)strlen(buf))
@@ -67,7 +67,7 @@ void fm_set_freq(double f)
     radio[3] = 0x10;   //4 byte (0x10) : Xtal is 32.768 kHz
     radio[4] = 0x00;   //5 byte0x00)
 
-    if ((fd = wiringPiI2CSetup(config->i2c_hw_radio_addr)) < 0)
+    if ((fd = wiringPiI2CSetup(config->i2c_dev.radio_addr)) < 0)
     {
         ERROR("error opening i2c channel");
     }
@@ -78,7 +78,7 @@ void fm_set_freq(double f)
     }
     close(fd);
     LOG("FM RADIO on at frequency: %f", f);
-    config->fm_on = 1;
+    config->audio.mode = A_FM_MODE;
 }
 void fm_mute()
 {
@@ -106,7 +106,7 @@ void fm_mute()
     radio[3] = 0x10;   //4 byte (0x10) : Xtal is 32.768 kHz
     radio[4] = 0x00;   //5 byte0x00)
 
-    if ((fd = wiringPiI2CSetup(config->i2c_hw_radio_addr)) < 0)
+    if ((fd = wiringPiI2CSetup(config->i2c_dev.radio_addr)) < 0)
     {
         ERROR("error opening i2c channel");
     }
@@ -117,7 +117,7 @@ void fm_mute()
     }
     close(fd);
     LOG("FM RADIO off at frequency: %f", frequency);
-    config->fm_on = 0;
+    config->audio.mode = A_NONE;
 }
 double fm_get_freq()
 {
@@ -126,7 +126,7 @@ double fm_get_freq()
     int fd;
     double frequency;
     antfx_conf_t *config = antfx_get_config();
-    if ((fd = wiringPiI2CSetup(config->i2c_hw_radio_addr)) < 0)
+    if ((fd = wiringPiI2CSetup(config->i2c_dev.radio_addr)) < 0)
     {
         ERROR("error opening i2c channel");
     }

@@ -4,15 +4,15 @@
 #include "db.h"
 #include "hw.h"
 #include "media.h"
+#include "utils.h"
 
-#define MAX_FIELD_SIZE 255
 typedef struct
 {
-    char field_1[MAX_FIELD_SIZE];
-    char field_2[MAX_FIELD_SIZE];
-    char field_3[MAX_FIELD_SIZE];
-    char field_4[MAX_FIELD_SIZE];
-    char field_5[MAX_FIELD_SIZE];
+    char field_1[ANTFX_MAX_STR_BUFF_SZ];
+    char field_2[ANTFX_MAX_STR_BUFF_SZ];
+    char field_3[ANTFX_MAX_STR_BUFF_SZ];
+    char field_4[ANTFX_MAX_STR_BUFF_SZ];
+    char field_5[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_ui_form_data_t;
 
 typedef struct
@@ -93,7 +93,7 @@ void antfx_ui_update()
     {
         lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
         lv_img_set_src(img, LV_SYMBOL_PLAY);
-        if(!conf->fm_on)
+        if(!conf->audio.mode != A_FM_MODE)
             antfx_ui_update_status("");
     }
     else if(m_ctrl->status == MUSIC_PAUSE)
@@ -296,7 +296,7 @@ static void  antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event)
 }
 static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event)
 {
-    char buff[MAX_FIELD_SIZE];
+    char buff[ANTFX_MAX_STR_BUFF_SZ];
     if (event == LV_EVENT_RELEASED)
     {
         const antfx_music_ctl_t* ctrl = antfx_music_get_ctrl();
@@ -335,8 +335,8 @@ static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event)
 }
 static void antfx_ui_fm_list_add(antfx_fm_record_t *r, void *list)
 {
-    char buff[MAX_FIELD_SIZE];
-    snprintf(buff, MAX_FIELD_SIZE, "%s : %.2f Mhz", r->name, r->freq);
+    char buff[ANTFX_MAX_STR_BUFF_SZ];
+    snprintf(buff, ANTFX_MAX_STR_BUFF_SZ, "%s : %.2f Mhz", r->name, r->freq);
     lv_obj_t *btn = lv_list_add_btn((lv_obj_t *)list, &radio, buff);
     r->user_data = (void *)list;
     lv_obj_set_user_data(btn, r);
@@ -502,8 +502,8 @@ static void antfx_ui_fav_setting(lv_obj_t *obj, lv_event_t event)
         lv_obj_t *btn;
         lv_style_t *style;
         antfx_conf_t* conf = antfx_get_config();
-        memset(g_scr_info.fields.field_1, 0, MAX_FIELD_SIZE);
-        memset(g_scr_info.fields.field_2, 0, MAX_FIELD_SIZE);
+        memset(g_scr_info.fields.field_1, 0, ANTFX_MAX_STR_BUFF_SZ);
+        memset(g_scr_info.fields.field_2, 0, ANTFX_MAX_STR_BUFF_SZ);
         btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
         lv_obj_set_event_cb(btn, lv_win_close_event_cb);
 
@@ -525,7 +525,7 @@ static void antfx_ui_fav_setting(lv_obj_t *obj, lv_event_t event)
         lv_obj_set_user_data(ta, g_scr_info.fields.field_1);
         lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
         lv_ta_set_text(ta, conf->fav.city);
-        strncpy(g_scr_info.fields.field_1, conf->fav.city, MAX_FIELD_SIZE);
+        strncpy(g_scr_info.fields.field_1, conf->fav.city, ANTFX_MAX_STR_BUFF_SZ);
 
         /* Create.kea keyboard */
         g_scr_info.keyboard = lv_kb_create(win, NULL);
@@ -546,7 +546,7 @@ static void antfx_ui_fav_setting(lv_obj_t *obj, lv_event_t event)
         lv_obj_set_user_data(ta, g_scr_info.fields.field_2);
         lv_obj_set_event_cb(ta, antfx_ui_attach_keyboard);
         lv_ta_set_text(ta, conf->fav.music_path);
-        strncpy(g_scr_info.fields.field_2, conf->fav.music_path, MAX_FIELD_SIZE);
+        strncpy(g_scr_info.fields.field_2, conf->fav.music_path, ANTFX_MAX_STR_BUFF_SZ);
 
         /* Create a label and position it above the text box */
         lbl = lv_label_create(win, NULL);
@@ -568,10 +568,10 @@ static void antfx_ui_fav_setting_save(lv_obj_t *obj, lv_event_t event)
             antfx_ui_alert("Invalid input");
             return;
         }
-        strncpy(conf->fav.city, g_scr_info.fields.field_1, MAX_FIELD_SIZE);
-        strncpy(conf->fav.music_path, g_scr_info.fields.field_2, MAX_FIELD_SIZE);
+        strncpy(conf->fav.city, g_scr_info.fields.field_1, ANTFX_MAX_STR_BUFF_SZ);
+        strncpy(conf->fav.music_path, g_scr_info.fields.field_2, ANTFX_MAX_STR_BUFF_SZ);
 
-        if (antfx_db_save_fav(&conf->fav, 1) == -1)
+        if (antfx_db_save_fav(1) == -1)
         {
             antfx_ui_alert("Unable to save user setting to database");
         }
@@ -588,7 +588,7 @@ static void antfx_ui_add_fm_channel(lv_obj_t *obj, lv_event_t event)
         trim(g_scr_info.fields.field_2, ' ');
         trim(g_scr_info.fields.field_1, ' ');
         record.freq = atof(g_scr_info.fields.field_2);
-        strncpy(record.name, g_scr_info.fields.field_1, MAX_FIELD_SIZE);
+        strncpy(record.name, g_scr_info.fields.field_1, ANTFX_MAX_STR_BUFF_SZ);
         if (record.freq > 0 && strcmp(record.name, "") != 0)
         {
             if (antfx_db_add_fm_channel(&record) == -1)
@@ -616,8 +616,8 @@ static void antfx_ui_add_fm_channel_popup(lv_obj_t *obj, lv_event_t event)
         lv_obj_t *win = lv_win_create(scr, NULL);
         lv_obj_t *btn;
         lv_style_t *style;
-        memset(g_scr_info.fields.field_1, 0, MAX_FIELD_SIZE);
-        memset(g_scr_info.fields.field_2, 0, MAX_FIELD_SIZE);
+        memset(g_scr_info.fields.field_1, 0, ANTFX_MAX_STR_BUFF_SZ);
+        memset(g_scr_info.fields.field_2, 0, ANTFX_MAX_STR_BUFF_SZ);
         btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
         lv_obj_set_event_cb(btn, lv_win_close_event_cb);
 
@@ -681,7 +681,7 @@ static void antfx_ui_attach_keyboard(lv_obj_t *obj, lv_event_t event)
         char *buff = (char *)lv_obj_get_user_data(obj);
         if (buff)
         {
-            strncpy(buff, str, MAX_FIELD_SIZE);
+            strncpy(buff, str, ANTFX_MAX_STR_BUFF_SZ);
             strcat(buff, (const char *)lv_event_get_data());
         }
     }
@@ -702,7 +702,7 @@ static void antfx_ui_attach_numpad(lv_obj_t *obj, lv_event_t event)
         char *buff = (char *)lv_obj_get_user_data(obj);
         if (buff)
         {
-            strncpy(buff, str, MAX_FIELD_SIZE);
+            strncpy(buff, str, ANTFX_MAX_STR_BUFF_SZ);
             strcat(buff, (const char *)lv_event_get_data());
         }
     }

@@ -107,14 +107,14 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
 	backends/fb_engine.c gui.c conf.c db.c utils.c hw.c media.c \
-	weather.c lib/ini/ini.c widgets/image.c widgets/default_wp.c \
-	widgets/icons/radio.c widgets/icons/alarm.c \
-	widgets/icons/calendar.c widgets/icons/camera.c \
-	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
-	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
-	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
-	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
-	widgets/icons/w13d.c widgets/icons/w50d.c \
+	weather.c bst.c lib/ini/ini.c widgets/image.c \
+	widgets/default_wp.c widgets/icons/radio.c \
+	widgets/icons/alarm.c widgets/icons/calendar.c \
+	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
+	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
+	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
+	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
+	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -175,8 +175,8 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	$(am__objects_1) $(am__objects_2) antfx-gui.$(OBJEXT) \
 	antfx-conf.$(OBJEXT) antfx-db.$(OBJEXT) antfx-utils.$(OBJEXT) \
 	antfx-hw.$(OBJEXT) antfx-media.$(OBJEXT) \
-	antfx-weather.$(OBJEXT) lib/ini/antfx-ini.$(OBJEXT) \
-	widgets/antfx-image.$(OBJEXT) \
+	antfx-weather.$(OBJEXT) antfx-bst.$(OBJEXT) \
+	lib/ini/antfx-ini.$(OBJEXT) widgets/antfx-image.$(OBJEXT) \
 	widgets/antfx-default_wp.$(OBJEXT) \
 	widgets/icons/antfx-radio.$(OBJEXT) \
 	widgets/icons/antfx-alarm.$(OBJEXT) \
@@ -300,11 +300,12 @@ DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
-	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-conf.Po \
-	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
-	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-media.Po \
-	./$(DEPDIR)/antfx-utils.Po ./$(DEPDIR)/antfx-weather.Po \
-	./$(DEPDIR)/loopback.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
+	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-bst.Po \
+	./$(DEPDIR)/antfx-conf.Po ./$(DEPDIR)/antfx-db.Po \
+	./$(DEPDIR)/antfx-gui.Po ./$(DEPDIR)/antfx-hw.Po \
+	./$(DEPDIR)/antfx-media.Po ./$(DEPDIR)/antfx-utils.Po \
+	./$(DEPDIR)/antfx-weather.Po ./$(DEPDIR)/loopback.Po \
+	backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/ini/$(DEPDIR)/antfx-ini.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
@@ -586,14 +587,15 @@ loopback_SOURCES = loopback.c
 
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
-	gui.c conf.c db.c utils.c hw.c media.c weather.c lib/ini/ini.c \
-	widgets/image.c widgets/default_wp.c widgets/icons/radio.c \
-	widgets/icons/alarm.c widgets/icons/calendar.c \
-	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
-	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
-	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
-	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
-	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
+	gui.c conf.c db.c utils.c hw.c media.c weather.c bst.c \
+	lib/ini/ini.c widgets/image.c widgets/default_wp.c \
+	widgets/icons/radio.c widgets/icons/alarm.c \
+	widgets/icons/calendar.c widgets/icons/camera.c \
+	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
+	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
+	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
+	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
+	widgets/icons/w13d.c widgets/icons/w50d.c \
 	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
 	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
 	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
@@ -1125,6 +1127,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/antfx-antfx.Po # am--include-marker
 include ./$(DEPDIR)/antfx-antfxapp.Po # am--include-marker
+include ./$(DEPDIR)/antfx-bst.Po # am--include-marker
 include ./$(DEPDIR)/antfx-conf.Po # am--include-marker
 include ./$(DEPDIR)/antfx-db.Po # am--include-marker
 include ./$(DEPDIR)/antfx-gui.Po # am--include-marker
@@ -1415,6 +1418,20 @@ antfx-weather.obj: weather.c
 #	$(AM_V_CC)source='weather.c' object='antfx-weather.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-weather.obj `if test -f 'weather.c'; then $(CYGPATH_W) 'weather.c'; else $(CYGPATH_W) '$(srcdir)/weather.c'; fi`
+
+antfx-bst.o: bst.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-bst.o -MD -MP -MF $(DEPDIR)/antfx-bst.Tpo -c -o antfx-bst.o `test -f 'bst.c' || echo '$(srcdir)/'`bst.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-bst.Tpo $(DEPDIR)/antfx-bst.Po
+#	$(AM_V_CC)source='bst.c' object='antfx-bst.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-bst.o `test -f 'bst.c' || echo '$(srcdir)/'`bst.c
+
+antfx-bst.obj: bst.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-bst.obj -MD -MP -MF $(DEPDIR)/antfx-bst.Tpo -c -o antfx-bst.obj `if test -f 'bst.c'; then $(CYGPATH_W) 'bst.c'; else $(CYGPATH_W) '$(srcdir)/bst.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-bst.Tpo $(DEPDIR)/antfx-bst.Po
+#	$(AM_V_CC)source='bst.c' object='antfx-bst.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-bst.obj `if test -f 'bst.c'; then $(CYGPATH_W) 'bst.c'; else $(CYGPATH_W) '$(srcdir)/bst.c'; fi`
 
 lib/ini/antfx-ini.o: lib/ini/ini.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/ini/antfx-ini.o -MD -MP -MF lib/ini/$(DEPDIR)/antfx-ini.Tpo -c -o lib/ini/antfx-ini.o `test -f 'lib/ini/ini.c' || echo '$(srcdir)/'`lib/ini/ini.c
@@ -3172,6 +3189,7 @@ distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-bst.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
 	-rm -f ./$(DEPDIR)/antfx-db.Po
 	-rm -f ./$(DEPDIR)/antfx-gui.Po
@@ -3335,6 +3353,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-bst.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
 	-rm -f ./$(DEPDIR)/antfx-db.Po
 	-rm -f ./$(DEPDIR)/antfx-gui.Po

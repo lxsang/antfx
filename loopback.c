@@ -25,8 +25,8 @@ int main(int argc, char const *argv[])
         NULL,
         "antfx",
         PA_STREAM_RECORD,
-        "antfx-source",
-        //"alsa_input.usb-GeneralPlus_USB_Audio_Device-00.mono-fallback",
+        //"antfx-source",
+        "alsa_input.usb-GeneralPlus_USB_Audio_Device-00.mono-fallback",
         "FM-in",
         &spec,
         NULL,
@@ -55,23 +55,14 @@ int main(int argc, char const *argv[])
         pa_simple_free(source);
         return 1;
     }
-    int len;
-    int total_bytes = 0;
-    int running = 1;
     while (pa_simple_read(source, buffer,BUFFLEN,&error) == 0)
     {
         LOG("Playing data");
-        total_bytes += len;
         if (pa_simple_write(sink, buffer, BUFFLEN, &error) != 0)
         {
             ERROR("pa_simple_write: %s\n", pa_strerror(error));
             break;
         }
-    }
-    LOG("total byte read:%d (%d)", total_bytes, len);
-    if(len < 0)
-    {
-        ERROR("pa_simple_write: %s\n", pa_strerror(error));
     }
 
     if (pa_simple_drain(sink, &error) != 0)

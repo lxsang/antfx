@@ -4,59 +4,69 @@
 #include "conf.h"
 #include "log.h"
 
-#define EQU(a,b) (strcmp(a,b) == 0)
+#define EQU(a, b) (strcmp(a, b) == 0)
 
 static int ini_handle(void *user_data, const char *section, const char *name,
                       const char *value)
 {
-    antfx_conf_t* config = (antfx_conf_t*) user_data;
+    antfx_conf_t *config = (antfx_conf_t *)user_data;
     if (EQU(section, "antfxd") && EQU(name, "db_path"))
     {
-        strncpy(config->db_path,value, MAX_CONF_SIZE);
+        strncpy(config->db_path, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "fb_dev"))
+    else if (EQU(section, "display") && EQU(name, "fb_dev"))
     {
-        strncpy(config->fb_dev,value, MAX_CONF_SIZE);
+        strncpy(config->display_dev.fb_dev, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "ts_dev"))
+    else if (EQU(section, "display") && EQU(name, "ts_dev"))
     {
-        strncpy(config->ts_dev,value, MAX_CONF_SIZE);
+        strncpy(config->display_dev.ts_dev, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "i2c_dev_del"))
+    else if (EQU(section, "i2cdev") && EQU(name, "i2c_dev_del"))
     {
-        strncpy(config->i2c_dev_del,value, MAX_CONF_SIZE);
+        strncpy(config->i2c_dev.dev_del, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "i2c_dev_new"))
+    else if (EQU(section, "i2cdev") && EQU(name, "i2c_dev_new"))
     {
-        strncpy(config->i2c_dev_new,value, MAX_CONF_SIZE);
+        strncpy(config->i2c_dev.dev_new, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "i2c_hw_clock_addr"))
+    else if (EQU(section, "i2cdev") && EQU(name, "i2c_hw_clock_addr"))
     {
-        config->i2c_hw_clock_addr = (unsigned int)strtol(value, NULL, 0);
+        config->i2c_dev.clock_addr = (uint8_t)strtol(value, NULL, 0);
     }
-    else if (EQU(section, "hardware") && EQU(name, "i2c_hw_radio_addr"))
+    else if (EQU(section, "i2cdev") && EQU(name, "i2c_hw_radio_addr"))
     {
-        config->i2c_hw_radio_addr = (unsigned int)strtol(value, NULL, 0);
+        config->i2c_dev.radio_addr = (uint8_t)strtol(value, NULL, 0);
     }
-    else if (EQU(section, "hardware") && EQU(name, "ts_calibrate_cmd"))
+    else if (EQU(section, "display") && EQU(name, "ts_calibrate_cmd"))
     {
-        strncpy(config->ts_calibrate_cmd,value, MAX_CONF_SIZE);
+        strncpy(config->display_dev.ts_calibrate_cmd, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "hardware") && EQU(name, "ts_calibrate_file"))
+    else if (EQU(section, "display") && EQU(name, "ts_calibrate_file"))
     {
-        strncpy(config->ts_calibrate_file,value, MAX_CONF_SIZE);
+        strncpy(config->display_dev.ts_calibrate_file, value, ANTFX_MAX_STR_BUFF_SZ);
     }
     else if (EQU(section, "weather") && EQU(name, "weather_api_uri"))
     {
-        strncpy(config->weather_api_uri,value, MAX_CONF_SIZE);
+        strncpy(config->weather.weather_api_uri, value, ANTFX_MAX_STR_BUFF_SZ);
     }
     else if (EQU(section, "weather") && EQU(name, "weather_check_period"))
     {
-        config->weather_check_period = (int) atoi(value);
+        config->weather.weather_check_period = (int)atoi(value);
     }
-    else if (EQU(section, "antfxd") && EQU(name, "startup_sound"))
+    else if (EQU(section, "audio") && EQU(name, "startup_sound"))
     {
-        strncpy(config->startup_sound,value, MAX_CONF_SIZE);
+        strncpy(config->audio.startup_sound, value, ANTFX_MAX_STR_BUFF_SZ);
+    }
+    else if (EQU(section, "audio") && EQU(name, "input"))
+    {
+        config->audio.inputs = bst_insert(config->audio.inputs, config->audio.n_in, value);
+        config->audio.n_in++;
+    }
+    else if (EQU(section, "audio") && EQU(name, "output"))
+    {
+        config->audio.outputs = bst_insert(config->audio.outputs, config->audio.n_out, value);
+        config->audio.n_out++;
     }
     else
     {
@@ -65,20 +75,50 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     return 1;
 }
 
-int antfx_read_config(const char* file, antfx_conf_t* config)
+int antfx_read_config(const char *file, antfx_conf_t *config)
 {
+    config->audio.mode = A_NONE;
+    config->audio.inputs = NULL;
+    config->audio.outputs = NULL;
+    config->audio.n_out = 0;
+    config->audio.n_in = 0;
+    memset(config->audio.startup_sound, 0, ANTFX_MAX_STR_BUFF_SZ);
+
+    memset(config->db_path, 0, ANTFX_MAX_STR_BUFF_SZ);
+
+    memset(config->display_dev.fb_dev, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->display_dev.ts_calibrate_cmd, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->display_dev.ts_calibrate_file, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->display_dev.ts_dev, 0, ANTFX_MAX_STR_BUFF_SZ);
+
+    memset(config->fav.city, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->fav.music_path, 0, ANTFX_MAX_STR_BUFF_SZ);
+    config->fav.id = 0;
+    config->fav.shuffle = 0;
+
+    memset(config->i2c_dev.dev_del, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->i2c_dev.dev_new, 0, ANTFX_MAX_STR_BUFF_SZ);
+    config->i2c_dev.clock_addr = 0;
+    config->i2c_dev.radio_addr = 0;
+
+    memset(config->weather.desc, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->weather.icon, 0, 10);
+    memset(config->weather.weather_api_uri, 0, ANTFX_MAX_STR_BUFF_SZ);
+    config->weather.weather_check_period = 300;
+    config->weather.update = 0;
+
     LOG("Read config file: %s", file);
     if (ini_parse(file, ini_handle, config) < 0)
     {
         ERROR("Can't load '%s'", file);
         return -1;
     }
-    if(antdfx_db_init() == -1)
+    if (antdfx_db_init() == -1)
     {
         ERROR("Unable to int database: %s", config->db_path);
         return -1;
     }
-    if(antfx_db_get_fav(&config->fav) == -1)
+    if (antfx_db_get_fav(&config->fav) == -1)
     {
         ERROR("Can't load user config from database");
     }

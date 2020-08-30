@@ -4,6 +4,7 @@
 #include "weather.h"
 #include "utils.h"
 #include "log.h"
+#include "conf.h"
 
 #define MAX_CURL_PAGE_LENGTH 2048
 
@@ -45,7 +46,7 @@ static void *weather_thread_handler(void *data)
     CURLcode res;
     (void)memset(buffer, 0, MAX_CURL_PAGE_LENGTH);
     curl_handle = curl_easy_init();
-    snprintf(buffer, MAX_CURL_PAGE_LENGTH, conf->weather_api_uri, conf->fav.city);
+    snprintf(buffer, MAX_CURL_PAGE_LENGTH, conf->weather.weather_api_uri, conf->fav.city);
     curl_easy_setopt(curl_handle, CURLOPT_URL, buffer);
     (void)memset(buffer, 0, MAX_CURL_PAGE_LENGTH);
     curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 0L);

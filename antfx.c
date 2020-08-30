@@ -22,7 +22,7 @@ static void render(lv_disp_t * disp, const lv_area_t * area, lv_color_t * color_
         }
     }
 
-    lv_disp_flush_ready(disp);
+    lv_disp_flush_ready(&disp->driver);
 #ifdef USE_SDL2
     display_update(&_screen);
 #endif

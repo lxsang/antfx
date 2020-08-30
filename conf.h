@@ -3,27 +3,26 @@
 #include <stdint.h>
 #include "db.h"
 #include "weather.h"
+#include "hw.h"
+#include "media.h"
+#include "default.h"
 
-#define DEFAULT_CONF "/etc/antfxd/config.ini"
-#define MAX_CONF_SIZE 255
+typedef struct {
+    char fb_dev[ANTFX_MAX_STR_BUFF_SZ];
+    char ts_dev[ANTFX_MAX_STR_BUFF_SZ];
+    char ts_calibrate_cmd[ANTFX_MAX_STR_BUFF_SZ];
+    char ts_calibrate_file[ANTFX_MAX_STR_BUFF_SZ];
+} antfx_display_dev_t;
 typedef struct
 {
-    char db_path[MAX_CONF_SIZE];
-    char fb_dev[MAX_CONF_SIZE];
-    char ts_dev[MAX_CONF_SIZE];
-    char i2c_dev_del[MAX_CONF_SIZE];
-    char i2c_dev_new[MAX_CONF_SIZE];
-    char ts_calibrate_cmd[MAX_CONF_SIZE];
-    char ts_calibrate_file[MAX_CONF_SIZE];
-    unsigned int i2c_hw_clock_addr;
-    unsigned int i2c_hw_radio_addr;
-    char weather_api_uri[MAX_CONF_SIZE];
-    int weather_check_period;
-    char startup_sound[MAX_CONF_SIZE];
-    uint8_t fm_on;
+    antfx_i2cdev_t i2c_dev;
+    antfx_display_dev_t display_dev;
+    antfx_audio_t audio;
     antfx_user_fav_t fav;
     antfx_wt_t weather;
+    char db_path[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_conf_t;
 
 int antfx_read_config(const char*, antfx_conf_t*);
+antfx_conf_t *antfx_get_config();
 #endif

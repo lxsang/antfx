@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include "db.h"
 #include "log.h"
-#include "utils.h"
 #include "weather.h"
+#include "conf.h"
 
 
 #define BUFFLEN 1024
@@ -62,7 +62,7 @@ static int antfx_db_fm_cb(void *user, int count, char **data, char **columns)
     }
     record->id = atoi(data[0]);
     record->freq = atof(data[2]);
-    strncpy(record->name, data[1], DB_MAX_TEXT_SIZE);
+    strncpy(record->name, data[1], ANTFX_MAX_STR_BUFF_SZ);
     fn(record,user_data[1]);
     return 0;
 }
@@ -76,9 +76,9 @@ static int antfx_db_fav_cb(void *user, int count, char **data, char **columns)
         return -1;
     }
     fav->id = atoi(data[0]);
-    strncpy(fav->city,data[1], DB_MAX_TEXT_SIZE);
+    strncpy(fav->city,data[1], ANTFX_MAX_STR_BUFF_SZ);
     fav->shuffle = atoi(data[2]);
-    strncpy(fav->music_path,data[3], DB_MAX_TEXT_SIZE);
+    strncpy(fav->music_path,data[3], ANTFX_MAX_STR_BUFF_SZ);
     return 0;
 }
 
@@ -147,29 +147,29 @@ int antfx_db_get_fav(antfx_user_fav_t* conf)
     conf->id = 0;
     return antfx_db_query(conf, antfx_db_fav_cb,"SELECT * FROM fav LIMIT 1");
 }
-int antfx_db_save_fav(antfx_user_fav_t* fav, int reload)
+int antfx_db_save_fav(int reload)
 {
     int ret;
     antfx_conf_t* conf = antfx_get_config();
-    if(fav->id == 0)
+    if(conf->fav.id == 0)
     {
         ret = antfx_db_query(
             NULL,
             NULL,
-            "INSERT INTO fav(city,shuffle,music) VALUES ('%s',%d, '%s')",
-            fav->city, fav->shuffle, fav->music_path);
+            "INSERT INTO fav(city,shuffle,music,input,output) VALUES ('%s',%d, '%s',NULL,NULL)",
+            conf->fav.city, conf->fav.shuffle, conf->fav.music_path);
     }
     else
     {
         ret = antfx_db_query(
             NULL,
             NULL,
-            "UPDATE fav SET city='%s',shuffle=%d,music='%s' WHERE id=%d",
-            fav->city, fav->shuffle, fav->music_path, fav->id);
+            "UPDATE fav SET city='%s',shuffle=%d,music='%s',input='%s',output='%s' WHERE id=%d",
+            conf->fav.city, conf->fav.shuffle, conf->fav.music_path, conf->fav.id, conf->fav.input,conf->fav.output);
     }
     if(ret != -1 && reload)
     {
-        ret = antfx_db_get_fav(fav);
+        ret = antfx_db_get_fav(&conf->fav);
         if(ret != -1)
         {
             weather_update(&conf->weather);
