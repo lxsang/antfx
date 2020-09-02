@@ -11,9 +11,9 @@ typedef struct {
     uint8_t radio_addr; 
 } antfx_i2cdev_t;
 
-void init_hw_clock();
-void fm_set_freq(double f);
-void fm_mute();
-double fm_get_freq();
+void antfx_hw_init_clock();
+void antfx_hw_fm_set_freq(double f);
+void antfx_hw_fm_mute();
+double antfx_hw_fm_get_freq();
 
 #endif

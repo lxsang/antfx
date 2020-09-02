@@ -87,16 +87,16 @@ int main(int argc, char *argv[])
     conf.tdev = g_config.display_dev.ts_dev;
     time_t last_weather_check = 0;
     time_t now;
-    anfx_music_init();
-    if(antfx_music_play(g_config.audio.startup_sound) == -1)
-    {
-        ERROR("Unable to play startup sound");
-    }
+    antfx_media_init();
     curl_global_init(CURL_GLOBAL_ALL);
     // start the hardware clock
-    init_hw_clock();
+    antfx_hw_init_clock();
     // start display engine
     antfx_ui_main(conf);
+    /*if(antfx_music_play(g_config.audio.startup_sound) == -1)
+    {
+        ERROR("Unable to play startup sound");
+    }*/
     running = 1;
     while (running)
     {
@@ -108,15 +108,15 @@ int main(int argc, char *argv[])
         }
         antfx_ui_update();
         lv_task_handler();
-        lv_tick_inc(5);
-        usleep(5000);
+        lv_tick_inc(1);
+        usleep(1000);
     }
     if(antfx_db_save_fav(0) == -1)
     {
         ERROR("Unable to save user configuration");
     }
-    anfx_music_release();
-    fm_mute();
+    //fm_mute();
+    antfx_media_release();
     antfx_release();
     curl_global_cleanup();
 }

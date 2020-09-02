@@ -4,31 +4,39 @@
 
 #include "bst.h"
 
-void bst_free(bst_node_t* root)
+void bst_free(bst_node_t* root, int free_data)
 {
     if(root != NULL)
     {
-        bst_free(root->left);
-        bst_free(root->right);
+        bst_free(root->left, free_data);
+        bst_free(root->right, free_data);
+        if(free_data)
+            free(root->data);
         free(root);
     }
 }
 
-bst_node_t* bst_insert(bst_node_t* root, int key, const char* data)
+bst_node_t* bst_insert(bst_node_t* root, int key, void* data, int free_data)
 {
     if(root == NULL)
     {
         root = malloc(sizeof(bst_node_t));
         root->key = key;
-        strncpy(root->data,data, ANTFX_MAX_STR_BUFF_SZ);
+        root->data = data;
         root->left = root->right = NULL;
     }
     else if(key < root->key)
-        root->left = bst_insert(root->left, key, data);
+        root->left = bst_insert(root->left, key, data, free_data);
     else if(key > root->key)
-        root->right = bst_insert(root->right, key, data);
+        root->right = bst_insert(root->right, key, data, free_data);
     else
-        strncpy(root->data,data, ANTFX_MAX_STR_BUFF_SZ);
+    {
+        if(root->data && free_data)
+        {
+            free(root->data);
+        }
+        root->data = data;
+    }
     return root;
 }
 
@@ -65,21 +73,21 @@ bst_node_t* bst_find(bst_node_t* root, int x)
 }
 
 
-bst_node_t* bst_delete(bst_node_t* root, int x)
+bst_node_t* bst_delete(bst_node_t* root, int x, int free_data)
 {
     bst_node_t* temp;
     if(root == NULL)
         return NULL;
     else if(x < root->key)
-        root->left = bst_delete(root->left, x);
+        root->left = bst_delete(root->left, x, free_data);
     else if(x > root->key)
-        root->right = bst_delete(root->right, x);
+        root->right = bst_delete(root->right, x, free_data);
     else if(root->left && root->right)
     {
         temp = bst_find_min(root->right);
         root->key = temp->key;
-        strncpy(root->data,temp->data, ANTFX_MAX_STR_BUFF_SZ);
-        root->right = bst_delete(root->right, root->key);
+        root->data = temp->data;
+        root->right = bst_delete(root->right, root->key, free_data);
     }
     else
     {

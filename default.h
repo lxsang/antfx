@@ -7,4 +7,5 @@
 #define DEFAULT_CITY "Paris"
 #define DEFAULT_M_PATH "/media/music/"
 #define DEFAULT_CONF "/etc/antfxd/config.ini"
+#define MAX_AUDIO_INPUT_BUFFER 524288
 #endif

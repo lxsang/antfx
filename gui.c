@@ -86,23 +86,22 @@ void antfx_ui_update()
     strftime(buffer, sizeof(buffer), "%a %b %Y", timeinfo);
     lv_label_set_text(g_scr_info.lbl_date, buffer);
     antfx_conf_t* conf = antfx_get_config();
-    const antfx_music_ctl_t * m_ctrl = antfx_music_get_ctrl();
     // update play back
     lv_obj_t *img = lv_list_get_btn_img(g_scr_info.bt_play_pause);
-    if(m_ctrl->status == MUSIC_STOP)
+    if(conf->media.music.status == MUSIC_STOP)
     {
         lv_bar_set_value(g_scr_info.progress, 0, LV_ANIM_OFF);
         lv_img_set_src(img, LV_SYMBOL_PLAY);
-        if(conf->audio.mode != A_FM_MODE)
+        if(conf->media.mode != M_FM_MODE)
             antfx_ui_update_status("");
     }
-    else if(m_ctrl->status == MUSIC_PAUSE)
+    else if(conf->media.music.status == MUSIC_PAUSE)
     {
         lv_img_set_src(img, LV_SYMBOL_PLAY);
     }
-    else if(m_ctrl->status == MUSIC_PLAYING)
+    else if(conf->media.music.status == MUSIC_PLAYING)
     {
-        int percent = (int) m_ctrl->current_frame * 100 / m_ctrl->total_frames;
+        int percent = (int) conf->media.music.current_frame * 100 / conf->media.music.total_frames;
         lv_bar_set_value(g_scr_info.progress, percent, LV_ANIM_OFF);
         lv_img_set_src(img, LV_SYMBOL_PAUSE);
     }
@@ -143,7 +142,6 @@ void antfx_ui_update_weather_icon(const char *x_text)
     }
     else if (strcmp(x_text, "02n") == 0)
     {
-        printf("icon set\n");
         lv_img_set_src(g_scr_info.lbl_weather_img, &w02n);
     }
     else if (strcmp(x_text, "03d") == 0 || strcmp(x_text, "03n") == 0)
@@ -291,7 +289,7 @@ static void  antfx_ui_music_stop(lv_obj_t *obj, lv_event_t event)
 {
     if (event == LV_EVENT_RELEASED)
     {
-        antfx_music_stop();
+        antfx_media_music_stop();
     }
 }
 static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event)
@@ -299,26 +297,25 @@ static void antfx_ui_music_play(lv_obj_t *obj, lv_event_t event)
     char buff[ANTFX_MAX_STR_BUFF_SZ];
     if (event == LV_EVENT_RELEASED)
     {
-        const antfx_music_ctl_t* ctrl = antfx_music_get_ctrl();
         antfx_conf_t *conf = antfx_get_config();
         const char *f_name = lv_list_get_btn_text(obj);
         snprintf(buff, sizeof(buff), "%s/%s", conf->fav.music_path, f_name);
-        fm_mute();
+        antfx_media_fm_stop();
         if(strcmp(f_name, "") == 0)
         {
-            if(ctrl->status == MUSIC_PLAYING)
+            if(conf->media.music.status == MUSIC_PLAYING)
             {
-                antfx_music_pause();
+                antfx_media_music_pause();
             }
-            else if(ctrl->status == MUSIC_PAUSE)
+            else if(conf->media.music.status == MUSIC_PAUSE)
             {
-                antfx_music_resume();
+                antfx_media_music_resume();
             }
         }
         else
         {
             antfx_ui_update_status("");
-            if (antfx_music_play(buff) == 0)
+            if (antfx_media_music_play(buff) == 0)
             {
                 antfx_ui_update_status(f_name);
             }
@@ -329,7 +326,7 @@ static void antfx_ui_fm_mute_cb(lv_obj_t *obj, lv_event_t event)
 {
     if (event == LV_EVENT_RELEASED)
     {
-        fm_mute();
+        antfx_media_fm_stop();
         antfx_ui_update_status("");
     }
 }
@@ -369,8 +366,8 @@ static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event)
         action = lv_mbox_get_active_btn_text(obj);
         if (strcmp(action, "Play") == 0)
         {
-            antfx_music_stop();
-            fm_set_freq(r->freq);
+            antfx_media_music_stop();
+            antfx_media_fm_start(r->freq, -1);
             snprintf(buff, 32, "FM: %.2f Mhz", r->freq);
             antfx_ui_update_status(buff);
         }

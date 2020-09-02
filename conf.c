@@ -54,11 +54,11 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         config->weather.weather_check_period = (int)atoi(value);
     }
-    else if (EQU(section, "audio") && EQU(name, "startup_sound"))
+    else if (EQU(section, "antfxd") && EQU(name, "startup_sound"))
     {
-        strncpy(config->audio.startup_sound, value, ANTFX_MAX_STR_BUFF_SZ);
+        strncpy(config->startup_sound, value, ANTFX_MAX_STR_BUFF_SZ);
     }
-    else if (EQU(section, "audio") && EQU(name, "input"))
+    /*else if (EQU(section, "audio") && EQU(name, "input"))
     {
         config->audio.inputs = bst_insert(config->audio.inputs, config->audio.n_in, value);
         config->audio.n_in++;
@@ -67,7 +67,7 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         config->audio.outputs = bst_insert(config->audio.outputs, config->audio.n_out, value);
         config->audio.n_out++;
-    }
+    }*/
     else
     {
         ERROR("Unknow config: [%s] %s = %s", section, name, value);
@@ -77,14 +77,8 @@ static int ini_handle(void *user_data, const char *section, const char *name,
 
 int antfx_read_config(const char *file, antfx_conf_t *config)
 {
-    config->audio.mode = A_NONE;
-    config->audio.inputs = NULL;
-    config->audio.outputs = NULL;
-    config->audio.n_out = 0;
-    config->audio.n_in = 0;
-    memset(config->audio.startup_sound, 0, ANTFX_MAX_STR_BUFF_SZ);
-
     memset(config->db_path, 0, ANTFX_MAX_STR_BUFF_SZ);
+    memset(config->startup_sound, 0, ANTFX_MAX_STR_BUFF_SZ);
 
     memset(config->display_dev.fb_dev, 0, ANTFX_MAX_STR_BUFF_SZ);
     memset(config->display_dev.ts_calibrate_cmd, 0, ANTFX_MAX_STR_BUFF_SZ);

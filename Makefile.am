@@ -35,6 +35,7 @@ antfx_SOURCES +=    gui.c \
                     utils.c \
                     hw.c \
                     media.c \
+                    audio.c \
                     weather.c \
                     bst.c \
                     lib/ini/ini.c

@@ -2,219 +2,260 @@
 #include <stdio.h>
 #include <string.h>
 #include <pulse/error.h>
-#include <pthread.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-
+#include <pthread.h>
 #include "log.h"
 #include "media.h"
+#include "hw.h"
+#include "conf.h"
 
-#define SET_STATUS(s)                 \
-    pthread_mutex_lock(&g_mctl.lock); \
-    g_mctl.status = s;                \
-    pthread_mutex_unlock(&g_mctl.lock);
+#define SET_STATUS(s)                        \
+    antfx_conf_t *conf = antfx_get_config(); \
+    conf->media.music.status = s;
 
-#define SET_MODE(s)                 \
-    pthread_mutex_lock(&g_mctl.lock); \
-    g_mctl.mode = s;                \
-    pthread_mutex_unlock(&g_mctl.lock);
+#define SET_MODE(s)                          \
+    antfx_conf_t *conf = antfx_get_config(); \
+    conf->media.music.mode = s;
 
-
-static antfx_music_ctl_t g_mctl = {
-    MUSIC_STOP,
-    MUSIC_ONCE,
-    0,
-    NULL,
-    NULL,
-    NULL,
-    0,
-    0,
-    {},
-    0,
-    {0}};
-
-
-static void antfx_music_release_ctrl()
+static void antfx_media_music_release_ctrl(antfx_media_music_ctl_t *ctl)
 {
     LOG("Clean up music controller");
     int error;
-    if (g_mctl.simple != NULL)
+    if (ctl->mh != NULL)
     {
-        if (pa_simple_drain(g_mctl.simple, &error) != 0)
-        {
-            ERROR("pa_simple_drain: %s\n", pa_strerror(error));
-        }
-        pa_simple_free(g_mctl.simple);
-        g_mctl.simple = NULL;
-    }
-    if (g_mctl.mh != NULL)
-    {
-        if (mpg123_close(g_mctl.mh) != MPG123_OK)
+        if (mpg123_close(ctl->mh) != MPG123_OK)
         {
             ERROR("Unable to close handle");
         }
-        mpg123_delete(g_mctl.mh);
-        g_mctl.mh = NULL;
+        mpg123_delete(ctl->mh);
+        ctl->mh = NULL;
     }
-    // if (g_mctl.buffer)
-    //   free(g_mctl.buffer);
-    g_mctl.buffer = NULL;
+    ctl->buffer = NULL;
+    ctl->buffer_len = 0;
+    SET_STATUS(MUSIC_STOP);
 }
 
-static void *antfx_music_ctl_thread(void *user)
+static void antfx_media_set_output(void)
 {
-    size_t done;
-    char *buffer;
-    int error = 0;
-    LOG("Start the music control with status: %d", g_mctl.status);
-    while (g_mctl.status != MUSIC_STOP)
+    if (antfx_audio_set_output(-1, "Default output") == -1)
     {
-        switch (g_mctl.status)
+        ERROR("Unable to set default output");
+    }
+}
+
+static int antfx_media_fm_cb(void *data, int len)
+{
+    if (!antfx_audio_writable())
+    {
+        ERROR("audio out is not writable");
+        return -1;
+    }
+    int size = antfx_audio_writable_size();
+    if (size < len)
+    {
+        LOG("Buffer is currently full");
+        return -1;
+    }
+    if (antfx_audio_write(data, len) == -1)
+    {
+        ERROR("Unable to write data to output");
+        return -1;
+    }
+    return 0;
+}
+
+static int antfx_media_music_playback(int fd, unsigned char** data, int max_len, antfx_audio_write_event_t e)
+{
+    antfx_conf_t *conf = antfx_get_config();
+    int ws, error, done;
+    if(conf->media.music.mh == NULL|| conf->audio.session.output_stream == NULL)
+    {
+        antfx_media_music_release_ctrl(&conf->media.music);
+        if(fd > 0) close(fd);
+        return -1;
+    }
+    if(e == A_EVENT_FAIL)
+    {
+        LOG("Event fail release controller");
+        antfx_media_music_release_ctrl(&conf->media.music);
+        if(fd > 0) close(fd);
+        return -1;
+    }
+    if(e == A_EVENT_PENDING)
+    {
+        return 0;
+    }
+    switch (conf->media.music.status)
+    {
+    case MUSIC_PAUSE:
+        return 0;
+    case MUSIC_PLAYING:
+        if(max_len == 0)
         {
-        case MUSIC_NEW:
-            antfx_music_release_ctrl();
-            // create new ctl
-            g_mctl.mh = mpg123_new(NULL, &error);
-            if (error != MPG123_OK)
-            {
-                ERROR("Unable to initialise handle: %s", mpg123_strerror(g_mctl.mh));
-                SET_STATUS(MUSIC_STOP);
-            }
-            else
-            {
-                error = mpg123_open(g_mctl.mh, g_mctl.current_song);
-                if (error != MPG123_OK)
-                {
-                    ERROR("Unable to open file %s: %s", g_mctl.current_song, mpg123_strerror(g_mctl.mh));
-                    SET_STATUS(MUSIC_STOP);
-                }
-                else
-                {
-                    error = mpg123_getformat(g_mctl.mh, (long *)&g_mctl.sample_spec.rate, (int *)&g_mctl.sample_spec.channels, &g_mctl.encoding);
-                    if (error != MPG123_OK)
-                    {
-                        ERROR("Unable to fetch media format: %s", mpg123_strerror(g_mctl.mh));
-                        SET_STATUS(MUSIC_STOP);
-                    }
-                    else
-                    {
-                        g_mctl.total_frames = mpg123_framelength(g_mctl.mh);
-                        g_mctl.sample_spec.format = PA_SAMPLE_S16LE;
-                        g_mctl.simple = pa_simple_new(
-                            NULL,
-                            "antfx",
-                            PA_STREAM_PLAYBACK,
-                            NULL,
-                            "music",
-                            &g_mctl.sample_spec,
-                            NULL,
-                            NULL,
-                            &error);
-
-                        if (g_mctl.simple == NULL)
-                        {
-                            ERROR("pa_simple_new: %s\n", pa_strerror(error));
-                            SET_STATUS(MUSIC_STOP);
-                        }
-                        else
-                        {
-                            SET_STATUS(MUSIC_PLAYING);
-                        }
-                    }
-                }
-            }
-            break;
-
-        case MUSIC_PLAYING:
-            error = mpg123_decode_frame(g_mctl.mh, &g_mctl.current_frame, &g_mctl.buffer, &done);
+            return 0;
+        }
+        if (conf->media.music.buffer_len == 0)
+        {
+            error = mpg123_decode_frame(conf->media.music.mh, &conf->media.music.current_frame, &conf->media.music.buffer, &done);
             if (error == MPG123_OK)
             {
-                //printf("frame %ld/%ld\n",g_mctl.current_frame, g_mctl.total_frames );
-                if (pa_simple_write(g_mctl.simple, g_mctl.buffer, (size_t)done, &error) != 0)
-                {
-                    ERROR("pa_simple_write: %s\n", pa_strerror(error));
-                    SET_STATUS(MUSIC_STOP);
-                }
+                conf->media.music.buffer_len = done;
             }
             else
             {
-                ERROR("Unable to decode frame: %s", mpg123_strerror(g_mctl.mh));
-                SET_STATUS(MUSIC_STOP);
+                ERROR("Unable to decode frame: %s", mpg123_strerror(conf->media.music.mh));
+                //antfx_media_music_release_ctrl(&conf->media.music);
+                //if(fd > 0) close(fd);
+                return -1;
             }
-            break;
-
-        case MUSIC_PAUSE:
-            usleep(100000); // 100 ms
-            break;
-
-        default:
-            break;
         }
+        if (conf->media.music.buffer_len > 0 && conf->media.music.buffer_len < max_len)
+        {
+            *data = (unsigned char*)conf->media.music.buffer;
+            ws = conf->media.music.buffer_len;
+            conf->media.music.buffer_len = 0;
+            return ws;
+        }
+        // drain the audio stream
+        //if(conf->media.music.status == MUSIC_PAUSE)
+        //    antfx_audio_write(conf->media.music.buffer, 0);
+        //    (void)pa_stream_drain(conf->audio.session.output_stream, NULL, NULL);
+        return 0;
+
+    case MUSIC_STOP:
+    default:
+        //antfx_media_music_release_ctrl(&conf->media.music);
+        //if(fd > 0) close(fd);
+        return -1;
     }
-    antfx_music_release_ctrl();
-    LOG("Stop the playback thread");
+}
+
+int antfx_media_music_play(const char *song)
+{
+    int fd;
+    int error = 0;
+    antfx_conf_t *conf = antfx_get_config();
+    conf->media.mode = M_NONE;
+    LOG("Playing %s", song);
+    if(conf->media.music.status != MUSIC_STOP)
+    {
+        antfx_media_music_stop();
+    }
+    fd = open(song, O_RDONLY);
+    if ((conf->media.music.mh = mpg123_new(NULL, &errno)) == NULL)
+    {
+        ERROR("Basic setup goes wrong: %s", mpg123_plain_strerror(errno));
+        return -1;
+    }
+    mpg123_handle *mh = (mpg123_handle *)conf->media.music.mh;
+    if (fd == -1)
+    {
+        ERROR("Unable to open song %s: %s", song, strerror(errno));
+        return -1;
+    }
+    error = mpg123_open_fd(mh, fd);
+    if (error != MPG123_OK)
+    {
+        ERROR("MPG123: Unable to open file %s: %s", song, mpg123_strerror(mh));
+        close(fd);
+        return -1;
+    }
+    long rate;
+    int channels;
+    error = mpg123_getformat(mh, (long *)&rate, (int *)&channels, &conf->media.music.encoding);
+    if (error != MPG123_OK)
+    {
+        ERROR("Unable to fetch media format: %s", mpg123_strerror(mh));
+        antfx_media_music_release_ctrl(&conf->media.music);
+        close(fd);
+        return -1;
+    }
+    conf->media.music.total_frames = mpg123_framelength(mh);
+    conf->media.mode = M_MUSIC_MODE;
+    conf->media.music.status = MUSIC_PLAYING;
+    if (antfx_audio_write_event_fd(fd, antfx_media_music_playback) == -1)
+    {
+        ERROR("Unable to set write event to mpg stream");
+        antfx_media_music_release_ctrl(&conf->media.music);
+        close(fd);
+        conf->media.mode = M_NONE;
+        conf->media.music.status = MUSIC_STOP;
+        return -1;
+    }
+    LOG("Subscribed to audio write event");
+    strncpy(conf->media.music.current_song, song, ANTFX_MAX_STR_BUFF_SZ);
     return 0;
 }
-
-const antfx_music_ctl_t* antfx_music_get_ctrl()
-{
-    return &g_mctl;
-}
-
-int antfx_music_play(const char *song)
-{
-    strncpy(g_mctl.current_song, song, ANTFX_MAX_STR_BUFF_SZ);
-    LOG("Playing %s", g_mctl.current_song);
-    if (g_mctl.status == MUSIC_STOP)
-    {
-        SET_STATUS(MUSIC_NEW);
-        if (pthread_create(&g_mctl.tid, NULL, antfx_music_ctl_thread, NULL) != 0)
-        {
-
-            ERROR("Error creating weather thread: %s", strerror(errno));
-            SET_STATUS(MUSIC_STOP);
-            return -1;
-        }
-
-        if (pthread_detach(g_mctl.tid) != 0)
-        {
-            ERROR("Unable to detach weather thread: %s", strerror(errno));
-            SET_STATUS(MUSIC_STOP);
-            return -1;
-        }
-    }
-    else
-    {
-        SET_STATUS(MUSIC_NEW);
-    }
-    return 0;
-}
-int antfx_music_pause()
+int antfx_media_music_pause()
 {
     SET_STATUS(MUSIC_PAUSE);
+    antfx_audio_output_pause();
 }
-int antfx_music_resume()
+int antfx_media_music_resume()
 {
     SET_STATUS(MUSIC_PLAYING);
+    antfx_audio_output_resume();
+    
 }
-int antfx_music_stop()
+int antfx_media_music_stop()
 {
     SET_STATUS(MUSIC_STOP);
-    memset(g_mctl.current_song, 0, ANTFX_MAX_STR_BUFF_SZ);
+    while(conf->media.music.mh != NULL)
+    {
+        usleep(10000);
+    }
+    antfx_audio_flush();
 }
 
-void anfx_music_init()
+void antfx_media_init()
 {
-    pthread_mutex_init(&g_mctl.lock, NULL);
     mpg123_init();
+    antfx_conf_t *conf = antfx_get_config();
+    conf->media.music.status = MUSIC_STOP;
+    conf->media.music.mode = MUSIC_ONCE;
+    conf->media.music.total_frames = 0;
+    conf->media.music.current_frame = 0;
+    conf->media.music.buffer = NULL;
+    conf->media.music.buffer_len = 0;
+    memset(conf->media.music.current_song, 0, ANTFX_MAX_STR_BUFF_SZ);
+    conf->media.mode = M_NONE;
+    antfx_audio_init(antfx_media_set_output);
 }
-void anfx_music_release()
+void antfx_media_release()
 {
-    pthread_mutex_destroy(&g_mctl.lock);
     mpg123_exit();
+    antfx_conf_t *conf = antfx_get_config();
+    antfx_media_music_stop();
+    antfx_audio_release();
 }
 
-void antfx_music_set_mode(antfx_music_play_mode_t m)
+int antfx_media_fm_start(float freq, int id)
 {
-    SET_MODE(m);
+    antfx_conf_t *conf = antfx_get_config();
+    antfx_media_music_stop();
+    conf->media.mode = M_NONE;
+    antfx_hw_fm_set_freq(freq);
+    if (antfx_audio_set_input(id, "FM-in", antfx_media_fm_cb) == -1)
+    {
+        antfx_hw_fm_mute();
+        ERROR("Unable to connect radio input to output");
+        return -1;
+    }
+    conf->media.mode = M_FM_MODE;
+    return 0;
+}
+void antfx_media_fm_stop()
+{
+    antfx_conf_t *conf = antfx_get_config();
+    if(conf->media.mode != M_FM_MODE)
+        return;
+    
+    antfx_audio_remove_input();
+    antfx_hw_fm_mute();
+    antfx_audio_flush();
+    conf->media.mode = M_NONE;
 }

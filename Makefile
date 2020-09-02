@@ -107,7 +107,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
 	backends/fb_engine.c gui.c conf.c db.c utils.c hw.c media.c \
-	weather.c bst.c lib/ini/ini.c widgets/image.c \
+	audio.c weather.c bst.c lib/ini/ini.c widgets/image.c \
 	widgets/default_wp.c widgets/icons/radio.c \
 	widgets/icons/alarm.c widgets/icons/calendar.c \
 	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
@@ -174,7 +174,7 @@ am__objects_2 = backends/antfx-fb_engine.$(OBJEXT)
 am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	$(am__objects_1) $(am__objects_2) antfx-gui.$(OBJEXT) \
 	antfx-conf.$(OBJEXT) antfx-db.$(OBJEXT) antfx-utils.$(OBJEXT) \
-	antfx-hw.$(OBJEXT) antfx-media.$(OBJEXT) \
+	antfx-hw.$(OBJEXT) antfx-media.$(OBJEXT) antfx-audio.$(OBJEXT) \
 	antfx-weather.$(OBJEXT) antfx-bst.$(OBJEXT) \
 	lib/ini/antfx-ini.$(OBJEXT) widgets/antfx-image.$(OBJEXT) \
 	widgets/antfx-default_wp.$(OBJEXT) \
@@ -300,12 +300,12 @@ DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
-	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-bst.Po \
-	./$(DEPDIR)/antfx-conf.Po ./$(DEPDIR)/antfx-db.Po \
-	./$(DEPDIR)/antfx-gui.Po ./$(DEPDIR)/antfx-hw.Po \
-	./$(DEPDIR)/antfx-media.Po ./$(DEPDIR)/antfx-utils.Po \
-	./$(DEPDIR)/antfx-weather.Po ./$(DEPDIR)/loopback.Po \
-	backends/$(DEPDIR)/antfx-fb_engine.Po \
+	./$(DEPDIR)/antfx-antfxapp.Po ./$(DEPDIR)/antfx-audio.Po \
+	./$(DEPDIR)/antfx-bst.Po ./$(DEPDIR)/antfx-conf.Po \
+	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
+	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-media.Po \
+	./$(DEPDIR)/antfx-utils.Po ./$(DEPDIR)/antfx-weather.Po \
+	./$(DEPDIR)/loopback.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/ini/$(DEPDIR)/antfx-ini.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
@@ -587,7 +587,7 @@ loopback_SOURCES = loopback.c
 
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
-	gui.c conf.c db.c utils.c hw.c media.c weather.c bst.c \
+	gui.c conf.c db.c utils.c hw.c media.c audio.c weather.c bst.c \
 	lib/ini/ini.c widgets/image.c widgets/default_wp.c \
 	widgets/icons/radio.c widgets/icons/alarm.c \
 	widgets/icons/calendar.c widgets/icons/camera.c \
@@ -1127,6 +1127,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/antfx-antfx.Po # am--include-marker
 include ./$(DEPDIR)/antfx-antfxapp.Po # am--include-marker
+include ./$(DEPDIR)/antfx-audio.Po # am--include-marker
 include ./$(DEPDIR)/antfx-bst.Po # am--include-marker
 include ./$(DEPDIR)/antfx-conf.Po # am--include-marker
 include ./$(DEPDIR)/antfx-db.Po # am--include-marker
@@ -1404,6 +1405,20 @@ antfx-media.obj: media.c
 #	$(AM_V_CC)source='media.c' object='antfx-media.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-media.obj `if test -f 'media.c'; then $(CYGPATH_W) 'media.c'; else $(CYGPATH_W) '$(srcdir)/media.c'; fi`
+
+antfx-audio.o: audio.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-audio.o -MD -MP -MF $(DEPDIR)/antfx-audio.Tpo -c -o antfx-audio.o `test -f 'audio.c' || echo '$(srcdir)/'`audio.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-audio.Tpo $(DEPDIR)/antfx-audio.Po
+#	$(AM_V_CC)source='audio.c' object='antfx-audio.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-audio.o `test -f 'audio.c' || echo '$(srcdir)/'`audio.c
+
+antfx-audio.obj: audio.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-audio.obj -MD -MP -MF $(DEPDIR)/antfx-audio.Tpo -c -o antfx-audio.obj `if test -f 'audio.c'; then $(CYGPATH_W) 'audio.c'; else $(CYGPATH_W) '$(srcdir)/audio.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/antfx-audio.Tpo $(DEPDIR)/antfx-audio.Po
+#	$(AM_V_CC)source='audio.c' object='antfx-audio.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o antfx-audio.obj `if test -f 'audio.c'; then $(CYGPATH_W) 'audio.c'; else $(CYGPATH_W) '$(srcdir)/audio.c'; fi`
 
 antfx-weather.o: weather.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT antfx-weather.o -MD -MP -MF $(DEPDIR)/antfx-weather.Tpo -c -o antfx-weather.o `test -f 'weather.c' || echo '$(srcdir)/'`weather.c
@@ -3189,6 +3204,7 @@ distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-audio.Po
 	-rm -f ./$(DEPDIR)/antfx-bst.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
 	-rm -f ./$(DEPDIR)/antfx-db.Po
@@ -3353,6 +3369,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f ./$(DEPDIR)/antfx-antfx.Po
 	-rm -f ./$(DEPDIR)/antfx-antfxapp.Po
+	-rm -f ./$(DEPDIR)/antfx-audio.Po
 	-rm -f ./$(DEPDIR)/antfx-bst.Po
 	-rm -f ./$(DEPDIR)/antfx-conf.Po
 	-rm -f ./$(DEPDIR)/antfx-db.Po

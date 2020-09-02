@@ -11,7 +11,7 @@
 #include "log.h"
 #include "conf.h"
 
-void init_hw_clock()
+void antfx_hw_init_clock()
 {
     int fd;
     char buf[32];
@@ -46,7 +46,7 @@ void init_hw_clock()
         return;
     }
 }
-void fm_set_freq(double f)
+void antfx_hw_fm_set_freq(double f)
 {
     uint8_t radio[5] = {0};
     uint8_t freq_h = 0;
@@ -78,9 +78,9 @@ void fm_set_freq(double f)
     }
     close(fd);
     LOG("FM RADIO on at frequency: %f", f);
-    config->audio.mode = A_FM_MODE;
+    config->media.mode = M_FM_MODE;
 }
-void fm_mute()
+void antfx_hw_fm_mute()
 {
     uint8_t radio[5] = {0};
     uint8_t freq_h = 0;
@@ -89,7 +89,7 @@ void fm_mute()
     ssize_t ret;
     unsigned int freq_b;
     antfx_conf_t *config = antfx_get_config();
-    double frequency = fm_get_freq();
+    double frequency = antfx_hw_fm_get_freq();
     if (frequency == -1)
     {
         return;
@@ -117,9 +117,9 @@ void fm_mute()
     }
     close(fd);
     LOG("FM RADIO off at frequency: %f", frequency);
-    config->audio.mode = A_NONE;
+    config->media.mode = M_NONE;
 }
-double fm_get_freq()
+double antfx_hw_fm_get_freq()
 {
     uint8_t radio[5] = {0};
     ssize_t ret;
