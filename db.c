@@ -8,17 +8,16 @@
 #include "weather.h"
 #include "conf.h"
 
-
 #define BUFFLEN 1024
 
-static int antfx_db_query(void* user, int (*call_back)(void *, int, char **, char **), const char *fstring, ...)
+static int antfx_db_query(void *user, int (*call_back)(void *, int, char **, char **), const char *fstring, ...)
 {
     char buffer[BUFFLEN];
     sqlite3 *db;
     va_list arguments;
     int ret;
     char *err_msg = 0;
-    antfx_conf_t* config = antfx_get_config();
+    antfx_conf_t *config = antfx_get_config();
     va_start(arguments, fstring);
     vsnprintf(buffer, BUFFLEN, fstring, arguments);
     va_end(arguments);
@@ -49,11 +48,11 @@ static int antfx_db_query(void* user, int (*call_back)(void *, int, char **, cha
 
 static int antfx_db_fm_cb(void *user, int count, char **data, char **columns)
 {
-    antfx_fm_record_t* record = (antfx_fm_record_t*) malloc(sizeof(antfx_fm_record_t));
-    (void) columns;
-    void** user_data =  (void**) user;
-    void (*fn)(antfx_fm_record_t*,void*) = (void (*)(antfx_fm_record_t*,void*)) user_data[0];
-    if(count != 3)
+    antfx_fm_record_t *record = (antfx_fm_record_t *)malloc(sizeof(antfx_fm_record_t));
+    (void)columns;
+    void **user_data = (void **)user;
+    void (*fn)(antfx_fm_record_t *, void *) = (void (*)(antfx_fm_record_t *, void *))user_data[0];
+    if (count != 3)
     {
         ERROR("Number column in returned data is not correct: %d expected 3", count);
         return -1;
@@ -61,42 +60,43 @@ static int antfx_db_fm_cb(void *user, int count, char **data, char **columns)
     record->id = atoi(data[0]);
     record->freq = atof(data[2]);
     strncpy(record->name, data[1], ANTFX_MAX_STR_BUFF_SZ);
-    fn(record,user_data[1]);
+    fn(record, user_data[1]);
     return 0;
 }
 
 static int antfx_db_fav_cb(void *user, int count, char **data, char **columns)
 {
-    antfx_user_fav_t* fav = (antfx_user_fav_t*) user;
-    if(count != 6)
+    (void) columns;
+    antfx_user_fav_t *fav = (antfx_user_fav_t *)user;
+    if (count != 8)
     {
         ERROR("Number column in returned data is not correct: %d expected 6", count);
         return -1;
     }
     fav->id = atoi(data[0]);
-    strncpy(fav->city,data[1], ANTFX_MAX_STR_BUFF_SZ);
+    strncpy(fav->city, data[1], ANTFX_MAX_STR_BUFF_SZ);
     fav->shuffle = atoi(data[2]);
-    strncpy(fav->music_path,data[3], ANTFX_MAX_STR_BUFF_SZ);
-    if(data[4]!= NULL)
-        strncpy(fav->input,data[4], ANTFX_MAX_STR_BUFF_SZ);
-    if(data[5]!= NULL)
-        strncpy(fav->output,data[5], ANTFX_MAX_STR_BUFF_SZ);
+    strncpy(fav->music_path, data[3], ANTFX_MAX_STR_BUFF_SZ);
+    fav->input = atoi(data[4]);
+    fav->output = atoi(data[5]);
+    fav->input_volume = atoi(data[6]);
+    fav->output_volume = atoi(data[7]);
     return 0;
 }
 
 int antdfx_db_init()
 {
-    if(antfx_db_query(NULL,NULL, RADIO_TABLE_SQL) == -1)
+    if (antfx_db_query(NULL, NULL, RADIO_TABLE_SQL) == -1)
     {
         ERROR("Unable to create table: radio");
         return -1;
     }
-    if(antfx_db_query(NULL,NULL, ALARM_TABLE_SQL) == -1)
+    if (antfx_db_query(NULL, NULL, ALARM_TABLE_SQL) == -1)
     {
         ERROR("Unable to create table: alarm");
         return -1;
     }
-    if(antfx_db_query(NULL,NULL, FAV_TABLE_SQL) == -1)
+    if (antfx_db_query(NULL, NULL, FAV_TABLE_SQL) == -1)
     {
         ERROR("Unable to create table: fav");
         return -1;
@@ -105,25 +105,27 @@ int antdfx_db_init()
 }
 int antfx_db_get_alarm(antfx_alarm_t *conf)
 {
+    (void) conf;
     return -1;
 }
 int antfx_db_save_alarm(antfx_alarm_t *conf)
 {
+    (void) conf;
     return -1;
 }
 int antfx_db_add_fm_channel(antfx_fm_record_t *record)
 {
     int ret;
-    ret = antfx_db_query(NULL, NULL, "INSERT INTO radio(name,frequency) VALUES ('%s',%.2f)",record->name, record->freq);
+    ret = antfx_db_query(NULL, NULL, "INSERT INTO radio(name,frequency) VALUES ('%s',%.2f)", record->name, record->freq);
     return ret;
 }
-int antfx_db_rm_fm_channel(antfx_fm_record_t* r)
+int antfx_db_rm_fm_channel(antfx_fm_record_t *r)
 {
     int ret;
-    if(r)
+    if (r)
     {
-        ret = antfx_db_query(NULL, NULL, "DELETE FROM radio WHERE id=%d",r->id);
-        if(ret == 0)
+        ret = antfx_db_query(NULL, NULL, "DELETE FROM radio WHERE id=%d", r->id);
+        if (ret == 0)
         {
             free(r);
         }
@@ -131,48 +133,61 @@ int antfx_db_rm_fm_channel(antfx_fm_record_t* r)
     }
     return 0;
 }
-int antfx_db_fetch_fm_channels(void (*callback)(antfx_fm_record_t *, void*), void* user)
+int antfx_db_fetch_fm_channels(void (*callback)(antfx_fm_record_t *, void *), void *user)
 {
     int ret;
-    void * data[2];
+    void *data[2];
     data[0] = callback;
     data[1] = user;
-    ret = antfx_db_query( data, antfx_db_fm_cb, "SELECT * FROM radio");
+    ret = antfx_db_query(data, antfx_db_fm_cb, "SELECT * FROM radio");
     return ret;
 }
 
-int antfx_db_get_fav(antfx_user_fav_t* conf)
+int antfx_db_get_fav(antfx_user_fav_t *conf)
 {
     strncpy(conf->city, DEFAULT_CITY, sizeof(conf->city));
     strncpy(conf->music_path, DEFAULT_M_PATH, sizeof(conf->music_path));
     conf->shuffle = 0;
     conf->id = 0;
-    return antfx_db_query(conf, antfx_db_fav_cb,"SELECT * FROM fav LIMIT 1");
+    return antfx_db_query(conf, antfx_db_fav_cb, "SELECT * FROM fav LIMIT 1");
 }
 int antfx_db_save_fav(int reload)
 {
     int ret;
-    antfx_conf_t* conf = antfx_get_config();
-    if(conf->fav.id == 0)
+    antfx_conf_t *conf = antfx_get_config();
+    if (conf->fav.id == 0)
     {
         ret = antfx_db_query(
             NULL,
             NULL,
-            "INSERT INTO fav(city,shuffle,music,input,output) VALUES ('%s',%d, '%s',NULL,NULL)",
-            conf->fav.city, conf->fav.shuffle, conf->fav.music_path);
+            "INSERT INTO fav(city,shuffle,music,input,output,input_volume,output_volume) VALUES ('%s',%d, '%s',%d,%d,%d,%d)",
+            conf->fav.city,
+            conf->fav.shuffle,
+            conf->fav.music_path,
+            conf->fav.input,
+            conf->fav.output,
+            conf->fav.input_volume,
+            conf->fav.output_volume);
     }
     else
     {
         ret = antfx_db_query(
             NULL,
             NULL,
-            "UPDATE fav SET city='%s',shuffle=%d,music='%s',input='%s',output='%s' WHERE id=%d",
-            conf->fav.city, conf->fav.shuffle, conf->fav.music_path, conf->fav.input,conf->fav.output, conf->fav.id);
+            "UPDATE fav SET city='%s',shuffle=%d,music='%s',input=%d,output=%d,input_volume=%d,output_volume=%d WHERE id=%d",
+            conf->fav.city,
+            conf->fav.shuffle,
+            conf->fav.music_path,
+            conf->fav.input,
+            conf->fav.output,
+            conf->fav.input_volume,
+            conf->fav.output_volume,
+            conf->fav.id);
     }
-    if(ret != -1 && reload)
+    if (ret != -1 && reload)
     {
         ret = antfx_db_get_fav(&conf->fav);
-        if(ret != -1)
+        if (ret != -1)
         {
             weather_update(&conf->weather);
         }

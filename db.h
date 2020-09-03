@@ -22,8 +22,10 @@ id INTEGER PRIMARY KEY AUTOINCREMENT,\
 city TEXT,\
 shuffle INTEGER,\
 music TEXT,\
-input TEXT,\
-output TEXT);"
+input INTEGER,\
+output INTEGER,\
+input_volume INTEGER,\
+output_volume INTEGER);"
 
 typedef enum {
     U_FM_FREQ,
@@ -42,8 +44,10 @@ typedef struct {
     char city[ANTFX_MAX_STR_BUFF_SZ];
     int shuffle;
     char music_path[ANTFX_MAX_STR_BUFF_SZ];
-    char input[ANTFX_MAX_STR_BUFF_SZ];
-    char output[ANTFX_MAX_STR_BUFF_SZ];
+    int input;
+    int output;
+    int input_volume;
+    int output_volume;
 } antfx_user_fav_t;
 
 typedef union {

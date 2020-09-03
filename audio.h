@@ -20,6 +20,7 @@ typedef struct
     pa_channel_map map;
     pa_cvolume volume;
     uint8_t card;
+    int index;
 } antfx_audio_dev_t;
 
 typedef struct
@@ -55,7 +56,7 @@ typedef struct
     antfx_audio_session_t session;
 } antfx_audio_t;
 
-int antfx_audio_init(void (*callback)(void));
+int antfx_audio_init();
 void antfx_audio_release();
 void antfx_audio_dump();
 int antfx_audio_writable();
@@ -70,5 +71,8 @@ int antfx_audio_set_output(int, const char *);
 void antfx_audio_output_pause();
 void antfx_audio_output_resume();
 int antfx_audio_output_is_paused();
+
+int antfx_audio_set_input_volume(int);
+int antfx_audio_set_output_volume(int);
 
 #endif

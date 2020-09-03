@@ -93,10 +93,6 @@ int main(int argc, char *argv[])
     antfx_hw_init_clock();
     // start display engine
     antfx_ui_main(conf);
-    /*if(antfx_music_play(g_config.audio.startup_sound) == -1)
-    {
-        ERROR("Unable to play startup sound");
-    }*/
     running = 1;
     while (running)
     {

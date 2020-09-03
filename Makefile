@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-pc-linux-gnu
 host_triplet = arm-poky-linux-gnu
-bin_PROGRAMS = antfx$(EXEEXT) loopback$(EXEEXT)
+bin_PROGRAMS = antfx$(EXEEXT)
 #am__append_1 = backends/sdl2_engine.c
 am__append_2 = backends/fb_engine.c
 subdir = .
@@ -110,64 +110,100 @@ am__antfx_SOURCES_DIST = antfxapp.c antfx.c backends/sdl2_engine.c \
 	audio.c weather.c bst.c lib/ini/ini.c widgets/image.c \
 	widgets/default_wp.c widgets/icons/radio.c \
 	widgets/icons/alarm.c widgets/icons/calendar.c \
-	widgets/icons/camera.c widgets/fonts/roboto_bold_50.c \
-	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
-	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
-	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
-	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
-	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
-	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
-	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
-	lib/liblv/lv_core/lv_debug.c lib/liblv/lv_draw/lv_draw_basic.c \
-	lib/liblv/lv_draw/lv_draw.c lib/liblv/lv_draw/lv_draw_rect.c \
-	lib/liblv/lv_draw/lv_draw_label.c \
-	lib/liblv/lv_draw/lv_draw_line.c \
-	lib/liblv/lv_draw/lv_draw_img.c \
-	lib/liblv/lv_draw/lv_draw_arc.c \
-	lib/liblv/lv_draw/lv_draw_triangle.c \
-	lib/liblv/lv_draw/lv_img_decoder.c \
-	lib/liblv/lv_draw/lv_img_cache.c lib/liblv/lv_font/lv_font.c \
-	lib/liblv/lv_font/lv_font_fmt_txt.c \
-	lib/liblv/lv_font/lv_font_roboto_12.c \
-	lib/liblv/lv_font/lv_font_roboto_16.c \
-	lib/liblv/lv_font/lv_font_roboto_22.c \
-	lib/liblv/lv_font/lv_font_roboto_28.c \
-	lib/liblv/lv_font/lv_font_unscii_8.c \
-	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
-	lib/liblv/lv_hal/lv_hal_tick.c lib/liblv/lv_misc/lv_circ.c \
-	lib/liblv/lv_misc/lv_area.c lib/liblv/lv_misc/lv_task.c \
-	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_anim.c \
-	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_ll.c \
-	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_txt.c \
-	lib/liblv/lv_misc/lv_math.c lib/liblv/lv_misc/lv_log.c \
-	lib/liblv/lv_misc/lv_gc.c lib/liblv/lv_misc/lv_utils.c \
-	lib/liblv/lv_misc/lv_async.c lib/liblv/lv_misc/lv_printf.c \
-	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_objx/lv_arc.c \
-	lib/liblv/lv_objx/lv_bar.c lib/liblv/lv_objx/lv_cb.c \
-	lib/liblv/lv_objx/lv_cpicker.c lib/liblv/lv_objx/lv_ddlist.c \
-	lib/liblv/lv_objx/lv_kb.c lib/liblv/lv_objx/lv_line.c \
-	lib/liblv/lv_objx/lv_mbox.c lib/liblv/lv_objx/lv_preload.c \
-	lib/liblv/lv_objx/lv_roller.c lib/liblv/lv_objx/lv_table.c \
-	lib/liblv/lv_objx/lv_tabview.c lib/liblv/lv_objx/lv_tileview.c \
-	lib/liblv/lv_objx/lv_btn.c lib/liblv/lv_objx/lv_calendar.c \
-	lib/liblv/lv_objx/lv_chart.c lib/liblv/lv_objx/lv_canvas.c \
-	lib/liblv/lv_objx/lv_gauge.c lib/liblv/lv_objx/lv_label.c \
-	lib/liblv/lv_objx/lv_list.c lib/liblv/lv_objx/lv_slider.c \
-	lib/liblv/lv_objx/lv_ta.c lib/liblv/lv_objx/lv_spinbox.c \
-	lib/liblv/lv_objx/lv_btnm.c lib/liblv/lv_objx/lv_cont.c \
-	lib/liblv/lv_objx/lv_img.c lib/liblv/lv_objx/lv_imgbtn.c \
-	lib/liblv/lv_objx/lv_led.c lib/liblv/lv_objx/lv_lmeter.c \
-	lib/liblv/lv_objx/lv_page.c lib/liblv/lv_objx/lv_sw.c \
-	lib/liblv/lv_objx/lv_win.c \
-	lib/liblv/lv_themes/lv_theme_alien.c \
+	widgets/icons/camera.c widgets/icons/w01d.c \
+	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
+	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
+	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
+	widgets/icons/w13d.c widgets/icons/w50d.c antfx_SOURCES += \
+	lib/liblv/lv_themes/lv_theme_template.c \
+	lib/liblv/lv_themes/lv_theme_mono.c \
 	lib/liblv/lv_themes/lv_theme.c \
-	lib/liblv/lv_themes/lv_theme_default.c \
-	lib/liblv/lv_themes/lv_theme_night.c \
-	lib/liblv/lv_themes/lv_theme_templ.c \
-	lib/liblv/lv_themes/lv_theme_zen.c \
+	lib/liblv/lv_themes/lv_theme_empty.c \
 	lib/liblv/lv_themes/lv_theme_material.c \
-	lib/liblv/lv_themes/lv_theme_nemo.c \
-	lib/liblv/lv_themes/lv_theme_mono.c
+	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_refr.c \
+	lib/liblv/lv_core/lv_indev.c lib/liblv/lv_core/lv_style.c \
+	lib/liblv/lv_core/lv_obj.c lib/liblv/lv_core/lv_group.c \
+	lib/liblv/lv_widgets/lv_arc.c lib/liblv/lv_widgets/lv_page.c \
+	lib/liblv/lv_widgets/lv_win.c \
+	lib/liblv/lv_widgets/lv_objmask.c \
+	lib/liblv/lv_widgets/lv_label.c \
+	lib/liblv/lv_widgets/lv_canvas.c \
+	lib/liblv/lv_widgets/lv_cont.c \
+	lib/liblv/lv_widgets/lv_msgbox.c lib/liblv/lv_widgets/lv_led.c \
+	lib/liblv/lv_widgets/lv_line.c \
+	lib/liblv/lv_widgets/lv_roller.c \
+	lib/liblv/lv_widgets/lv_switch.c \
+	lib/liblv/lv_widgets/lv_linemeter.c \
+	lib/liblv/lv_widgets/lv_tileview.c \
+	lib/liblv/lv_widgets/lv_spinbox.c \
+	lib/liblv/lv_widgets/lv_objx_templ.c \
+	lib/liblv/lv_widgets/lv_calendar.c \
+	lib/liblv/lv_widgets/lv_img.c \
+	lib/liblv/lv_widgets/lv_textarea.c \
+	lib/liblv/lv_widgets/lv_bar.c \
+	lib/liblv/lv_widgets/lv_cpicker.c \
+	lib/liblv/lv_widgets/lv_chart.c \
+	lib/liblv/lv_widgets/lv_checkbox.c \
+	lib/liblv/lv_widgets/lv_gauge.c \
+	lib/liblv/lv_widgets/lv_imgbtn.c \
+	lib/liblv/lv_widgets/lv_dropdown.c \
+	lib/liblv/lv_widgets/lv_spinner.c \
+	lib/liblv/lv_widgets/lv_btn.c lib/liblv/lv_widgets/lv_list.c \
+	lib/liblv/lv_widgets/lv_slider.c \
+	lib/liblv/lv_widgets/lv_tabview.c \
+	lib/liblv/lv_widgets/lv_table.c \
+	lib/liblv/lv_widgets/lv_keyboard.c \
+	lib/liblv/lv_widgets/lv_btnmatrix.c \
+	lib/liblv/lv_font/lv_font_montserrat_18.c \
+	lib/liblv/lv_font/lv_font_montserrat_24.c \
+	lib/liblv/lv_font/lv_font_montserrat_16.c \
+	lib/liblv/lv_font/lv_font_montserrat_36.c \
+	lib/liblv/lv_font/lv_font_montserrat_30.c \
+	lib/liblv/lv_font/lv_font_montserrat_12_subpx.c \
+	lib/liblv/lv_font/lv_font_unscii_8.c \
+	lib/liblv/lv_font/lv_font_loader.c \
+	lib/liblv/lv_font/lv_font_montserrat_28.c \
+	lib/liblv/lv_font/lv_font_montserrat_22.c \
+	lib/liblv/lv_font/lv_font_montserrat_40.c \
+	lib/liblv/lv_font/lv_font_montserrat_48.c \
+	lib/liblv/lv_font/lv_font_montserrat_34.c \
+	lib/liblv/lv_font/lv_font_montserrat_32.c \
+	lib/liblv/lv_font/lv_font_montserrat_28_compressed.c \
+	lib/liblv/lv_font/lv_font_montserrat_20.c \
+	lib/liblv/lv_font/lv_font_montserrat_46.c \
+	lib/liblv/lv_font/lv_font_montserrat_14.c \
+	lib/liblv/lv_font/lv_font.c \
+	lib/liblv/lv_font/lv_font_montserrat_42.c \
+	lib/liblv/lv_font/lv_font_simsun_16_cjk.c \
+	lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c \
+	lib/liblv/lv_font/lv_font_montserrat_12.c \
+	lib/liblv/lv_font/lv_font_montserrat_44.c \
+	lib/liblv/lv_font/lv_font_montserrat_38.c \
+	lib/liblv/lv_font/lv_font_montserrat_26.c \
+	lib/liblv/lv_font/lv_font_fmt_txt.c \
+	lib/liblv/lv_misc/lv_txt_ap.c lib/liblv/lv_misc/lv_task.c \
+	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_misc/lv_math.c \
+	lib/liblv/lv_misc/lv_anim.c lib/liblv/lv_misc/lv_async.c \
+	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_templ.c \
+	lib/liblv/lv_misc/lv_printf.c lib/liblv/lv_misc/lv_gc.c \
+	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_debug.c \
+	lib/liblv/lv_misc/lv_txt.c lib/liblv/lv_misc/lv_area.c \
+	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_utils.c \
+	lib/liblv/lv_misc/lv_log.c lib/liblv/lv_misc/lv_ll.c \
+	lib/liblv/lv_draw/lv_img_buf.c \
+	lib/liblv/lv_draw/lv_img_decoder.c \
+	lib/liblv/lv_draw/lv_draw_triangle.c \
+	lib/liblv/lv_draw/lv_draw_blend.c \
+	lib/liblv/lv_draw/lv_draw_img.c \
+	lib/liblv/lv_draw/lv_draw_rect.c \
+	lib/liblv/lv_draw/lv_draw_line.c \
+	lib/liblv/lv_draw/lv_draw_label.c \
+	lib/liblv/lv_draw/lv_draw_mask.c \
+	lib/liblv/lv_draw/lv_draw_arc.c \
+	lib/liblv/lv_draw/lv_img_cache.c \
+	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
+	lib/liblv/lv_hal/lv_hal_tick.c \
+	lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
 am__dirstamp = $(am__leading_dot)dirstamp
 #am__objects_1 = backends/antfx-sdl2_engine.$(OBJEXT)
 am__objects_2 = backends/antfx-fb_engine.$(OBJEXT)
@@ -182,7 +218,6 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	widgets/icons/antfx-alarm.$(OBJEXT) \
 	widgets/icons/antfx-calendar.$(OBJEXT) \
 	widgets/icons/antfx-camera.$(OBJEXT) \
-	widgets/fonts/antfx-roboto_bold_50.$(OBJEXT) \
 	widgets/icons/antfx-w01d.$(OBJEXT) \
 	widgets/icons/antfx-w01n.$(OBJEXT) \
 	widgets/icons/antfx-w02d.$(OBJEXT) \
@@ -195,95 +230,113 @@ am_antfx_OBJECTS = antfx-antfxapp.$(OBJEXT) antfx-antfx.$(OBJEXT) \
 	widgets/icons/antfx-w11d.$(OBJEXT) \
 	widgets/icons/antfx-w13d.$(OBJEXT) \
 	widgets/icons/antfx-w50d.$(OBJEXT) \
-	lib/liblv/lv_core/antfx-lv_group.$(OBJEXT) \
-	lib/liblv/lv_core/antfx-lv_indev.$(OBJEXT) \
+	lib/liblv/lv_themes/antfx-lv_theme_template.$(OBJEXT) \
+	lib/liblv/lv_themes/antfx-lv_theme_mono.$(OBJEXT) \
+	lib/liblv/lv_themes/antfx-lv_theme.$(OBJEXT) \
+	lib/liblv/lv_themes/antfx-lv_theme_empty.$(OBJEXT) \
+	lib/liblv/lv_themes/antfx-lv_theme_material.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_disp.$(OBJEXT) \
-	lib/liblv/lv_core/antfx-lv_obj.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_refr.$(OBJEXT) \
+	lib/liblv/lv_core/antfx-lv_indev.$(OBJEXT) \
 	lib/liblv/lv_core/antfx-lv_style.$(OBJEXT) \
-	lib/liblv/lv_core/antfx-lv_debug.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_basic.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_rect.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_label.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_line.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_img.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_arc.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_draw_triangle.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_img_decoder.$(OBJEXT) \
-	lib/liblv/lv_draw/antfx-lv_img_cache.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font_fmt_txt.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font_roboto_12.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font_roboto_16.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font_roboto_22.$(OBJEXT) \
-	lib/liblv/lv_font/antfx-lv_font_roboto_28.$(OBJEXT) \
+	lib/liblv/lv_core/antfx-lv_obj.$(OBJEXT) \
+	lib/liblv/lv_core/antfx-lv_group.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_arc.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_page.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_win.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_objmask.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_label.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_canvas.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_cont.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_msgbox.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_led.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_line.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_roller.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_switch.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_linemeter.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_tileview.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_spinbox.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_objx_templ.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_calendar.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_img.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_textarea.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_bar.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_cpicker.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_chart.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_checkbox.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_gauge.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_imgbtn.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_dropdown.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_spinner.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_btn.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_list.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_slider.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_tabview.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_table.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_keyboard.$(OBJEXT) \
+	lib/liblv/lv_widgets/antfx-lv_btnmatrix.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_18.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_24.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_16.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_36.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_30.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.$(OBJEXT) \
 	lib/liblv/lv_font/antfx-lv_font_unscii_8.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_loader.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_28.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_22.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_40.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_48.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_34.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_32.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_20.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_46.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_14.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_42.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_12.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_44.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_38.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_montserrat_26.$(OBJEXT) \
+	lib/liblv/lv_font/antfx-lv_font_fmt_txt.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_txt_ap.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_task.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_bidi.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_math.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_anim.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_async.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_mem.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_templ.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_printf.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_gc.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_fs.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_debug.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_txt.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_area.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_color.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_utils.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_log.$(OBJEXT) \
+	lib/liblv/lv_misc/antfx-lv_ll.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_img_buf.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_img_decoder.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_triangle.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_blend.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_img.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_rect.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_line.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_label.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_mask.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_draw_arc.$(OBJEXT) \
+	lib/liblv/lv_draw/antfx-lv_img_cache.$(OBJEXT) \
 	lib/liblv/lv_hal/antfx-lv_hal_disp.$(OBJEXT) \
 	lib/liblv/lv_hal/antfx-lv_hal_indev.$(OBJEXT) \
 	lib/liblv/lv_hal/antfx-lv_hal_tick.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_circ.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_area.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_task.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_fs.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_anim.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_mem.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_ll.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_color.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_txt.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_math.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_log.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_gc.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_utils.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_async.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_printf.$(OBJEXT) \
-	lib/liblv/lv_misc/antfx-lv_bidi.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_arc.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_bar.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_cb.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_cpicker.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_ddlist.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_kb.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_line.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_mbox.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_preload.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_roller.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_table.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_tabview.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_tileview.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_btn.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_calendar.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_chart.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_canvas.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_gauge.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_label.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_list.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_slider.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_ta.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_spinbox.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_btnm.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_cont.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_img.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_imgbtn.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_led.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_lmeter.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_page.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_sw.$(OBJEXT) \
-	lib/liblv/lv_objx/antfx-lv_win.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_alien.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_default.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_night.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_templ.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_zen.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_material.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_nemo.$(OBJEXT) \
-	lib/liblv/lv_themes/antfx-lv_theme_mono.$(OBJEXT)
+	lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.$(OBJEXT)
 antfx_OBJECTS = $(am_antfx_OBJECTS)
 antfx_LDADD = $(LDADD)
-am_loopback_OBJECTS = loopback.$(OBJEXT)
-loopback_OBJECTS = $(am_loopback_OBJECTS)
-loopback_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -305,33 +358,54 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	./$(DEPDIR)/antfx-db.Po ./$(DEPDIR)/antfx-gui.Po \
 	./$(DEPDIR)/antfx-hw.Po ./$(DEPDIR)/antfx-media.Po \
 	./$(DEPDIR)/antfx-utils.Po ./$(DEPDIR)/antfx-weather.Po \
-	./$(DEPDIR)/loopback.Po backends/$(DEPDIR)/antfx-fb_engine.Po \
+	backends/$(DEPDIR)/antfx-fb_engine.Po \
 	backends/$(DEPDIR)/antfx-sdl2_engine.Po \
 	lib/ini/$(DEPDIR)/antfx-ini.Po \
-	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Po \
 	lib/liblv/lv_core/$(DEPDIR)/antfx-lv_style.Po \
-	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po \
-	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po \
+	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po \
 	lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po \
 	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po \
 	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Po \
-	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po \
-	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po \
-	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po \
-	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po \
+	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po \
 	lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po \
+	lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po \
 	lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_disp.Po \
 	lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_indev.Po \
 	lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_tick.Po \
@@ -339,8 +413,8 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po \
-	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po \
@@ -349,52 +423,51 @@ am__depfiles_remade = ./$(DEPDIR)/antfx-antfx.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po \
+	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po \
 	lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po \
-	lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po \
 	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po \
 	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po \
 	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po \
-	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po \
+	lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po \
+	lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po \
 	widgets/$(DEPDIR)/antfx-default_wp.Po \
 	widgets/$(DEPDIR)/antfx-image.Po \
-	widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po \
 	widgets/icons/$(DEPDIR)/antfx-alarm.Po \
 	widgets/icons/$(DEPDIR)/antfx-calendar.Po \
 	widgets/icons/$(DEPDIR)/antfx-camera.Po \
@@ -428,8 +501,8 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(antfx_SOURCES) $(loopback_SOURCES)
-DIST_SOURCES = $(am__antfx_SOURCES_DIST) $(loopback_SOURCES)
+SOURCES = $(antfx_SOURCES)
+DIST_SOURCES = $(am__antfx_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -572,7 +645,6 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
 AM_CPPFLAGS = -W  -Wall -g -std=c99
-
 # SUBDIRS =  lib/ .
 EXTRA_DIST = README.md \
                 LICENSE \
@@ -583,7 +655,6 @@ EXTRA_DIST = README.md \
                 config.ini \
                 lib/ini/ini.h
 
-loopback_SOURCES = loopback.c
 
 # lib source files
 antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
@@ -591,65 +662,100 @@ antfx_SOURCES = antfxapp.c antfx.c $(am__append_1) $(am__append_2) \
 	lib/ini/ini.c widgets/image.c widgets/default_wp.c \
 	widgets/icons/radio.c widgets/icons/alarm.c \
 	widgets/icons/calendar.c widgets/icons/camera.c \
-	widgets/fonts/roboto_bold_50.c widgets/icons/w01d.c \
-	widgets/icons/w01n.c widgets/icons/w02d.c widgets/icons/w02n.c \
-	widgets/icons/w03d.c widgets/icons/w04d.c widgets/icons/w09d.c \
-	widgets/icons/w10d.c widgets/icons/w10n.c widgets/icons/w11d.c \
-	widgets/icons/w13d.c widgets/icons/w50d.c \
-	lib/liblv/lv_core/lv_group.c lib/liblv/lv_core/lv_indev.c \
-	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_obj.c \
-	lib/liblv/lv_core/lv_refr.c lib/liblv/lv_core/lv_style.c \
-	lib/liblv/lv_core/lv_debug.c lib/liblv/lv_draw/lv_draw_basic.c \
-	lib/liblv/lv_draw/lv_draw.c lib/liblv/lv_draw/lv_draw_rect.c \
-	lib/liblv/lv_draw/lv_draw_label.c \
-	lib/liblv/lv_draw/lv_draw_line.c \
-	lib/liblv/lv_draw/lv_draw_img.c \
-	lib/liblv/lv_draw/lv_draw_arc.c \
-	lib/liblv/lv_draw/lv_draw_triangle.c \
-	lib/liblv/lv_draw/lv_img_decoder.c \
-	lib/liblv/lv_draw/lv_img_cache.c lib/liblv/lv_font/lv_font.c \
-	lib/liblv/lv_font/lv_font_fmt_txt.c \
-	lib/liblv/lv_font/lv_font_roboto_12.c \
-	lib/liblv/lv_font/lv_font_roboto_16.c \
-	lib/liblv/lv_font/lv_font_roboto_22.c \
-	lib/liblv/lv_font/lv_font_roboto_28.c \
-	lib/liblv/lv_font/lv_font_unscii_8.c \
-	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
-	lib/liblv/lv_hal/lv_hal_tick.c lib/liblv/lv_misc/lv_circ.c \
-	lib/liblv/lv_misc/lv_area.c lib/liblv/lv_misc/lv_task.c \
-	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_anim.c \
-	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_ll.c \
-	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_txt.c \
-	lib/liblv/lv_misc/lv_math.c lib/liblv/lv_misc/lv_log.c \
-	lib/liblv/lv_misc/lv_gc.c lib/liblv/lv_misc/lv_utils.c \
-	lib/liblv/lv_misc/lv_async.c lib/liblv/lv_misc/lv_printf.c \
-	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_objx/lv_arc.c \
-	lib/liblv/lv_objx/lv_bar.c lib/liblv/lv_objx/lv_cb.c \
-	lib/liblv/lv_objx/lv_cpicker.c lib/liblv/lv_objx/lv_ddlist.c \
-	lib/liblv/lv_objx/lv_kb.c lib/liblv/lv_objx/lv_line.c \
-	lib/liblv/lv_objx/lv_mbox.c lib/liblv/lv_objx/lv_preload.c \
-	lib/liblv/lv_objx/lv_roller.c lib/liblv/lv_objx/lv_table.c \
-	lib/liblv/lv_objx/lv_tabview.c lib/liblv/lv_objx/lv_tileview.c \
-	lib/liblv/lv_objx/lv_btn.c lib/liblv/lv_objx/lv_calendar.c \
-	lib/liblv/lv_objx/lv_chart.c lib/liblv/lv_objx/lv_canvas.c \
-	lib/liblv/lv_objx/lv_gauge.c lib/liblv/lv_objx/lv_label.c \
-	lib/liblv/lv_objx/lv_list.c lib/liblv/lv_objx/lv_slider.c \
-	lib/liblv/lv_objx/lv_ta.c lib/liblv/lv_objx/lv_spinbox.c \
-	lib/liblv/lv_objx/lv_btnm.c lib/liblv/lv_objx/lv_cont.c \
-	lib/liblv/lv_objx/lv_img.c lib/liblv/lv_objx/lv_imgbtn.c \
-	lib/liblv/lv_objx/lv_led.c lib/liblv/lv_objx/lv_lmeter.c \
-	lib/liblv/lv_objx/lv_page.c lib/liblv/lv_objx/lv_sw.c \
-	lib/liblv/lv_objx/lv_win.c \
-	lib/liblv/lv_themes/lv_theme_alien.c \
+	widgets/icons/w01d.c widgets/icons/w01n.c widgets/icons/w02d.c \
+	widgets/icons/w02n.c widgets/icons/w03d.c widgets/icons/w04d.c \
+	widgets/icons/w09d.c widgets/icons/w10d.c widgets/icons/w10n.c \
+	widgets/icons/w11d.c widgets/icons/w13d.c widgets/icons/w50d.c \
+	antfx_SOURCES += lib/liblv/lv_themes/lv_theme_template.c \
+	lib/liblv/lv_themes/lv_theme_mono.c \
 	lib/liblv/lv_themes/lv_theme.c \
-	lib/liblv/lv_themes/lv_theme_default.c \
-	lib/liblv/lv_themes/lv_theme_night.c \
-	lib/liblv/lv_themes/lv_theme_templ.c \
-	lib/liblv/lv_themes/lv_theme_zen.c \
+	lib/liblv/lv_themes/lv_theme_empty.c \
 	lib/liblv/lv_themes/lv_theme_material.c \
-	lib/liblv/lv_themes/lv_theme_nemo.c \
-	lib/liblv/lv_themes/lv_theme_mono.c
-antfx_CPPFLAGS = -I$(srcdir)/lib
+	lib/liblv/lv_core/lv_disp.c lib/liblv/lv_core/lv_refr.c \
+	lib/liblv/lv_core/lv_indev.c lib/liblv/lv_core/lv_style.c \
+	lib/liblv/lv_core/lv_obj.c lib/liblv/lv_core/lv_group.c \
+	lib/liblv/lv_widgets/lv_arc.c lib/liblv/lv_widgets/lv_page.c \
+	lib/liblv/lv_widgets/lv_win.c \
+	lib/liblv/lv_widgets/lv_objmask.c \
+	lib/liblv/lv_widgets/lv_label.c \
+	lib/liblv/lv_widgets/lv_canvas.c \
+	lib/liblv/lv_widgets/lv_cont.c \
+	lib/liblv/lv_widgets/lv_msgbox.c lib/liblv/lv_widgets/lv_led.c \
+	lib/liblv/lv_widgets/lv_line.c \
+	lib/liblv/lv_widgets/lv_roller.c \
+	lib/liblv/lv_widgets/lv_switch.c \
+	lib/liblv/lv_widgets/lv_linemeter.c \
+	lib/liblv/lv_widgets/lv_tileview.c \
+	lib/liblv/lv_widgets/lv_spinbox.c \
+	lib/liblv/lv_widgets/lv_objx_templ.c \
+	lib/liblv/lv_widgets/lv_calendar.c \
+	lib/liblv/lv_widgets/lv_img.c \
+	lib/liblv/lv_widgets/lv_textarea.c \
+	lib/liblv/lv_widgets/lv_bar.c \
+	lib/liblv/lv_widgets/lv_cpicker.c \
+	lib/liblv/lv_widgets/lv_chart.c \
+	lib/liblv/lv_widgets/lv_checkbox.c \
+	lib/liblv/lv_widgets/lv_gauge.c \
+	lib/liblv/lv_widgets/lv_imgbtn.c \
+	lib/liblv/lv_widgets/lv_dropdown.c \
+	lib/liblv/lv_widgets/lv_spinner.c \
+	lib/liblv/lv_widgets/lv_btn.c lib/liblv/lv_widgets/lv_list.c \
+	lib/liblv/lv_widgets/lv_slider.c \
+	lib/liblv/lv_widgets/lv_tabview.c \
+	lib/liblv/lv_widgets/lv_table.c \
+	lib/liblv/lv_widgets/lv_keyboard.c \
+	lib/liblv/lv_widgets/lv_btnmatrix.c \
+	lib/liblv/lv_font/lv_font_montserrat_18.c \
+	lib/liblv/lv_font/lv_font_montserrat_24.c \
+	lib/liblv/lv_font/lv_font_montserrat_16.c \
+	lib/liblv/lv_font/lv_font_montserrat_36.c \
+	lib/liblv/lv_font/lv_font_montserrat_30.c \
+	lib/liblv/lv_font/lv_font_montserrat_12_subpx.c \
+	lib/liblv/lv_font/lv_font_unscii_8.c \
+	lib/liblv/lv_font/lv_font_loader.c \
+	lib/liblv/lv_font/lv_font_montserrat_28.c \
+	lib/liblv/lv_font/lv_font_montserrat_22.c \
+	lib/liblv/lv_font/lv_font_montserrat_40.c \
+	lib/liblv/lv_font/lv_font_montserrat_48.c \
+	lib/liblv/lv_font/lv_font_montserrat_34.c \
+	lib/liblv/lv_font/lv_font_montserrat_32.c \
+	lib/liblv/lv_font/lv_font_montserrat_28_compressed.c \
+	lib/liblv/lv_font/lv_font_montserrat_20.c \
+	lib/liblv/lv_font/lv_font_montserrat_46.c \
+	lib/liblv/lv_font/lv_font_montserrat_14.c \
+	lib/liblv/lv_font/lv_font.c \
+	lib/liblv/lv_font/lv_font_montserrat_42.c \
+	lib/liblv/lv_font/lv_font_simsun_16_cjk.c \
+	lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c \
+	lib/liblv/lv_font/lv_font_montserrat_12.c \
+	lib/liblv/lv_font/lv_font_montserrat_44.c \
+	lib/liblv/lv_font/lv_font_montserrat_38.c \
+	lib/liblv/lv_font/lv_font_montserrat_26.c \
+	lib/liblv/lv_font/lv_font_fmt_txt.c \
+	lib/liblv/lv_misc/lv_txt_ap.c lib/liblv/lv_misc/lv_task.c \
+	lib/liblv/lv_misc/lv_bidi.c lib/liblv/lv_misc/lv_math.c \
+	lib/liblv/lv_misc/lv_anim.c lib/liblv/lv_misc/lv_async.c \
+	lib/liblv/lv_misc/lv_mem.c lib/liblv/lv_misc/lv_templ.c \
+	lib/liblv/lv_misc/lv_printf.c lib/liblv/lv_misc/lv_gc.c \
+	lib/liblv/lv_misc/lv_fs.c lib/liblv/lv_misc/lv_debug.c \
+	lib/liblv/lv_misc/lv_txt.c lib/liblv/lv_misc/lv_area.c \
+	lib/liblv/lv_misc/lv_color.c lib/liblv/lv_misc/lv_utils.c \
+	lib/liblv/lv_misc/lv_log.c lib/liblv/lv_misc/lv_ll.c \
+	lib/liblv/lv_draw/lv_img_buf.c \
+	lib/liblv/lv_draw/lv_img_decoder.c \
+	lib/liblv/lv_draw/lv_draw_triangle.c \
+	lib/liblv/lv_draw/lv_draw_blend.c \
+	lib/liblv/lv_draw/lv_draw_img.c \
+	lib/liblv/lv_draw/lv_draw_rect.c \
+	lib/liblv/lv_draw/lv_draw_line.c \
+	lib/liblv/lv_draw/lv_draw_label.c \
+	lib/liblv/lv_draw/lv_draw_mask.c \
+	lib/liblv/lv_draw/lv_draw_arc.c \
+	lib/liblv/lv_draw/lv_img_cache.c \
+	lib/liblv/lv_hal/lv_hal_disp.c lib/liblv/lv_hal/lv_hal_indev.c \
+	lib/liblv/lv_hal/lv_hal_tick.c \
+	lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
+antfx_CPPFLAGS = -I$(srcdir)/lib -W  -Wall -g -std=c99
 all: all-am
 
 .SUFFIXES:
@@ -771,15 +877,6 @@ widgets/icons/antfx-calendar.$(OBJEXT): widgets/icons/$(am__dirstamp) \
 	widgets/icons/$(DEPDIR)/$(am__dirstamp)
 widgets/icons/antfx-camera.$(OBJEXT): widgets/icons/$(am__dirstamp) \
 	widgets/icons/$(DEPDIR)/$(am__dirstamp)
-widgets/fonts/$(am__dirstamp):
-	@$(MKDIR_P) widgets/fonts
-	@: > widgets/fonts/$(am__dirstamp)
-widgets/fonts/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) widgets/fonts/$(DEPDIR)
-	@: > widgets/fonts/$(DEPDIR)/$(am__dirstamp)
-widgets/fonts/antfx-roboto_bold_50.$(OBJEXT):  \
-	widgets/fonts/$(am__dirstamp) \
-	widgets/fonts/$(DEPDIR)/$(am__dirstamp)
 widgets/icons/antfx-w01d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
 	widgets/icons/$(DEPDIR)/$(am__dirstamp)
 widgets/icons/antfx-w01n.$(OBJEXT): widgets/icons/$(am__dirstamp) \
@@ -804,96 +901,345 @@ widgets/icons/antfx-w13d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
 	widgets/icons/$(DEPDIR)/$(am__dirstamp)
 widgets/icons/antfx-w50d.$(OBJEXT): widgets/icons/$(am__dirstamp) \
 	widgets/icons/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_themes
+	@: > lib/liblv/lv_themes/$(am__dirstamp)
+lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_themes/$(DEPDIR)
+	@: > lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/antfx-lv_theme_template.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/antfx-lv_theme_mono.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/antfx-lv_theme.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/antfx-lv_theme_empty.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_themes/antfx-lv_theme_material.$(OBJEXT):  \
+	lib/liblv/lv_themes/$(am__dirstamp) \
+	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_core/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_core
 	@: > lib/liblv/lv_core/$(am__dirstamp)
 lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_core/$(DEPDIR)
 	@: > lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_core/antfx-lv_group.$(OBJEXT):  \
-	lib/liblv/lv_core/$(am__dirstamp) \
-	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_core/antfx-lv_indev.$(OBJEXT):  \
-	lib/liblv/lv_core/$(am__dirstamp) \
-	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_core/antfx-lv_disp.$(OBJEXT):  \
-	lib/liblv/lv_core/$(am__dirstamp) \
-	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_core/antfx-lv_obj.$(OBJEXT):  \
 	lib/liblv/lv_core/$(am__dirstamp) \
 	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_core/antfx-lv_refr.$(OBJEXT):  \
 	lib/liblv/lv_core/$(am__dirstamp) \
 	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/antfx-lv_indev.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_core/antfx-lv_style.$(OBJEXT):  \
 	lib/liblv/lv_core/$(am__dirstamp) \
 	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_core/antfx-lv_debug.$(OBJEXT):  \
+lib/liblv/lv_core/antfx-lv_obj.$(OBJEXT):  \
 	lib/liblv/lv_core/$(am__dirstamp) \
 	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_draw
-	@: > lib/liblv/lv_draw/$(am__dirstamp)
-lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_draw/$(DEPDIR)
-	@: > lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_basic.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_rect.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_label.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_line.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_img.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_arc.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_draw_triangle.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_img_decoder.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_draw/antfx-lv_img_cache.$(OBJEXT):  \
-	lib/liblv/lv_draw/$(am__dirstamp) \
-	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_core/antfx-lv_group.$(OBJEXT):  \
+	lib/liblv/lv_core/$(am__dirstamp) \
+	lib/liblv/lv_core/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_widgets
+	@: > lib/liblv/lv_widgets/$(am__dirstamp)
+lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_widgets/$(DEPDIR)
+	@: > lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_arc.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_page.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_win.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_objmask.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_label.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_canvas.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_cont.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_msgbox.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_led.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_line.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_roller.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_switch.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_linemeter.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_tileview.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_spinbox.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_objx_templ.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_calendar.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_img.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_textarea.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_bar.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_cpicker.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_chart.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_checkbox.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_gauge.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_imgbtn.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_dropdown.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_spinner.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_btn.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_list.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_slider.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_tabview.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_table.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_keyboard.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_widgets/antfx-lv_btnmatrix.$(OBJEXT):  \
+	lib/liblv/lv_widgets/$(am__dirstamp) \
+	lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_font/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_font
 	@: > lib/liblv/lv_font/$(am__dirstamp)
 lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_font/$(DEPDIR)
 	@: > lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_18.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font_fmt_txt.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_24.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font_roboto_12.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_16.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font_roboto_16.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_36.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font_roboto_22.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_30.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_font/antfx-lv_font_roboto_28.$(OBJEXT):  \
+lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_font/antfx-lv_font_unscii_8.$(OBJEXT):  \
 	lib/liblv/lv_font/$(am__dirstamp) \
 	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_loader.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_28.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_22.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_40.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_48.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_34.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_32.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_20.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_46.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_14.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_42.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_12.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_44.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_38.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_montserrat_26.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_font/antfx-lv_font_fmt_txt.$(OBJEXT):  \
+	lib/liblv/lv_font/$(am__dirstamp) \
+	lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_misc
+	@: > lib/liblv/lv_misc/$(am__dirstamp)
+lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_misc/$(DEPDIR)
+	@: > lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_txt_ap.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_task.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_bidi.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_math.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_anim.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_async.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_mem.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_templ.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_printf.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_gc.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_fs.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_debug.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_txt.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_area.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_color.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_utils.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_log.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_misc/antfx-lv_ll.$(OBJEXT):  \
+	lib/liblv/lv_misc/$(am__dirstamp) \
+	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_draw
+	@: > lib/liblv/lv_draw/$(am__dirstamp)
+lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_draw/$(DEPDIR)
+	@: > lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_img_buf.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_img_decoder.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_triangle.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_blend.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_img.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_rect.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_line.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_label.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_mask.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_draw_arc.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_draw/antfx-lv_img_cache.$(OBJEXT):  \
+	lib/liblv/lv_draw/$(am__dirstamp) \
+	lib/liblv/lv_draw/$(DEPDIR)/$(am__dirstamp)
 lib/liblv/lv_hal/$(am__dirstamp):
 	@$(MKDIR_P) lib/liblv/lv_hal
 	@: > lib/liblv/lv_hal/$(am__dirstamp)
@@ -909,203 +1255,19 @@ lib/liblv/lv_hal/antfx-lv_hal_indev.$(OBJEXT):  \
 lib/liblv/lv_hal/antfx-lv_hal_tick.$(OBJEXT):  \
 	lib/liblv/lv_hal/$(am__dirstamp) \
 	lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_misc
-	@: > lib/liblv/lv_misc/$(am__dirstamp)
-lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_misc/$(DEPDIR)
-	@: > lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_circ.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_area.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_task.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_fs.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_anim.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_mem.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_ll.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_color.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_txt.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_math.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_log.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_gc.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_utils.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_async.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_printf.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_misc/antfx-lv_bidi.$(OBJEXT):  \
-	lib/liblv/lv_misc/$(am__dirstamp) \
-	lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_objx
-	@: > lib/liblv/lv_objx/$(am__dirstamp)
-lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_objx/$(DEPDIR)
-	@: > lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_arc.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_bar.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_cb.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_cpicker.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_ddlist.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_kb.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_line.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_mbox.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_preload.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_roller.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_table.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_tabview.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_tileview.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_btn.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_calendar.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_chart.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_canvas.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_gauge.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_label.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_list.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_slider.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_ta.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_spinbox.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_btnm.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_cont.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_img.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_imgbtn.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_led.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_lmeter.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_page.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_sw.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_objx/antfx-lv_win.$(OBJEXT):  \
-	lib/liblv/lv_objx/$(am__dirstamp) \
-	lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_themes
-	@: > lib/liblv/lv_themes/$(am__dirstamp)
-lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) lib/liblv/lv_themes/$(DEPDIR)
-	@: > lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_alien.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_default.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_night.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_templ.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_zen.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_material.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_nemo.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
-lib/liblv/lv_themes/antfx-lv_theme_mono.$(OBJEXT):  \
-	lib/liblv/lv_themes/$(am__dirstamp) \
-	lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_gpu/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_gpu
+	@: > lib/liblv/lv_gpu/$(am__dirstamp)
+lib/liblv/lv_gpu/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lib/liblv/lv_gpu/$(DEPDIR)
+	@: > lib/liblv/lv_gpu/$(DEPDIR)/$(am__dirstamp)
+lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.$(OBJEXT):  \
+	lib/liblv/lv_gpu/$(am__dirstamp) \
+	lib/liblv/lv_gpu/$(DEPDIR)/$(am__dirstamp)
 
 antfx$(EXEEXT): $(antfx_OBJECTS) $(antfx_DEPENDENCIES) $(EXTRA_antfx_DEPENDENCIES) 
 	@rm -f antfx$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(antfx_OBJECTS) $(antfx_LDADD) $(LIBS)
-
-loopback$(EXEEXT): $(loopback_OBJECTS) $(loopback_DEPENDENCIES) $(EXTRA_loopback_DEPENDENCIES) 
-	@rm -f loopback$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(loopback_OBJECTS) $(loopback_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -1114,12 +1276,12 @@ mostlyclean-compile:
 	-rm -f lib/liblv/lv_core/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_draw/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_font/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_gpu/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_hal/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_misc/*.$(OBJEXT)
-	-rm -f lib/liblv/lv_objx/*.$(OBJEXT)
 	-rm -f lib/liblv/lv_themes/*.$(OBJEXT)
+	-rm -f lib/liblv/lv_widgets/*.$(OBJEXT)
 	-rm -f widgets/*.$(OBJEXT)
-	-rm -f widgets/fonts/*.$(OBJEXT)
 	-rm -f widgets/icons/*.$(OBJEXT)
 
 distclean-compile:
@@ -1136,34 +1298,54 @@ include ./$(DEPDIR)/antfx-hw.Po # am--include-marker
 include ./$(DEPDIR)/antfx-media.Po # am--include-marker
 include ./$(DEPDIR)/antfx-utils.Po # am--include-marker
 include ./$(DEPDIR)/antfx-weather.Po # am--include-marker
-include ./$(DEPDIR)/loopback.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-fb_engine.Po # am--include-marker
 include backends/$(DEPDIR)/antfx-sdl2_engine.Po # am--include-marker
 include lib/ini/$(DEPDIR)/antfx-ini.Po # am--include-marker
-include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Po # am--include-marker
 include lib/liblv/lv_core/$(DEPDIR)/antfx-lv_style.Po # am--include-marker
-include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po # am--include-marker
-include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po # am--include-marker
+include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po # am--include-marker
 include lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po # am--include-marker
 include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po # am--include-marker
 include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Po # am--include-marker
-include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po # am--include-marker
-include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po # am--include-marker
-include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po # am--include-marker
-include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po # am--include-marker
+include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po # am--include-marker
 include lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po # am--include-marker
+include lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po # am--include-marker
 include lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_disp.Po # am--include-marker
 include lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_indev.Po # am--include-marker
 include lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_tick.Po # am--include-marker
@@ -1171,8 +1353,8 @@ include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po # am--include-marker
-include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po # am--include-marker
@@ -1181,52 +1363,51 @@ include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po # am--include-marker
+include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po # am--include-marker
 include lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po # am--include-marker
-include lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po # am--include-marker
 include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po # am--include-marker
 include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po # am--include-marker
 include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po # am--include-marker
-include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po # am--include-marker
+include lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po # am--include-marker
+include lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po # am--include-marker
 include widgets/$(DEPDIR)/antfx-default_wp.Po # am--include-marker
 include widgets/$(DEPDIR)/antfx-image.Po # am--include-marker
-include widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-alarm.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-calendar.Po # am--include-marker
 include widgets/icons/$(DEPDIR)/antfx-camera.Po # am--include-marker
@@ -1546,20 +1727,6 @@ widgets/icons/antfx-camera.obj: widgets/icons/camera.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-camera.obj `if test -f 'widgets/icons/camera.c'; then $(CYGPATH_W) 'widgets/icons/camera.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/camera.c'; fi`
 
-widgets/fonts/antfx-roboto_bold_50.o: widgets/fonts/roboto_bold_50.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/fonts/antfx-roboto_bold_50.o -MD -MP -MF widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Tpo -c -o widgets/fonts/antfx-roboto_bold_50.o `test -f 'widgets/fonts/roboto_bold_50.c' || echo '$(srcdir)/'`widgets/fonts/roboto_bold_50.c
-	$(AM_V_at)$(am__mv) widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Tpo widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po
-#	$(AM_V_CC)source='widgets/fonts/roboto_bold_50.c' object='widgets/fonts/antfx-roboto_bold_50.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/fonts/antfx-roboto_bold_50.o `test -f 'widgets/fonts/roboto_bold_50.c' || echo '$(srcdir)/'`widgets/fonts/roboto_bold_50.c
-
-widgets/fonts/antfx-roboto_bold_50.obj: widgets/fonts/roboto_bold_50.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/fonts/antfx-roboto_bold_50.obj -MD -MP -MF widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Tpo -c -o widgets/fonts/antfx-roboto_bold_50.obj `if test -f 'widgets/fonts/roboto_bold_50.c'; then $(CYGPATH_W) 'widgets/fonts/roboto_bold_50.c'; else $(CYGPATH_W) '$(srcdir)/widgets/fonts/roboto_bold_50.c'; fi`
-	$(AM_V_at)$(am__mv) widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Tpo widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po
-#	$(AM_V_CC)source='widgets/fonts/roboto_bold_50.c' object='widgets/fonts/antfx-roboto_bold_50.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/fonts/antfx-roboto_bold_50.obj `if test -f 'widgets/fonts/roboto_bold_50.c'; then $(CYGPATH_W) 'widgets/fonts/roboto_bold_50.c'; else $(CYGPATH_W) '$(srcdir)/widgets/fonts/roboto_bold_50.c'; fi`
-
 widgets/icons/antfx-w01d.o: widgets/icons/w01d.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT widgets/icons/antfx-w01d.o -MD -MP -MF widgets/icons/$(DEPDIR)/antfx-w01d.Tpo -c -o widgets/icons/antfx-w01d.o `test -f 'widgets/icons/w01d.c' || echo '$(srcdir)/'`widgets/icons/w01d.c
 	$(AM_V_at)$(am__mv) widgets/icons/$(DEPDIR)/antfx-w01d.Tpo widgets/icons/$(DEPDIR)/antfx-w01d.Po
@@ -1728,33 +1895,75 @@ widgets/icons/antfx-w50d.obj: widgets/icons/w50d.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o widgets/icons/antfx-w50d.obj `if test -f 'widgets/icons/w50d.c'; then $(CYGPATH_W) 'widgets/icons/w50d.c'; else $(CYGPATH_W) '$(srcdir)/widgets/icons/w50d.c'; fi`
 
-lib/liblv/lv_core/antfx-lv_group.o: lib/liblv/lv_core/lv_group.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_group.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo -c -o lib/liblv/lv_core/antfx-lv_group.o `test -f 'lib/liblv/lv_core/lv_group.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_group.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_group.c' object='lib/liblv/lv_core/antfx-lv_group.o' libtool=no \
+lib/liblv/lv_themes/antfx-lv_theme_template.o: lib/liblv/lv_themes/lv_theme_template.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_template.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_template.o `test -f 'lib/liblv/lv_themes/lv_theme_template.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_template.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_template.c' object='lib/liblv/lv_themes/antfx-lv_theme_template.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_group.o `test -f 'lib/liblv/lv_core/lv_group.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_group.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_template.o `test -f 'lib/liblv/lv_themes/lv_theme_template.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_template.c
 
-lib/liblv/lv_core/antfx-lv_group.obj: lib/liblv/lv_core/lv_group.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_group.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo -c -o lib/liblv/lv_core/antfx-lv_group.obj `if test -f 'lib/liblv/lv_core/lv_group.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_group.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_group.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_group.c' object='lib/liblv/lv_core/antfx-lv_group.obj' libtool=no \
+lib/liblv/lv_themes/antfx-lv_theme_template.obj: lib/liblv/lv_themes/lv_theme_template.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_template.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_template.obj `if test -f 'lib/liblv/lv_themes/lv_theme_template.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_template.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_template.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_template.c' object='lib/liblv/lv_themes/antfx-lv_theme_template.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_group.obj `if test -f 'lib/liblv/lv_core/lv_group.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_group.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_group.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_template.obj `if test -f 'lib/liblv/lv_themes/lv_theme_template.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_template.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_template.c'; fi`
 
-lib/liblv/lv_core/antfx-lv_indev.o: lib/liblv/lv_core/lv_indev.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_indev.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo -c -o lib/liblv/lv_core/antfx-lv_indev.o `test -f 'lib/liblv/lv_core/lv_indev.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_indev.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_indev.c' object='lib/liblv/lv_core/antfx-lv_indev.o' libtool=no \
+lib/liblv/lv_themes/antfx-lv_theme_mono.o: lib/liblv/lv_themes/lv_theme_mono.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_mono.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.o `test -f 'lib/liblv/lv_themes/lv_theme_mono.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_mono.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_mono.c' object='lib/liblv/lv_themes/antfx-lv_theme_mono.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_indev.o `test -f 'lib/liblv/lv_core/lv_indev.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_indev.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.o `test -f 'lib/liblv/lv_themes/lv_theme_mono.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_mono.c
 
-lib/liblv/lv_core/antfx-lv_indev.obj: lib/liblv/lv_core/lv_indev.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_indev.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo -c -o lib/liblv/lv_core/antfx-lv_indev.obj `if test -f 'lib/liblv/lv_core/lv_indev.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_indev.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_indev.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_indev.c' object='lib/liblv/lv_core/antfx-lv_indev.obj' libtool=no \
+lib/liblv/lv_themes/antfx-lv_theme_mono.obj: lib/liblv/lv_themes/lv_theme_mono.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_mono.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.obj `if test -f 'lib/liblv/lv_themes/lv_theme_mono.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_mono.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_mono.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_mono.c' object='lib/liblv/lv_themes/antfx-lv_theme_mono.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_indev.obj `if test -f 'lib/liblv/lv_core/lv_indev.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_indev.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_indev.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.obj `if test -f 'lib/liblv/lv_themes/lv_theme_mono.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_mono.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_mono.c'; fi`
+
+lib/liblv/lv_themes/antfx-lv_theme.o: lib/liblv/lv_themes/lv_theme.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme.o `test -f 'lib/liblv/lv_themes/lv_theme.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme.c' object='lib/liblv/lv_themes/antfx-lv_theme.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme.o `test -f 'lib/liblv/lv_themes/lv_theme.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme.c
+
+lib/liblv/lv_themes/antfx-lv_theme.obj: lib/liblv/lv_themes/lv_theme.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme.obj `if test -f 'lib/liblv/lv_themes/lv_theme.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme.c' object='lib/liblv/lv_themes/antfx-lv_theme.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme.obj `if test -f 'lib/liblv/lv_themes/lv_theme.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme.c'; fi`
+
+lib/liblv/lv_themes/antfx-lv_theme_empty.o: lib/liblv/lv_themes/lv_theme_empty.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_empty.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_empty.o `test -f 'lib/liblv/lv_themes/lv_theme_empty.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_empty.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_empty.c' object='lib/liblv/lv_themes/antfx-lv_theme_empty.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_empty.o `test -f 'lib/liblv/lv_themes/lv_theme_empty.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_empty.c
+
+lib/liblv/lv_themes/antfx-lv_theme_empty.obj: lib/liblv/lv_themes/lv_theme_empty.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_empty.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_empty.obj `if test -f 'lib/liblv/lv_themes/lv_theme_empty.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_empty.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_empty.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_empty.c' object='lib/liblv/lv_themes/antfx-lv_theme_empty.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_empty.obj `if test -f 'lib/liblv/lv_themes/lv_theme_empty.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_empty.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_empty.c'; fi`
+
+lib/liblv/lv_themes/antfx-lv_theme_material.o: lib/liblv/lv_themes/lv_theme_material.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_material.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_material.o `test -f 'lib/liblv/lv_themes/lv_theme_material.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_material.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_material.c' object='lib/liblv/lv_themes/antfx-lv_theme_material.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_material.o `test -f 'lib/liblv/lv_themes/lv_theme_material.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_material.c
+
+lib/liblv/lv_themes/antfx-lv_theme_material.obj: lib/liblv/lv_themes/lv_theme_material.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_material.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_material.obj `if test -f 'lib/liblv/lv_themes/lv_theme_material.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_material.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_material.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
+#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_material.c' object='lib/liblv/lv_themes/antfx-lv_theme_material.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_material.obj `if test -f 'lib/liblv/lv_themes/lv_theme_material.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_material.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_material.c'; fi`
 
 lib/liblv/lv_core/antfx-lv_disp.o: lib/liblv/lv_core/lv_disp.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_disp.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Tpo -c -o lib/liblv/lv_core/antfx-lv_disp.o `test -f 'lib/liblv/lv_core/lv_disp.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_disp.c
@@ -1770,20 +1979,6 @@ lib/liblv/lv_core/antfx-lv_disp.obj: lib/liblv/lv_core/lv_disp.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_disp.obj `if test -f 'lib/liblv/lv_core/lv_disp.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_disp.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_disp.c'; fi`
 
-lib/liblv/lv_core/antfx-lv_obj.o: lib/liblv/lv_core/lv_obj.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_obj.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo -c -o lib/liblv/lv_core/antfx-lv_obj.o `test -f 'lib/liblv/lv_core/lv_obj.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_obj.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_obj.c' object='lib/liblv/lv_core/antfx-lv_obj.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_obj.o `test -f 'lib/liblv/lv_core/lv_obj.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_obj.c
-
-lib/liblv/lv_core/antfx-lv_obj.obj: lib/liblv/lv_core/lv_obj.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_obj.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo -c -o lib/liblv/lv_core/antfx-lv_obj.obj `if test -f 'lib/liblv/lv_core/lv_obj.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_obj.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_obj.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_obj.c' object='lib/liblv/lv_core/antfx-lv_obj.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_obj.obj `if test -f 'lib/liblv/lv_core/lv_obj.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_obj.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_obj.c'; fi`
-
 lib/liblv/lv_core/antfx-lv_refr.o: lib/liblv/lv_core/lv_refr.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_refr.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Tpo -c -o lib/liblv/lv_core/antfx-lv_refr.o `test -f 'lib/liblv/lv_core/lv_refr.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_refr.c
 	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Po
@@ -1797,6 +1992,20 @@ lib/liblv/lv_core/antfx-lv_refr.obj: lib/liblv/lv_core/lv_refr.c
 #	$(AM_V_CC)source='lib/liblv/lv_core/lv_refr.c' object='lib/liblv/lv_core/antfx-lv_refr.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_refr.obj `if test -f 'lib/liblv/lv_core/lv_refr.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_refr.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_refr.c'; fi`
+
+lib/liblv/lv_core/antfx-lv_indev.o: lib/liblv/lv_core/lv_indev.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_indev.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo -c -o lib/liblv/lv_core/antfx-lv_indev.o `test -f 'lib/liblv/lv_core/lv_indev.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_indev.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_indev.c' object='lib/liblv/lv_core/antfx-lv_indev.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_indev.o `test -f 'lib/liblv/lv_core/lv_indev.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_indev.c
+
+lib/liblv/lv_core/antfx-lv_indev.obj: lib/liblv/lv_core/lv_indev.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_indev.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo -c -o lib/liblv/lv_core/antfx-lv_indev.obj `if test -f 'lib/liblv/lv_core/lv_indev.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_indev.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_indev.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_indev.c' object='lib/liblv/lv_core/antfx-lv_indev.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_indev.obj `if test -f 'lib/liblv/lv_core/lv_indev.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_indev.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_indev.c'; fi`
 
 lib/liblv/lv_core/antfx-lv_style.o: lib/liblv/lv_core/lv_style.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_style.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_style.Tpo -c -o lib/liblv/lv_core/antfx-lv_style.o `test -f 'lib/liblv/lv_core/lv_style.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_style.c
@@ -1812,159 +2021,761 @@ lib/liblv/lv_core/antfx-lv_style.obj: lib/liblv/lv_core/lv_style.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_style.obj `if test -f 'lib/liblv/lv_core/lv_style.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_style.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_style.c'; fi`
 
-lib/liblv/lv_core/antfx-lv_debug.o: lib/liblv/lv_core/lv_debug.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_debug.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Tpo -c -o lib/liblv/lv_core/antfx-lv_debug.o `test -f 'lib/liblv/lv_core/lv_debug.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_debug.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_debug.c' object='lib/liblv/lv_core/antfx-lv_debug.o' libtool=no \
+lib/liblv/lv_core/antfx-lv_obj.o: lib/liblv/lv_core/lv_obj.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_obj.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo -c -o lib/liblv/lv_core/antfx-lv_obj.o `test -f 'lib/liblv/lv_core/lv_obj.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_obj.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_obj.c' object='lib/liblv/lv_core/antfx-lv_obj.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_debug.o `test -f 'lib/liblv/lv_core/lv_debug.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_debug.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_obj.o `test -f 'lib/liblv/lv_core/lv_obj.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_obj.c
 
-lib/liblv/lv_core/antfx-lv_debug.obj: lib/liblv/lv_core/lv_debug.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_debug.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Tpo -c -o lib/liblv/lv_core/antfx-lv_debug.obj `if test -f 'lib/liblv/lv_core/lv_debug.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_debug.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_debug.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
-#	$(AM_V_CC)source='lib/liblv/lv_core/lv_debug.c' object='lib/liblv/lv_core/antfx-lv_debug.obj' libtool=no \
+lib/liblv/lv_core/antfx-lv_obj.obj: lib/liblv/lv_core/lv_obj.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_obj.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo -c -o lib/liblv/lv_core/antfx-lv_obj.obj `if test -f 'lib/liblv/lv_core/lv_obj.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_obj.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_obj.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_obj.c' object='lib/liblv/lv_core/antfx-lv_obj.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_debug.obj `if test -f 'lib/liblv/lv_core/lv_debug.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_debug.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_debug.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_obj.obj `if test -f 'lib/liblv/lv_core/lv_obj.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_obj.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_obj.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_basic.o: lib/liblv/lv_draw/lv_draw_basic.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_basic.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_basic.o `test -f 'lib/liblv/lv_draw/lv_draw_basic.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_basic.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_basic.c' object='lib/liblv/lv_draw/antfx-lv_draw_basic.o' libtool=no \
+lib/liblv/lv_core/antfx-lv_group.o: lib/liblv/lv_core/lv_group.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_group.o -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo -c -o lib/liblv/lv_core/antfx-lv_group.o `test -f 'lib/liblv/lv_core/lv_group.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_group.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_group.c' object='lib/liblv/lv_core/antfx-lv_group.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_basic.o `test -f 'lib/liblv/lv_draw/lv_draw_basic.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_basic.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_group.o `test -f 'lib/liblv/lv_core/lv_group.c' || echo '$(srcdir)/'`lib/liblv/lv_core/lv_group.c
 
-lib/liblv/lv_draw/antfx-lv_draw_basic.obj: lib/liblv/lv_draw/lv_draw_basic.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_basic.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_basic.obj `if test -f 'lib/liblv/lv_draw/lv_draw_basic.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_basic.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_basic.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_basic.c' object='lib/liblv/lv_draw/antfx-lv_draw_basic.obj' libtool=no \
+lib/liblv/lv_core/antfx-lv_group.obj: lib/liblv/lv_core/lv_group.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_core/antfx-lv_group.obj -MD -MP -MF lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo -c -o lib/liblv/lv_core/antfx-lv_group.obj `if test -f 'lib/liblv/lv_core/lv_group.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_group.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_group.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Tpo lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
+#	$(AM_V_CC)source='lib/liblv/lv_core/lv_group.c' object='lib/liblv/lv_core/antfx-lv_group.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_basic.obj `if test -f 'lib/liblv/lv_draw/lv_draw_basic.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_basic.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_basic.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_core/antfx-lv_group.obj `if test -f 'lib/liblv/lv_core/lv_group.c'; then $(CYGPATH_W) 'lib/liblv/lv_core/lv_group.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_core/lv_group.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw.o: lib/liblv/lv_draw/lv_draw.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw.o `test -f 'lib/liblv/lv_draw/lv_draw.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw.c' object='lib/liblv/lv_draw/antfx-lv_draw.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_arc.o: lib/liblv/lv_widgets/lv_arc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_arc.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_arc.o `test -f 'lib/liblv/lv_widgets/lv_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_arc.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_arc.c' object='lib/liblv/lv_widgets/antfx-lv_arc.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw.o `test -f 'lib/liblv/lv_draw/lv_draw.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_arc.o `test -f 'lib/liblv/lv_widgets/lv_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_arc.c
 
-lib/liblv/lv_draw/antfx-lv_draw.obj: lib/liblv/lv_draw/lv_draw.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw.obj `if test -f 'lib/liblv/lv_draw/lv_draw.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw.c' object='lib/liblv/lv_draw/antfx-lv_draw.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_arc.obj: lib/liblv/lv_widgets/lv_arc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_arc.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_arc.obj `if test -f 'lib/liblv/lv_widgets/lv_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_arc.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_arc.c' object='lib/liblv/lv_widgets/antfx-lv_arc.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw.obj `if test -f 'lib/liblv/lv_draw/lv_draw.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_arc.obj `if test -f 'lib/liblv/lv_widgets/lv_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_arc.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_rect.o: lib/liblv/lv_draw/lv_draw_rect.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_rect.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.o `test -f 'lib/liblv/lv_draw/lv_draw_rect.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_rect.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_rect.c' object='lib/liblv/lv_draw/antfx-lv_draw_rect.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_page.o: lib/liblv/lv_widgets/lv_page.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_page.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_page.o `test -f 'lib/liblv/lv_widgets/lv_page.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_page.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_page.c' object='lib/liblv/lv_widgets/antfx-lv_page.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.o `test -f 'lib/liblv/lv_draw/lv_draw_rect.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_rect.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_page.o `test -f 'lib/liblv/lv_widgets/lv_page.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_page.c
 
-lib/liblv/lv_draw/antfx-lv_draw_rect.obj: lib/liblv/lv_draw/lv_draw_rect.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_rect.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.obj `if test -f 'lib/liblv/lv_draw/lv_draw_rect.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_rect.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_rect.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_rect.c' object='lib/liblv/lv_draw/antfx-lv_draw_rect.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_page.obj: lib/liblv/lv_widgets/lv_page.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_page.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_page.obj `if test -f 'lib/liblv/lv_widgets/lv_page.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_page.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_page.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_page.c' object='lib/liblv/lv_widgets/antfx-lv_page.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.obj `if test -f 'lib/liblv/lv_draw/lv_draw_rect.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_rect.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_rect.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_page.obj `if test -f 'lib/liblv/lv_widgets/lv_page.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_page.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_page.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_label.o: lib/liblv/lv_draw/lv_draw_label.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_label.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_label.o `test -f 'lib/liblv/lv_draw/lv_draw_label.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_label.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_label.c' object='lib/liblv/lv_draw/antfx-lv_draw_label.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_win.o: lib/liblv/lv_widgets/lv_win.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_win.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_win.o `test -f 'lib/liblv/lv_widgets/lv_win.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_win.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_win.c' object='lib/liblv/lv_widgets/antfx-lv_win.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_label.o `test -f 'lib/liblv/lv_draw/lv_draw_label.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_label.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_win.o `test -f 'lib/liblv/lv_widgets/lv_win.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_win.c
 
-lib/liblv/lv_draw/antfx-lv_draw_label.obj: lib/liblv/lv_draw/lv_draw_label.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_label.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_label.obj `if test -f 'lib/liblv/lv_draw/lv_draw_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_label.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_label.c' object='lib/liblv/lv_draw/antfx-lv_draw_label.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_win.obj: lib/liblv/lv_widgets/lv_win.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_win.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_win.obj `if test -f 'lib/liblv/lv_widgets/lv_win.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_win.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_win.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_win.c' object='lib/liblv/lv_widgets/antfx-lv_win.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_label.obj `if test -f 'lib/liblv/lv_draw/lv_draw_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_label.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_win.obj `if test -f 'lib/liblv/lv_widgets/lv_win.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_win.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_win.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_line.o: lib/liblv/lv_draw/lv_draw_line.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_line.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_line.o `test -f 'lib/liblv/lv_draw/lv_draw_line.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_line.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_line.c' object='lib/liblv/lv_draw/antfx-lv_draw_line.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_objmask.o: lib/liblv/lv_widgets/lv_objmask.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_objmask.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_objmask.o `test -f 'lib/liblv/lv_widgets/lv_objmask.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_objmask.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_objmask.c' object='lib/liblv/lv_widgets/antfx-lv_objmask.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_line.o `test -f 'lib/liblv/lv_draw/lv_draw_line.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_line.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_objmask.o `test -f 'lib/liblv/lv_widgets/lv_objmask.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_objmask.c
 
-lib/liblv/lv_draw/antfx-lv_draw_line.obj: lib/liblv/lv_draw/lv_draw_line.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_line.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_line.obj `if test -f 'lib/liblv/lv_draw/lv_draw_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_line.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_line.c' object='lib/liblv/lv_draw/antfx-lv_draw_line.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_objmask.obj: lib/liblv/lv_widgets/lv_objmask.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_objmask.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_objmask.obj `if test -f 'lib/liblv/lv_widgets/lv_objmask.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_objmask.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_objmask.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_objmask.c' object='lib/liblv/lv_widgets/antfx-lv_objmask.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_line.obj `if test -f 'lib/liblv/lv_draw/lv_draw_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_line.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_objmask.obj `if test -f 'lib/liblv/lv_widgets/lv_objmask.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_objmask.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_objmask.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_img.o: lib/liblv/lv_draw/lv_draw_img.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_img.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_img.o `test -f 'lib/liblv/lv_draw/lv_draw_img.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_img.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_img.c' object='lib/liblv/lv_draw/antfx-lv_draw_img.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_label.o: lib/liblv/lv_widgets/lv_label.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_label.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_label.o `test -f 'lib/liblv/lv_widgets/lv_label.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_label.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_label.c' object='lib/liblv/lv_widgets/antfx-lv_label.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_img.o `test -f 'lib/liblv/lv_draw/lv_draw_img.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_img.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_label.o `test -f 'lib/liblv/lv_widgets/lv_label.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_label.c
 
-lib/liblv/lv_draw/antfx-lv_draw_img.obj: lib/liblv/lv_draw/lv_draw_img.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_img.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_img.obj `if test -f 'lib/liblv/lv_draw/lv_draw_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_img.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_img.c' object='lib/liblv/lv_draw/antfx-lv_draw_img.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_label.obj: lib/liblv/lv_widgets/lv_label.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_label.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_label.obj `if test -f 'lib/liblv/lv_widgets/lv_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_label.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_label.c' object='lib/liblv/lv_widgets/antfx-lv_label.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_img.obj `if test -f 'lib/liblv/lv_draw/lv_draw_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_img.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_label.obj `if test -f 'lib/liblv/lv_widgets/lv_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_label.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_arc.o: lib/liblv/lv_draw/lv_draw_arc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_arc.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.o `test -f 'lib/liblv/lv_draw/lv_draw_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_arc.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_arc.c' object='lib/liblv/lv_draw/antfx-lv_draw_arc.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_canvas.o: lib/liblv/lv_widgets/lv_canvas.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_canvas.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_canvas.o `test -f 'lib/liblv/lv_widgets/lv_canvas.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_canvas.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_canvas.c' object='lib/liblv/lv_widgets/antfx-lv_canvas.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.o `test -f 'lib/liblv/lv_draw/lv_draw_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_arc.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_canvas.o `test -f 'lib/liblv/lv_widgets/lv_canvas.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_canvas.c
 
-lib/liblv/lv_draw/antfx-lv_draw_arc.obj: lib/liblv/lv_draw/lv_draw_arc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_arc.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.obj `if test -f 'lib/liblv/lv_draw/lv_draw_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_arc.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_arc.c' object='lib/liblv/lv_draw/antfx-lv_draw_arc.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_canvas.obj: lib/liblv/lv_widgets/lv_canvas.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_canvas.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_canvas.obj `if test -f 'lib/liblv/lv_widgets/lv_canvas.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_canvas.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_canvas.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_canvas.c' object='lib/liblv/lv_widgets/antfx-lv_canvas.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.obj `if test -f 'lib/liblv/lv_draw/lv_draw_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_arc.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_canvas.obj `if test -f 'lib/liblv/lv_widgets/lv_canvas.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_canvas.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_canvas.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_draw_triangle.o: lib/liblv/lv_draw/lv_draw_triangle.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_triangle.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.o `test -f 'lib/liblv/lv_draw/lv_draw_triangle.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_triangle.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_triangle.c' object='lib/liblv/lv_draw/antfx-lv_draw_triangle.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_cont.o: lib/liblv/lv_widgets/lv_cont.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_cont.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_cont.o `test -f 'lib/liblv/lv_widgets/lv_cont.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_cont.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_cont.c' object='lib/liblv/lv_widgets/antfx-lv_cont.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.o `test -f 'lib/liblv/lv_draw/lv_draw_triangle.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_triangle.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_cont.o `test -f 'lib/liblv/lv_widgets/lv_cont.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_cont.c
 
-lib/liblv/lv_draw/antfx-lv_draw_triangle.obj: lib/liblv/lv_draw/lv_draw_triangle.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_triangle.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.obj `if test -f 'lib/liblv/lv_draw/lv_draw_triangle.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_triangle.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_triangle.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_triangle.c' object='lib/liblv/lv_draw/antfx-lv_draw_triangle.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_cont.obj: lib/liblv/lv_widgets/lv_cont.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_cont.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_cont.obj `if test -f 'lib/liblv/lv_widgets/lv_cont.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_cont.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_cont.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_cont.c' object='lib/liblv/lv_widgets/antfx-lv_cont.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.obj `if test -f 'lib/liblv/lv_draw/lv_draw_triangle.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_triangle.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_triangle.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_cont.obj `if test -f 'lib/liblv/lv_widgets/lv_cont.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_cont.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_cont.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_img_decoder.o: lib/liblv/lv_draw/lv_img_decoder.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_decoder.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.o `test -f 'lib/liblv/lv_draw/lv_img_decoder.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_decoder.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_decoder.c' object='lib/liblv/lv_draw/antfx-lv_img_decoder.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_msgbox.o: lib/liblv/lv_widgets/lv_msgbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_msgbox.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_msgbox.o `test -f 'lib/liblv/lv_widgets/lv_msgbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_msgbox.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_msgbox.c' object='lib/liblv/lv_widgets/antfx-lv_msgbox.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.o `test -f 'lib/liblv/lv_draw/lv_img_decoder.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_decoder.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_msgbox.o `test -f 'lib/liblv/lv_widgets/lv_msgbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_msgbox.c
 
-lib/liblv/lv_draw/antfx-lv_img_decoder.obj: lib/liblv/lv_draw/lv_img_decoder.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_decoder.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.obj `if test -f 'lib/liblv/lv_draw/lv_img_decoder.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_decoder.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_decoder.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_decoder.c' object='lib/liblv/lv_draw/antfx-lv_img_decoder.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_msgbox.obj: lib/liblv/lv_widgets/lv_msgbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_msgbox.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_msgbox.obj `if test -f 'lib/liblv/lv_widgets/lv_msgbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_msgbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_msgbox.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_msgbox.c' object='lib/liblv/lv_widgets/antfx-lv_msgbox.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.obj `if test -f 'lib/liblv/lv_draw/lv_img_decoder.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_decoder.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_decoder.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_msgbox.obj `if test -f 'lib/liblv/lv_widgets/lv_msgbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_msgbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_msgbox.c'; fi`
 
-lib/liblv/lv_draw/antfx-lv_img_cache.o: lib/liblv/lv_draw/lv_img_cache.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_cache.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_cache.o `test -f 'lib/liblv/lv_draw/lv_img_cache.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_cache.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_cache.c' object='lib/liblv/lv_draw/antfx-lv_img_cache.o' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_led.o: lib/liblv/lv_widgets/lv_led.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_led.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_led.o `test -f 'lib/liblv/lv_widgets/lv_led.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_led.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_led.c' object='lib/liblv/lv_widgets/antfx-lv_led.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_cache.o `test -f 'lib/liblv/lv_draw/lv_img_cache.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_cache.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_led.o `test -f 'lib/liblv/lv_widgets/lv_led.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_led.c
 
-lib/liblv/lv_draw/antfx-lv_img_cache.obj: lib/liblv/lv_draw/lv_img_cache.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_cache.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_cache.obj `if test -f 'lib/liblv/lv_draw/lv_img_cache.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_cache.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_cache.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
-#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_cache.c' object='lib/liblv/lv_draw/antfx-lv_img_cache.obj' libtool=no \
+lib/liblv/lv_widgets/antfx-lv_led.obj: lib/liblv/lv_widgets/lv_led.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_led.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_led.obj `if test -f 'lib/liblv/lv_widgets/lv_led.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_led.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_led.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_led.c' object='lib/liblv/lv_widgets/antfx-lv_led.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_cache.obj `if test -f 'lib/liblv/lv_draw/lv_img_cache.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_cache.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_cache.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_led.obj `if test -f 'lib/liblv/lv_widgets/lv_led.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_led.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_led.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_line.o: lib/liblv/lv_widgets/lv_line.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_line.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_line.o `test -f 'lib/liblv/lv_widgets/lv_line.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_line.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_line.c' object='lib/liblv/lv_widgets/antfx-lv_line.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_line.o `test -f 'lib/liblv/lv_widgets/lv_line.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_line.c
+
+lib/liblv/lv_widgets/antfx-lv_line.obj: lib/liblv/lv_widgets/lv_line.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_line.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_line.obj `if test -f 'lib/liblv/lv_widgets/lv_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_line.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_line.c' object='lib/liblv/lv_widgets/antfx-lv_line.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_line.obj `if test -f 'lib/liblv/lv_widgets/lv_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_line.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_roller.o: lib/liblv/lv_widgets/lv_roller.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_roller.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_roller.o `test -f 'lib/liblv/lv_widgets/lv_roller.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_roller.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_roller.c' object='lib/liblv/lv_widgets/antfx-lv_roller.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_roller.o `test -f 'lib/liblv/lv_widgets/lv_roller.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_roller.c
+
+lib/liblv/lv_widgets/antfx-lv_roller.obj: lib/liblv/lv_widgets/lv_roller.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_roller.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_roller.obj `if test -f 'lib/liblv/lv_widgets/lv_roller.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_roller.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_roller.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_roller.c' object='lib/liblv/lv_widgets/antfx-lv_roller.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_roller.obj `if test -f 'lib/liblv/lv_widgets/lv_roller.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_roller.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_roller.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_switch.o: lib/liblv/lv_widgets/lv_switch.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_switch.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_switch.o `test -f 'lib/liblv/lv_widgets/lv_switch.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_switch.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_switch.c' object='lib/liblv/lv_widgets/antfx-lv_switch.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_switch.o `test -f 'lib/liblv/lv_widgets/lv_switch.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_switch.c
+
+lib/liblv/lv_widgets/antfx-lv_switch.obj: lib/liblv/lv_widgets/lv_switch.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_switch.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_switch.obj `if test -f 'lib/liblv/lv_widgets/lv_switch.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_switch.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_switch.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_switch.c' object='lib/liblv/lv_widgets/antfx-lv_switch.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_switch.obj `if test -f 'lib/liblv/lv_widgets/lv_switch.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_switch.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_switch.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_linemeter.o: lib/liblv/lv_widgets/lv_linemeter.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_linemeter.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_linemeter.o `test -f 'lib/liblv/lv_widgets/lv_linemeter.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_linemeter.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_linemeter.c' object='lib/liblv/lv_widgets/antfx-lv_linemeter.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_linemeter.o `test -f 'lib/liblv/lv_widgets/lv_linemeter.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_linemeter.c
+
+lib/liblv/lv_widgets/antfx-lv_linemeter.obj: lib/liblv/lv_widgets/lv_linemeter.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_linemeter.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_linemeter.obj `if test -f 'lib/liblv/lv_widgets/lv_linemeter.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_linemeter.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_linemeter.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_linemeter.c' object='lib/liblv/lv_widgets/antfx-lv_linemeter.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_linemeter.obj `if test -f 'lib/liblv/lv_widgets/lv_linemeter.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_linemeter.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_linemeter.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_tileview.o: lib/liblv/lv_widgets/lv_tileview.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_tileview.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_tileview.o `test -f 'lib/liblv/lv_widgets/lv_tileview.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_tileview.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_tileview.c' object='lib/liblv/lv_widgets/antfx-lv_tileview.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_tileview.o `test -f 'lib/liblv/lv_widgets/lv_tileview.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_tileview.c
+
+lib/liblv/lv_widgets/antfx-lv_tileview.obj: lib/liblv/lv_widgets/lv_tileview.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_tileview.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_tileview.obj `if test -f 'lib/liblv/lv_widgets/lv_tileview.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_tileview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_tileview.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_tileview.c' object='lib/liblv/lv_widgets/antfx-lv_tileview.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_tileview.obj `if test -f 'lib/liblv/lv_widgets/lv_tileview.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_tileview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_tileview.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_spinbox.o: lib/liblv/lv_widgets/lv_spinbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_spinbox.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_spinbox.o `test -f 'lib/liblv/lv_widgets/lv_spinbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_spinbox.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_spinbox.c' object='lib/liblv/lv_widgets/antfx-lv_spinbox.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_spinbox.o `test -f 'lib/liblv/lv_widgets/lv_spinbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_spinbox.c
+
+lib/liblv/lv_widgets/antfx-lv_spinbox.obj: lib/liblv/lv_widgets/lv_spinbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_spinbox.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_spinbox.obj `if test -f 'lib/liblv/lv_widgets/lv_spinbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_spinbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_spinbox.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_spinbox.c' object='lib/liblv/lv_widgets/antfx-lv_spinbox.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_spinbox.obj `if test -f 'lib/liblv/lv_widgets/lv_spinbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_spinbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_spinbox.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_objx_templ.o: lib/liblv/lv_widgets/lv_objx_templ.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_objx_templ.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_objx_templ.o `test -f 'lib/liblv/lv_widgets/lv_objx_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_objx_templ.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_objx_templ.c' object='lib/liblv/lv_widgets/antfx-lv_objx_templ.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_objx_templ.o `test -f 'lib/liblv/lv_widgets/lv_objx_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_objx_templ.c
+
+lib/liblv/lv_widgets/antfx-lv_objx_templ.obj: lib/liblv/lv_widgets/lv_objx_templ.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_objx_templ.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_objx_templ.obj `if test -f 'lib/liblv/lv_widgets/lv_objx_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_objx_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_objx_templ.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_objx_templ.c' object='lib/liblv/lv_widgets/antfx-lv_objx_templ.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_objx_templ.obj `if test -f 'lib/liblv/lv_widgets/lv_objx_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_objx_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_objx_templ.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_calendar.o: lib/liblv/lv_widgets/lv_calendar.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_calendar.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_calendar.o `test -f 'lib/liblv/lv_widgets/lv_calendar.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_calendar.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_calendar.c' object='lib/liblv/lv_widgets/antfx-lv_calendar.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_calendar.o `test -f 'lib/liblv/lv_widgets/lv_calendar.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_calendar.c
+
+lib/liblv/lv_widgets/antfx-lv_calendar.obj: lib/liblv/lv_widgets/lv_calendar.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_calendar.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_calendar.obj `if test -f 'lib/liblv/lv_widgets/lv_calendar.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_calendar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_calendar.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_calendar.c' object='lib/liblv/lv_widgets/antfx-lv_calendar.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_calendar.obj `if test -f 'lib/liblv/lv_widgets/lv_calendar.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_calendar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_calendar.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_img.o: lib/liblv/lv_widgets/lv_img.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_img.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_img.o `test -f 'lib/liblv/lv_widgets/lv_img.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_img.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_img.c' object='lib/liblv/lv_widgets/antfx-lv_img.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_img.o `test -f 'lib/liblv/lv_widgets/lv_img.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_img.c
+
+lib/liblv/lv_widgets/antfx-lv_img.obj: lib/liblv/lv_widgets/lv_img.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_img.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_img.obj `if test -f 'lib/liblv/lv_widgets/lv_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_img.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_img.c' object='lib/liblv/lv_widgets/antfx-lv_img.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_img.obj `if test -f 'lib/liblv/lv_widgets/lv_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_img.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_textarea.o: lib/liblv/lv_widgets/lv_textarea.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_textarea.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_textarea.o `test -f 'lib/liblv/lv_widgets/lv_textarea.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_textarea.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_textarea.c' object='lib/liblv/lv_widgets/antfx-lv_textarea.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_textarea.o `test -f 'lib/liblv/lv_widgets/lv_textarea.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_textarea.c
+
+lib/liblv/lv_widgets/antfx-lv_textarea.obj: lib/liblv/lv_widgets/lv_textarea.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_textarea.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_textarea.obj `if test -f 'lib/liblv/lv_widgets/lv_textarea.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_textarea.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_textarea.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_textarea.c' object='lib/liblv/lv_widgets/antfx-lv_textarea.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_textarea.obj `if test -f 'lib/liblv/lv_widgets/lv_textarea.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_textarea.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_textarea.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_bar.o: lib/liblv/lv_widgets/lv_bar.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_bar.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_bar.o `test -f 'lib/liblv/lv_widgets/lv_bar.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_bar.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_bar.c' object='lib/liblv/lv_widgets/antfx-lv_bar.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_bar.o `test -f 'lib/liblv/lv_widgets/lv_bar.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_bar.c
+
+lib/liblv/lv_widgets/antfx-lv_bar.obj: lib/liblv/lv_widgets/lv_bar.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_bar.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_bar.obj `if test -f 'lib/liblv/lv_widgets/lv_bar.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_bar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_bar.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_bar.c' object='lib/liblv/lv_widgets/antfx-lv_bar.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_bar.obj `if test -f 'lib/liblv/lv_widgets/lv_bar.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_bar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_bar.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_cpicker.o: lib/liblv/lv_widgets/lv_cpicker.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_cpicker.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_cpicker.o `test -f 'lib/liblv/lv_widgets/lv_cpicker.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_cpicker.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_cpicker.c' object='lib/liblv/lv_widgets/antfx-lv_cpicker.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_cpicker.o `test -f 'lib/liblv/lv_widgets/lv_cpicker.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_cpicker.c
+
+lib/liblv/lv_widgets/antfx-lv_cpicker.obj: lib/liblv/lv_widgets/lv_cpicker.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_cpicker.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_cpicker.obj `if test -f 'lib/liblv/lv_widgets/lv_cpicker.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_cpicker.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_cpicker.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_cpicker.c' object='lib/liblv/lv_widgets/antfx-lv_cpicker.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_cpicker.obj `if test -f 'lib/liblv/lv_widgets/lv_cpicker.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_cpicker.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_cpicker.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_chart.o: lib/liblv/lv_widgets/lv_chart.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_chart.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_chart.o `test -f 'lib/liblv/lv_widgets/lv_chart.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_chart.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_chart.c' object='lib/liblv/lv_widgets/antfx-lv_chart.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_chart.o `test -f 'lib/liblv/lv_widgets/lv_chart.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_chart.c
+
+lib/liblv/lv_widgets/antfx-lv_chart.obj: lib/liblv/lv_widgets/lv_chart.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_chart.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_chart.obj `if test -f 'lib/liblv/lv_widgets/lv_chart.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_chart.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_chart.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_chart.c' object='lib/liblv/lv_widgets/antfx-lv_chart.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_chart.obj `if test -f 'lib/liblv/lv_widgets/lv_chart.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_chart.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_chart.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_checkbox.o: lib/liblv/lv_widgets/lv_checkbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_checkbox.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_checkbox.o `test -f 'lib/liblv/lv_widgets/lv_checkbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_checkbox.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_checkbox.c' object='lib/liblv/lv_widgets/antfx-lv_checkbox.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_checkbox.o `test -f 'lib/liblv/lv_widgets/lv_checkbox.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_checkbox.c
+
+lib/liblv/lv_widgets/antfx-lv_checkbox.obj: lib/liblv/lv_widgets/lv_checkbox.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_checkbox.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_checkbox.obj `if test -f 'lib/liblv/lv_widgets/lv_checkbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_checkbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_checkbox.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_checkbox.c' object='lib/liblv/lv_widgets/antfx-lv_checkbox.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_checkbox.obj `if test -f 'lib/liblv/lv_widgets/lv_checkbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_checkbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_checkbox.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_gauge.o: lib/liblv/lv_widgets/lv_gauge.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_gauge.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_gauge.o `test -f 'lib/liblv/lv_widgets/lv_gauge.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_gauge.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_gauge.c' object='lib/liblv/lv_widgets/antfx-lv_gauge.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_gauge.o `test -f 'lib/liblv/lv_widgets/lv_gauge.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_gauge.c
+
+lib/liblv/lv_widgets/antfx-lv_gauge.obj: lib/liblv/lv_widgets/lv_gauge.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_gauge.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_gauge.obj `if test -f 'lib/liblv/lv_widgets/lv_gauge.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_gauge.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_gauge.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_gauge.c' object='lib/liblv/lv_widgets/antfx-lv_gauge.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_gauge.obj `if test -f 'lib/liblv/lv_widgets/lv_gauge.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_gauge.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_gauge.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_imgbtn.o: lib/liblv/lv_widgets/lv_imgbtn.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_imgbtn.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_imgbtn.o `test -f 'lib/liblv/lv_widgets/lv_imgbtn.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_imgbtn.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_imgbtn.c' object='lib/liblv/lv_widgets/antfx-lv_imgbtn.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_imgbtn.o `test -f 'lib/liblv/lv_widgets/lv_imgbtn.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_imgbtn.c
+
+lib/liblv/lv_widgets/antfx-lv_imgbtn.obj: lib/liblv/lv_widgets/lv_imgbtn.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_imgbtn.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_imgbtn.obj `if test -f 'lib/liblv/lv_widgets/lv_imgbtn.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_imgbtn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_imgbtn.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_imgbtn.c' object='lib/liblv/lv_widgets/antfx-lv_imgbtn.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_imgbtn.obj `if test -f 'lib/liblv/lv_widgets/lv_imgbtn.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_imgbtn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_imgbtn.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_dropdown.o: lib/liblv/lv_widgets/lv_dropdown.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_dropdown.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_dropdown.o `test -f 'lib/liblv/lv_widgets/lv_dropdown.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_dropdown.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_dropdown.c' object='lib/liblv/lv_widgets/antfx-lv_dropdown.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_dropdown.o `test -f 'lib/liblv/lv_widgets/lv_dropdown.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_dropdown.c
+
+lib/liblv/lv_widgets/antfx-lv_dropdown.obj: lib/liblv/lv_widgets/lv_dropdown.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_dropdown.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_dropdown.obj `if test -f 'lib/liblv/lv_widgets/lv_dropdown.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_dropdown.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_dropdown.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_dropdown.c' object='lib/liblv/lv_widgets/antfx-lv_dropdown.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_dropdown.obj `if test -f 'lib/liblv/lv_widgets/lv_dropdown.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_dropdown.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_dropdown.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_spinner.o: lib/liblv/lv_widgets/lv_spinner.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_spinner.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_spinner.o `test -f 'lib/liblv/lv_widgets/lv_spinner.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_spinner.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_spinner.c' object='lib/liblv/lv_widgets/antfx-lv_spinner.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_spinner.o `test -f 'lib/liblv/lv_widgets/lv_spinner.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_spinner.c
+
+lib/liblv/lv_widgets/antfx-lv_spinner.obj: lib/liblv/lv_widgets/lv_spinner.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_spinner.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_spinner.obj `if test -f 'lib/liblv/lv_widgets/lv_spinner.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_spinner.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_spinner.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_spinner.c' object='lib/liblv/lv_widgets/antfx-lv_spinner.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_spinner.obj `if test -f 'lib/liblv/lv_widgets/lv_spinner.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_spinner.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_spinner.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_btn.o: lib/liblv/lv_widgets/lv_btn.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_btn.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_btn.o `test -f 'lib/liblv/lv_widgets/lv_btn.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_btn.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_btn.c' object='lib/liblv/lv_widgets/antfx-lv_btn.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_btn.o `test -f 'lib/liblv/lv_widgets/lv_btn.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_btn.c
+
+lib/liblv/lv_widgets/antfx-lv_btn.obj: lib/liblv/lv_widgets/lv_btn.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_btn.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_btn.obj `if test -f 'lib/liblv/lv_widgets/lv_btn.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_btn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_btn.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_btn.c' object='lib/liblv/lv_widgets/antfx-lv_btn.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_btn.obj `if test -f 'lib/liblv/lv_widgets/lv_btn.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_btn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_btn.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_list.o: lib/liblv/lv_widgets/lv_list.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_list.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_list.o `test -f 'lib/liblv/lv_widgets/lv_list.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_list.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_list.c' object='lib/liblv/lv_widgets/antfx-lv_list.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_list.o `test -f 'lib/liblv/lv_widgets/lv_list.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_list.c
+
+lib/liblv/lv_widgets/antfx-lv_list.obj: lib/liblv/lv_widgets/lv_list.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_list.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_list.obj `if test -f 'lib/liblv/lv_widgets/lv_list.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_list.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_list.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_list.c' object='lib/liblv/lv_widgets/antfx-lv_list.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_list.obj `if test -f 'lib/liblv/lv_widgets/lv_list.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_list.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_list.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_slider.o: lib/liblv/lv_widgets/lv_slider.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_slider.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_slider.o `test -f 'lib/liblv/lv_widgets/lv_slider.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_slider.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_slider.c' object='lib/liblv/lv_widgets/antfx-lv_slider.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_slider.o `test -f 'lib/liblv/lv_widgets/lv_slider.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_slider.c
+
+lib/liblv/lv_widgets/antfx-lv_slider.obj: lib/liblv/lv_widgets/lv_slider.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_slider.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_slider.obj `if test -f 'lib/liblv/lv_widgets/lv_slider.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_slider.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_slider.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_slider.c' object='lib/liblv/lv_widgets/antfx-lv_slider.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_slider.obj `if test -f 'lib/liblv/lv_widgets/lv_slider.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_slider.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_slider.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_tabview.o: lib/liblv/lv_widgets/lv_tabview.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_tabview.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_tabview.o `test -f 'lib/liblv/lv_widgets/lv_tabview.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_tabview.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_tabview.c' object='lib/liblv/lv_widgets/antfx-lv_tabview.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_tabview.o `test -f 'lib/liblv/lv_widgets/lv_tabview.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_tabview.c
+
+lib/liblv/lv_widgets/antfx-lv_tabview.obj: lib/liblv/lv_widgets/lv_tabview.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_tabview.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_tabview.obj `if test -f 'lib/liblv/lv_widgets/lv_tabview.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_tabview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_tabview.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_tabview.c' object='lib/liblv/lv_widgets/antfx-lv_tabview.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_tabview.obj `if test -f 'lib/liblv/lv_widgets/lv_tabview.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_tabview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_tabview.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_table.o: lib/liblv/lv_widgets/lv_table.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_table.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_table.o `test -f 'lib/liblv/lv_widgets/lv_table.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_table.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_table.c' object='lib/liblv/lv_widgets/antfx-lv_table.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_table.o `test -f 'lib/liblv/lv_widgets/lv_table.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_table.c
+
+lib/liblv/lv_widgets/antfx-lv_table.obj: lib/liblv/lv_widgets/lv_table.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_table.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_table.obj `if test -f 'lib/liblv/lv_widgets/lv_table.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_table.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_table.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_table.c' object='lib/liblv/lv_widgets/antfx-lv_table.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_table.obj `if test -f 'lib/liblv/lv_widgets/lv_table.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_table.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_table.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_keyboard.o: lib/liblv/lv_widgets/lv_keyboard.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_keyboard.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_keyboard.o `test -f 'lib/liblv/lv_widgets/lv_keyboard.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_keyboard.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_keyboard.c' object='lib/liblv/lv_widgets/antfx-lv_keyboard.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_keyboard.o `test -f 'lib/liblv/lv_widgets/lv_keyboard.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_keyboard.c
+
+lib/liblv/lv_widgets/antfx-lv_keyboard.obj: lib/liblv/lv_widgets/lv_keyboard.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_keyboard.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_keyboard.obj `if test -f 'lib/liblv/lv_widgets/lv_keyboard.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_keyboard.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_keyboard.c' object='lib/liblv/lv_widgets/antfx-lv_keyboard.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_keyboard.obj `if test -f 'lib/liblv/lv_widgets/lv_keyboard.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_keyboard.c'; fi`
+
+lib/liblv/lv_widgets/antfx-lv_btnmatrix.o: lib/liblv/lv_widgets/lv_btnmatrix.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_btnmatrix.o -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_btnmatrix.o `test -f 'lib/liblv/lv_widgets/lv_btnmatrix.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_btnmatrix.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_btnmatrix.c' object='lib/liblv/lv_widgets/antfx-lv_btnmatrix.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_btnmatrix.o `test -f 'lib/liblv/lv_widgets/lv_btnmatrix.c' || echo '$(srcdir)/'`lib/liblv/lv_widgets/lv_btnmatrix.c
+
+lib/liblv/lv_widgets/antfx-lv_btnmatrix.obj: lib/liblv/lv_widgets/lv_btnmatrix.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_widgets/antfx-lv_btnmatrix.obj -MD -MP -MF lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Tpo -c -o lib/liblv/lv_widgets/antfx-lv_btnmatrix.obj `if test -f 'lib/liblv/lv_widgets/lv_btnmatrix.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_btnmatrix.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_btnmatrix.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Tpo lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po
+#	$(AM_V_CC)source='lib/liblv/lv_widgets/lv_btnmatrix.c' object='lib/liblv/lv_widgets/antfx-lv_btnmatrix.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_widgets/antfx-lv_btnmatrix.obj `if test -f 'lib/liblv/lv_widgets/lv_btnmatrix.c'; then $(CYGPATH_W) 'lib/liblv/lv_widgets/lv_btnmatrix.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_widgets/lv_btnmatrix.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_18.o: lib/liblv/lv_font/lv_font_montserrat_18.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_18.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_18.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_18.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_18.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_18.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_18.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_18.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_18.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_18.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_18.obj: lib/liblv/lv_font/lv_font_montserrat_18.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_18.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_18.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_18.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_18.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_18.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_18.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_18.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_18.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_18.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_18.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_18.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_24.o: lib/liblv/lv_font/lv_font_montserrat_24.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_24.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_24.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_24.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_24.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_24.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_24.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_24.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_24.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_24.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_24.obj: lib/liblv/lv_font/lv_font_montserrat_24.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_24.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_24.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_24.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_24.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_24.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_24.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_24.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_24.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_24.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_24.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_24.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_16.o: lib/liblv/lv_font/lv_font_montserrat_16.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_16.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_16.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_16.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_16.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_16.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_16.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_16.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_16.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_16.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_16.obj: lib/liblv/lv_font/lv_font_montserrat_16.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_16.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_16.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_16.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_16.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_16.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_16.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_16.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_16.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_16.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_16.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_16.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_36.o: lib/liblv/lv_font/lv_font_montserrat_36.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_36.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_36.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_36.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_36.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_36.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_36.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_36.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_36.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_36.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_36.obj: lib/liblv/lv_font/lv_font_montserrat_36.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_36.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_36.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_36.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_36.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_36.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_36.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_36.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_36.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_36.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_36.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_36.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_30.o: lib/liblv/lv_font/lv_font_montserrat_30.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_30.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_30.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_30.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_30.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_30.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_30.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_30.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_30.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_30.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_30.obj: lib/liblv/lv_font/lv_font_montserrat_30.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_30.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_30.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_30.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_30.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_30.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_30.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_30.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_30.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_30.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_30.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_30.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.o: lib/liblv/lv_font/lv_font_montserrat_12_subpx.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_12_subpx.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_12_subpx.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_12_subpx.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.obj: lib/liblv/lv_font/lv_font_montserrat_12_subpx.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_12_subpx.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12_subpx.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_12_subpx.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_unscii_8.o: lib/liblv/lv_font/lv_font_unscii_8.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_unscii_8.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.o `test -f 'lib/liblv/lv_font/lv_font_unscii_8.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_unscii_8.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_unscii_8.c' object='lib/liblv/lv_font/antfx-lv_font_unscii_8.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.o `test -f 'lib/liblv/lv_font/lv_font_unscii_8.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_unscii_8.c
+
+lib/liblv/lv_font/antfx-lv_font_unscii_8.obj: lib/liblv/lv_font/lv_font_unscii_8.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_unscii_8.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.obj `if test -f 'lib/liblv/lv_font/lv_font_unscii_8.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_unscii_8.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_unscii_8.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_unscii_8.c' object='lib/liblv/lv_font/antfx-lv_font_unscii_8.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.obj `if test -f 'lib/liblv/lv_font/lv_font_unscii_8.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_unscii_8.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_unscii_8.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_loader.o: lib/liblv/lv_font/lv_font_loader.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_loader.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_loader.o `test -f 'lib/liblv/lv_font/lv_font_loader.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_loader.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_loader.c' object='lib/liblv/lv_font/antfx-lv_font_loader.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_loader.o `test -f 'lib/liblv/lv_font/lv_font_loader.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_loader.c
+
+lib/liblv/lv_font/antfx-lv_font_loader.obj: lib/liblv/lv_font/lv_font_loader.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_loader.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_loader.obj `if test -f 'lib/liblv/lv_font/lv_font_loader.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_loader.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_loader.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_loader.c' object='lib/liblv/lv_font/antfx-lv_font_loader.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_loader.obj `if test -f 'lib/liblv/lv_font/lv_font_loader.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_loader.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_loader.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_28.o: lib/liblv/lv_font/lv_font_montserrat_28.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_28.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_28.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_28.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_28.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_28.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_28.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_28.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_28.obj: lib/liblv/lv_font/lv_font_montserrat_28.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_28.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_28.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_28.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_28.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_28.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_28.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_28.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_28.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_28.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_22.o: lib/liblv/lv_font/lv_font_montserrat_22.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_22.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_22.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_22.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_22.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_22.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_22.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_22.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_22.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_22.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_22.obj: lib/liblv/lv_font/lv_font_montserrat_22.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_22.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_22.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_22.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_22.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_22.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_22.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_22.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_22.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_22.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_22.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_22.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_40.o: lib/liblv/lv_font/lv_font_montserrat_40.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_40.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_40.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_40.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_40.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_40.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_40.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_40.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_40.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_40.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_40.obj: lib/liblv/lv_font/lv_font_montserrat_40.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_40.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_40.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_40.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_40.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_40.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_40.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_40.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_40.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_40.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_40.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_40.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_48.o: lib/liblv/lv_font/lv_font_montserrat_48.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_48.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_48.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_48.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_48.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_48.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_48.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_48.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_48.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_48.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_48.obj: lib/liblv/lv_font/lv_font_montserrat_48.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_48.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_48.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_48.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_48.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_48.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_48.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_48.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_48.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_48.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_48.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_48.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_34.o: lib/liblv/lv_font/lv_font_montserrat_34.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_34.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_34.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_34.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_34.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_34.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_34.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_34.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_34.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_34.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_34.obj: lib/liblv/lv_font/lv_font_montserrat_34.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_34.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_34.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_34.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_34.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_34.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_34.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_34.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_34.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_34.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_34.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_34.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_32.o: lib/liblv/lv_font/lv_font_montserrat_32.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_32.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_32.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_32.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_32.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_32.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_32.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_32.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_32.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_32.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_32.obj: lib/liblv/lv_font/lv_font_montserrat_32.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_32.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_32.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_32.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_32.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_32.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_32.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_32.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_32.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_32.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_32.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_32.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.o: lib/liblv/lv_font/lv_font_montserrat_28_compressed.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_28_compressed.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_28_compressed.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_28_compressed.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.obj: lib/liblv/lv_font/lv_font_montserrat_28_compressed.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_28_compressed.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_28_compressed.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_28_compressed.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_20.o: lib/liblv/lv_font/lv_font_montserrat_20.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_20.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_20.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_20.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_20.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_20.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_20.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_20.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_20.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_20.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_20.obj: lib/liblv/lv_font/lv_font_montserrat_20.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_20.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_20.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_20.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_20.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_20.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_20.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_20.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_20.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_20.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_20.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_20.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_46.o: lib/liblv/lv_font/lv_font_montserrat_46.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_46.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_46.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_46.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_46.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_46.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_46.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_46.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_46.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_46.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_46.obj: lib/liblv/lv_font/lv_font_montserrat_46.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_46.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_46.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_46.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_46.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_46.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_46.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_46.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_46.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_46.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_46.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_46.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_14.o: lib/liblv/lv_font/lv_font_montserrat_14.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_14.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_14.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_14.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_14.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_14.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_14.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_14.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_14.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_14.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_14.obj: lib/liblv/lv_font/lv_font_montserrat_14.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_14.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_14.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_14.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_14.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_14.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_14.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_14.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_14.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_14.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_14.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_14.c'; fi`
 
 lib/liblv/lv_font/antfx-lv_font.o: lib/liblv/lv_font/lv_font.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font.Tpo -c -o lib/liblv/lv_font/antfx-lv_font.o `test -f 'lib/liblv/lv_font/lv_font.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font.c
@@ -1980,6 +2791,104 @@ lib/liblv/lv_font/antfx-lv_font.obj: lib/liblv/lv_font/lv_font.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font.obj `if test -f 'lib/liblv/lv_font/lv_font.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font.c'; fi`
 
+lib/liblv/lv_font/antfx-lv_font_montserrat_42.o: lib/liblv/lv_font/lv_font_montserrat_42.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_42.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_42.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_42.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_42.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_42.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_42.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_42.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_42.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_42.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_42.obj: lib/liblv/lv_font/lv_font_montserrat_42.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_42.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_42.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_42.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_42.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_42.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_42.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_42.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_42.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_42.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_42.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_42.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.o: lib/liblv/lv_font/lv_font_simsun_16_cjk.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.o `test -f 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_simsun_16_cjk.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_simsun_16_cjk.c' object='lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.o `test -f 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_simsun_16_cjk.c
+
+lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.obj: lib/liblv/lv_font/lv_font_simsun_16_cjk.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.obj `if test -f 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_simsun_16_cjk.c' object='lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_simsun_16_cjk.obj `if test -f 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_simsun_16_cjk.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.o: lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.o `test -f 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c' object='lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.o `test -f 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c
+
+lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.obj: lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.obj `if test -f 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c' object='lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_dejavu_16_persian_hebrew.obj `if test -f 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_dejavu_16_persian_hebrew.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_12.o: lib/liblv/lv_font/lv_font_montserrat_12.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_12.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_12.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_12.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_12.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_12.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_12.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_12.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_12.obj: lib/liblv/lv_font/lv_font_montserrat_12.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_12.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_12.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_12.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_12.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_12.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_12.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_12.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_12.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_12.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_12.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_44.o: lib/liblv/lv_font/lv_font_montserrat_44.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_44.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_44.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_44.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_44.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_44.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_44.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_44.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_44.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_44.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_44.obj: lib/liblv/lv_font/lv_font_montserrat_44.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_44.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_44.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_44.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_44.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_44.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_44.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_44.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_44.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_44.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_44.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_44.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_38.o: lib/liblv/lv_font/lv_font_montserrat_38.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_38.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_38.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_38.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_38.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_38.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_38.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_38.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_38.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_38.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_38.obj: lib/liblv/lv_font/lv_font_montserrat_38.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_38.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_38.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_38.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_38.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_38.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_38.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_38.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_38.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_38.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_38.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_38.c'; fi`
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_26.o: lib/liblv/lv_font/lv_font_montserrat_26.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_26.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_26.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_26.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_26.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_26.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_26.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_26.o `test -f 'lib/liblv/lv_font/lv_font_montserrat_26.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_montserrat_26.c
+
+lib/liblv/lv_font/antfx-lv_font_montserrat_26.obj: lib/liblv/lv_font/lv_font_montserrat_26.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_montserrat_26.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_26.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_26.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_26.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_26.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po
+#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_montserrat_26.c' object='lib/liblv/lv_font/antfx-lv_font_montserrat_26.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_montserrat_26.obj `if test -f 'lib/liblv/lv_font/lv_font_montserrat_26.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_montserrat_26.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_montserrat_26.c'; fi`
+
 lib/liblv/lv_font/antfx-lv_font_fmt_txt.o: lib/liblv/lv_font/lv_font_fmt_txt.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_fmt_txt.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_fmt_txt.o `test -f 'lib/liblv/lv_font/lv_font_fmt_txt.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_fmt_txt.c
 	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Po
@@ -1994,75 +2903,411 @@ lib/liblv/lv_font/antfx-lv_font_fmt_txt.obj: lib/liblv/lv_font/lv_font_fmt_txt.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_fmt_txt.obj `if test -f 'lib/liblv/lv_font/lv_font_fmt_txt.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_fmt_txt.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_fmt_txt.c'; fi`
 
-lib/liblv/lv_font/antfx-lv_font_roboto_12.o: lib/liblv/lv_font/lv_font_roboto_12.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_12.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_12.o `test -f 'lib/liblv/lv_font/lv_font_roboto_12.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_12.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_12.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_12.o' libtool=no \
+lib/liblv/lv_misc/antfx-lv_txt_ap.o: lib/liblv/lv_misc/lv_txt_ap.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt_ap.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt_ap.o `test -f 'lib/liblv/lv_misc/lv_txt_ap.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt_ap.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt_ap.c' object='lib/liblv/lv_misc/antfx-lv_txt_ap.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_12.o `test -f 'lib/liblv/lv_font/lv_font_roboto_12.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_12.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt_ap.o `test -f 'lib/liblv/lv_misc/lv_txt_ap.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt_ap.c
 
-lib/liblv/lv_font/antfx-lv_font_roboto_12.obj: lib/liblv/lv_font/lv_font_roboto_12.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_12.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_12.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_12.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_12.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_12.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_12.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_12.obj' libtool=no \
+lib/liblv/lv_misc/antfx-lv_txt_ap.obj: lib/liblv/lv_misc/lv_txt_ap.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt_ap.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt_ap.obj `if test -f 'lib/liblv/lv_misc/lv_txt_ap.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt_ap.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt_ap.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt_ap.c' object='lib/liblv/lv_misc/antfx-lv_txt_ap.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_12.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_12.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_12.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_12.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt_ap.obj `if test -f 'lib/liblv/lv_misc/lv_txt_ap.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt_ap.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt_ap.c'; fi`
 
-lib/liblv/lv_font/antfx-lv_font_roboto_16.o: lib/liblv/lv_font/lv_font_roboto_16.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_16.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_16.o `test -f 'lib/liblv/lv_font/lv_font_roboto_16.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_16.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_16.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_16.o' libtool=no \
+lib/liblv/lv_misc/antfx-lv_task.o: lib/liblv/lv_misc/lv_task.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_task.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo -c -o lib/liblv/lv_misc/antfx-lv_task.o `test -f 'lib/liblv/lv_misc/lv_task.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_task.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_task.c' object='lib/liblv/lv_misc/antfx-lv_task.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_16.o `test -f 'lib/liblv/lv_font/lv_font_roboto_16.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_16.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_task.o `test -f 'lib/liblv/lv_misc/lv_task.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_task.c
 
-lib/liblv/lv_font/antfx-lv_font_roboto_16.obj: lib/liblv/lv_font/lv_font_roboto_16.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_16.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_16.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_16.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_16.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_16.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_16.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_16.obj' libtool=no \
+lib/liblv/lv_misc/antfx-lv_task.obj: lib/liblv/lv_misc/lv_task.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_task.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo -c -o lib/liblv/lv_misc/antfx-lv_task.obj `if test -f 'lib/liblv/lv_misc/lv_task.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_task.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_task.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_task.c' object='lib/liblv/lv_misc/antfx-lv_task.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_16.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_16.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_16.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_16.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_task.obj `if test -f 'lib/liblv/lv_misc/lv_task.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_task.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_task.c'; fi`
 
-lib/liblv/lv_font/antfx-lv_font_roboto_22.o: lib/liblv/lv_font/lv_font_roboto_22.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_22.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_22.o `test -f 'lib/liblv/lv_font/lv_font_roboto_22.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_22.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_22.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_22.o' libtool=no \
+lib/liblv/lv_misc/antfx-lv_bidi.o: lib/liblv/lv_misc/lv_bidi.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_bidi.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo -c -o lib/liblv/lv_misc/antfx-lv_bidi.o `test -f 'lib/liblv/lv_misc/lv_bidi.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_bidi.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_bidi.c' object='lib/liblv/lv_misc/antfx-lv_bidi.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_22.o `test -f 'lib/liblv/lv_font/lv_font_roboto_22.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_22.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_bidi.o `test -f 'lib/liblv/lv_misc/lv_bidi.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_bidi.c
 
-lib/liblv/lv_font/antfx-lv_font_roboto_22.obj: lib/liblv/lv_font/lv_font_roboto_22.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_22.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_22.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_22.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_22.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_22.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_22.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_22.obj' libtool=no \
+lib/liblv/lv_misc/antfx-lv_bidi.obj: lib/liblv/lv_misc/lv_bidi.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_bidi.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo -c -o lib/liblv/lv_misc/antfx-lv_bidi.obj `if test -f 'lib/liblv/lv_misc/lv_bidi.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_bidi.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_bidi.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_bidi.c' object='lib/liblv/lv_misc/antfx-lv_bidi.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_22.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_22.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_22.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_22.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_bidi.obj `if test -f 'lib/liblv/lv_misc/lv_bidi.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_bidi.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_bidi.c'; fi`
 
-lib/liblv/lv_font/antfx-lv_font_roboto_28.o: lib/liblv/lv_font/lv_font_roboto_28.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_28.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_28.o `test -f 'lib/liblv/lv_font/lv_font_roboto_28.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_28.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_28.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_28.o' libtool=no \
+lib/liblv/lv_misc/antfx-lv_math.o: lib/liblv/lv_misc/lv_math.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_math.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo -c -o lib/liblv/lv_misc/antfx-lv_math.o `test -f 'lib/liblv/lv_misc/lv_math.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_math.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_math.c' object='lib/liblv/lv_misc/antfx-lv_math.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_28.o `test -f 'lib/liblv/lv_font/lv_font_roboto_28.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_roboto_28.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_math.o `test -f 'lib/liblv/lv_misc/lv_math.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_math.c
 
-lib/liblv/lv_font/antfx-lv_font_roboto_28.obj: lib/liblv/lv_font/lv_font_roboto_28.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_roboto_28.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_roboto_28.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_28.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_28.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_28.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_roboto_28.c' object='lib/liblv/lv_font/antfx-lv_font_roboto_28.obj' libtool=no \
+lib/liblv/lv_misc/antfx-lv_math.obj: lib/liblv/lv_misc/lv_math.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_math.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo -c -o lib/liblv/lv_misc/antfx-lv_math.obj `if test -f 'lib/liblv/lv_misc/lv_math.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_math.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_math.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_math.c' object='lib/liblv/lv_misc/antfx-lv_math.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_roboto_28.obj `if test -f 'lib/liblv/lv_font/lv_font_roboto_28.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_roboto_28.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_roboto_28.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_math.obj `if test -f 'lib/liblv/lv_misc/lv_math.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_math.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_math.c'; fi`
 
-lib/liblv/lv_font/antfx-lv_font_unscii_8.o: lib/liblv/lv_font/lv_font_unscii_8.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_unscii_8.o -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.o `test -f 'lib/liblv/lv_font/lv_font_unscii_8.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_unscii_8.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_unscii_8.c' object='lib/liblv/lv_font/antfx-lv_font_unscii_8.o' libtool=no \
+lib/liblv/lv_misc/antfx-lv_anim.o: lib/liblv/lv_misc/lv_anim.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_anim.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo -c -o lib/liblv/lv_misc/antfx-lv_anim.o `test -f 'lib/liblv/lv_misc/lv_anim.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_anim.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_anim.c' object='lib/liblv/lv_misc/antfx-lv_anim.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.o `test -f 'lib/liblv/lv_font/lv_font_unscii_8.c' || echo '$(srcdir)/'`lib/liblv/lv_font/lv_font_unscii_8.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_anim.o `test -f 'lib/liblv/lv_misc/lv_anim.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_anim.c
 
-lib/liblv/lv_font/antfx-lv_font_unscii_8.obj: lib/liblv/lv_font/lv_font_unscii_8.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_font/antfx-lv_font_unscii_8.obj -MD -MP -MF lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.obj `if test -f 'lib/liblv/lv_font/lv_font_unscii_8.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_unscii_8.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_unscii_8.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Tpo lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
-#	$(AM_V_CC)source='lib/liblv/lv_font/lv_font_unscii_8.c' object='lib/liblv/lv_font/antfx-lv_font_unscii_8.obj' libtool=no \
+lib/liblv/lv_misc/antfx-lv_anim.obj: lib/liblv/lv_misc/lv_anim.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_anim.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo -c -o lib/liblv/lv_misc/antfx-lv_anim.obj `if test -f 'lib/liblv/lv_misc/lv_anim.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_anim.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_anim.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_anim.c' object='lib/liblv/lv_misc/antfx-lv_anim.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_font/antfx-lv_font_unscii_8.obj `if test -f 'lib/liblv/lv_font/lv_font_unscii_8.c'; then $(CYGPATH_W) 'lib/liblv/lv_font/lv_font_unscii_8.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_font/lv_font_unscii_8.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_anim.obj `if test -f 'lib/liblv/lv_misc/lv_anim.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_anim.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_anim.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_async.o: lib/liblv/lv_misc/lv_async.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_async.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo -c -o lib/liblv/lv_misc/antfx-lv_async.o `test -f 'lib/liblv/lv_misc/lv_async.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_async.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_async.c' object='lib/liblv/lv_misc/antfx-lv_async.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_async.o `test -f 'lib/liblv/lv_misc/lv_async.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_async.c
+
+lib/liblv/lv_misc/antfx-lv_async.obj: lib/liblv/lv_misc/lv_async.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_async.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo -c -o lib/liblv/lv_misc/antfx-lv_async.obj `if test -f 'lib/liblv/lv_misc/lv_async.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_async.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_async.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_async.c' object='lib/liblv/lv_misc/antfx-lv_async.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_async.obj `if test -f 'lib/liblv/lv_misc/lv_async.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_async.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_async.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_mem.o: lib/liblv/lv_misc/lv_mem.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_mem.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo -c -o lib/liblv/lv_misc/antfx-lv_mem.o `test -f 'lib/liblv/lv_misc/lv_mem.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_mem.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_mem.c' object='lib/liblv/lv_misc/antfx-lv_mem.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_mem.o `test -f 'lib/liblv/lv_misc/lv_mem.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_mem.c
+
+lib/liblv/lv_misc/antfx-lv_mem.obj: lib/liblv/lv_misc/lv_mem.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_mem.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo -c -o lib/liblv/lv_misc/antfx-lv_mem.obj `if test -f 'lib/liblv/lv_misc/lv_mem.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_mem.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_mem.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_mem.c' object='lib/liblv/lv_misc/antfx-lv_mem.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_mem.obj `if test -f 'lib/liblv/lv_misc/lv_mem.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_mem.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_mem.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_templ.o: lib/liblv/lv_misc/lv_templ.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_templ.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Tpo -c -o lib/liblv/lv_misc/antfx-lv_templ.o `test -f 'lib/liblv/lv_misc/lv_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_templ.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_templ.c' object='lib/liblv/lv_misc/antfx-lv_templ.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_templ.o `test -f 'lib/liblv/lv_misc/lv_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_templ.c
+
+lib/liblv/lv_misc/antfx-lv_templ.obj: lib/liblv/lv_misc/lv_templ.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_templ.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Tpo -c -o lib/liblv/lv_misc/antfx-lv_templ.obj `if test -f 'lib/liblv/lv_misc/lv_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_templ.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_templ.c' object='lib/liblv/lv_misc/antfx-lv_templ.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_templ.obj `if test -f 'lib/liblv/lv_misc/lv_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_templ.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_printf.o: lib/liblv/lv_misc/lv_printf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_printf.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo -c -o lib/liblv/lv_misc/antfx-lv_printf.o `test -f 'lib/liblv/lv_misc/lv_printf.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_printf.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_printf.c' object='lib/liblv/lv_misc/antfx-lv_printf.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_printf.o `test -f 'lib/liblv/lv_misc/lv_printf.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_printf.c
+
+lib/liblv/lv_misc/antfx-lv_printf.obj: lib/liblv/lv_misc/lv_printf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_printf.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo -c -o lib/liblv/lv_misc/antfx-lv_printf.obj `if test -f 'lib/liblv/lv_misc/lv_printf.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_printf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_printf.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_printf.c' object='lib/liblv/lv_misc/antfx-lv_printf.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_printf.obj `if test -f 'lib/liblv/lv_misc/lv_printf.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_printf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_printf.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_gc.o: lib/liblv/lv_misc/lv_gc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_gc.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo -c -o lib/liblv/lv_misc/antfx-lv_gc.o `test -f 'lib/liblv/lv_misc/lv_gc.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_gc.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_gc.c' object='lib/liblv/lv_misc/antfx-lv_gc.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_gc.o `test -f 'lib/liblv/lv_misc/lv_gc.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_gc.c
+
+lib/liblv/lv_misc/antfx-lv_gc.obj: lib/liblv/lv_misc/lv_gc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_gc.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo -c -o lib/liblv/lv_misc/antfx-lv_gc.obj `if test -f 'lib/liblv/lv_misc/lv_gc.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_gc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_gc.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_gc.c' object='lib/liblv/lv_misc/antfx-lv_gc.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_gc.obj `if test -f 'lib/liblv/lv_misc/lv_gc.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_gc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_gc.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_fs.o: lib/liblv/lv_misc/lv_fs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_fs.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo -c -o lib/liblv/lv_misc/antfx-lv_fs.o `test -f 'lib/liblv/lv_misc/lv_fs.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_fs.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_fs.c' object='lib/liblv/lv_misc/antfx-lv_fs.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_fs.o `test -f 'lib/liblv/lv_misc/lv_fs.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_fs.c
+
+lib/liblv/lv_misc/antfx-lv_fs.obj: lib/liblv/lv_misc/lv_fs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_fs.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo -c -o lib/liblv/lv_misc/antfx-lv_fs.obj `if test -f 'lib/liblv/lv_misc/lv_fs.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_fs.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_fs.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_fs.c' object='lib/liblv/lv_misc/antfx-lv_fs.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_fs.obj `if test -f 'lib/liblv/lv_misc/lv_fs.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_fs.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_fs.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_debug.o: lib/liblv/lv_misc/lv_debug.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_debug.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Tpo -c -o lib/liblv/lv_misc/antfx-lv_debug.o `test -f 'lib/liblv/lv_misc/lv_debug.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_debug.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_debug.c' object='lib/liblv/lv_misc/antfx-lv_debug.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_debug.o `test -f 'lib/liblv/lv_misc/lv_debug.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_debug.c
+
+lib/liblv/lv_misc/antfx-lv_debug.obj: lib/liblv/lv_misc/lv_debug.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_debug.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Tpo -c -o lib/liblv/lv_misc/antfx-lv_debug.obj `if test -f 'lib/liblv/lv_misc/lv_debug.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_debug.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_debug.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_debug.c' object='lib/liblv/lv_misc/antfx-lv_debug.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_debug.obj `if test -f 'lib/liblv/lv_misc/lv_debug.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_debug.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_debug.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_txt.o: lib/liblv/lv_misc/lv_txt.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt.o `test -f 'lib/liblv/lv_misc/lv_txt.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt.c' object='lib/liblv/lv_misc/antfx-lv_txt.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt.o `test -f 'lib/liblv/lv_misc/lv_txt.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt.c
+
+lib/liblv/lv_misc/antfx-lv_txt.obj: lib/liblv/lv_misc/lv_txt.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt.obj `if test -f 'lib/liblv/lv_misc/lv_txt.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt.c' object='lib/liblv/lv_misc/antfx-lv_txt.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt.obj `if test -f 'lib/liblv/lv_misc/lv_txt.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_area.o: lib/liblv/lv_misc/lv_area.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_area.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo -c -o lib/liblv/lv_misc/antfx-lv_area.o `test -f 'lib/liblv/lv_misc/lv_area.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_area.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_area.c' object='lib/liblv/lv_misc/antfx-lv_area.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_area.o `test -f 'lib/liblv/lv_misc/lv_area.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_area.c
+
+lib/liblv/lv_misc/antfx-lv_area.obj: lib/liblv/lv_misc/lv_area.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_area.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo -c -o lib/liblv/lv_misc/antfx-lv_area.obj `if test -f 'lib/liblv/lv_misc/lv_area.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_area.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_area.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_area.c' object='lib/liblv/lv_misc/antfx-lv_area.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_area.obj `if test -f 'lib/liblv/lv_misc/lv_area.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_area.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_area.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_color.o: lib/liblv/lv_misc/lv_color.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_color.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo -c -o lib/liblv/lv_misc/antfx-lv_color.o `test -f 'lib/liblv/lv_misc/lv_color.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_color.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_color.c' object='lib/liblv/lv_misc/antfx-lv_color.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_color.o `test -f 'lib/liblv/lv_misc/lv_color.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_color.c
+
+lib/liblv/lv_misc/antfx-lv_color.obj: lib/liblv/lv_misc/lv_color.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_color.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo -c -o lib/liblv/lv_misc/antfx-lv_color.obj `if test -f 'lib/liblv/lv_misc/lv_color.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_color.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_color.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_color.c' object='lib/liblv/lv_misc/antfx-lv_color.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_color.obj `if test -f 'lib/liblv/lv_misc/lv_color.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_color.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_color.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_utils.o: lib/liblv/lv_misc/lv_utils.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_utils.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo -c -o lib/liblv/lv_misc/antfx-lv_utils.o `test -f 'lib/liblv/lv_misc/lv_utils.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_utils.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_utils.c' object='lib/liblv/lv_misc/antfx-lv_utils.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_utils.o `test -f 'lib/liblv/lv_misc/lv_utils.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_utils.c
+
+lib/liblv/lv_misc/antfx-lv_utils.obj: lib/liblv/lv_misc/lv_utils.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_utils.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo -c -o lib/liblv/lv_misc/antfx-lv_utils.obj `if test -f 'lib/liblv/lv_misc/lv_utils.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_utils.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_utils.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_utils.c' object='lib/liblv/lv_misc/antfx-lv_utils.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_utils.obj `if test -f 'lib/liblv/lv_misc/lv_utils.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_utils.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_utils.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_log.o: lib/liblv/lv_misc/lv_log.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_log.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo -c -o lib/liblv/lv_misc/antfx-lv_log.o `test -f 'lib/liblv/lv_misc/lv_log.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_log.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_log.c' object='lib/liblv/lv_misc/antfx-lv_log.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_log.o `test -f 'lib/liblv/lv_misc/lv_log.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_log.c
+
+lib/liblv/lv_misc/antfx-lv_log.obj: lib/liblv/lv_misc/lv_log.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_log.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo -c -o lib/liblv/lv_misc/antfx-lv_log.obj `if test -f 'lib/liblv/lv_misc/lv_log.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_log.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_log.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_log.c' object='lib/liblv/lv_misc/antfx-lv_log.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_log.obj `if test -f 'lib/liblv/lv_misc/lv_log.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_log.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_log.c'; fi`
+
+lib/liblv/lv_misc/antfx-lv_ll.o: lib/liblv/lv_misc/lv_ll.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_ll.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo -c -o lib/liblv/lv_misc/antfx-lv_ll.o `test -f 'lib/liblv/lv_misc/lv_ll.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_ll.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_ll.c' object='lib/liblv/lv_misc/antfx-lv_ll.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_ll.o `test -f 'lib/liblv/lv_misc/lv_ll.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_ll.c
+
+lib/liblv/lv_misc/antfx-lv_ll.obj: lib/liblv/lv_misc/lv_ll.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_ll.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo -c -o lib/liblv/lv_misc/antfx-lv_ll.obj `if test -f 'lib/liblv/lv_misc/lv_ll.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_ll.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_ll.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
+#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_ll.c' object='lib/liblv/lv_misc/antfx-lv_ll.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_ll.obj `if test -f 'lib/liblv/lv_misc/lv_ll.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_ll.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_ll.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_img_buf.o: lib/liblv/lv_draw/lv_img_buf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_buf.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_buf.o `test -f 'lib/liblv/lv_draw/lv_img_buf.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_buf.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_buf.c' object='lib/liblv/lv_draw/antfx-lv_img_buf.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_buf.o `test -f 'lib/liblv/lv_draw/lv_img_buf.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_buf.c
+
+lib/liblv/lv_draw/antfx-lv_img_buf.obj: lib/liblv/lv_draw/lv_img_buf.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_buf.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_buf.obj `if test -f 'lib/liblv/lv_draw/lv_img_buf.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_buf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_buf.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_buf.c' object='lib/liblv/lv_draw/antfx-lv_img_buf.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_buf.obj `if test -f 'lib/liblv/lv_draw/lv_img_buf.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_buf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_buf.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_img_decoder.o: lib/liblv/lv_draw/lv_img_decoder.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_decoder.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.o `test -f 'lib/liblv/lv_draw/lv_img_decoder.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_decoder.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_decoder.c' object='lib/liblv/lv_draw/antfx-lv_img_decoder.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.o `test -f 'lib/liblv/lv_draw/lv_img_decoder.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_decoder.c
+
+lib/liblv/lv_draw/antfx-lv_img_decoder.obj: lib/liblv/lv_draw/lv_img_decoder.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_decoder.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.obj `if test -f 'lib/liblv/lv_draw/lv_img_decoder.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_decoder.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_decoder.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_decoder.c' object='lib/liblv/lv_draw/antfx-lv_img_decoder.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_decoder.obj `if test -f 'lib/liblv/lv_draw/lv_img_decoder.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_decoder.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_decoder.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_triangle.o: lib/liblv/lv_draw/lv_draw_triangle.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_triangle.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.o `test -f 'lib/liblv/lv_draw/lv_draw_triangle.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_triangle.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_triangle.c' object='lib/liblv/lv_draw/antfx-lv_draw_triangle.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.o `test -f 'lib/liblv/lv_draw/lv_draw_triangle.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_triangle.c
+
+lib/liblv/lv_draw/antfx-lv_draw_triangle.obj: lib/liblv/lv_draw/lv_draw_triangle.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_triangle.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.obj `if test -f 'lib/liblv/lv_draw/lv_draw_triangle.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_triangle.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_triangle.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_triangle.c' object='lib/liblv/lv_draw/antfx-lv_draw_triangle.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_triangle.obj `if test -f 'lib/liblv/lv_draw/lv_draw_triangle.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_triangle.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_triangle.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_blend.o: lib/liblv/lv_draw/lv_draw_blend.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_blend.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_blend.o `test -f 'lib/liblv/lv_draw/lv_draw_blend.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_blend.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_blend.c' object='lib/liblv/lv_draw/antfx-lv_draw_blend.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_blend.o `test -f 'lib/liblv/lv_draw/lv_draw_blend.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_blend.c
+
+lib/liblv/lv_draw/antfx-lv_draw_blend.obj: lib/liblv/lv_draw/lv_draw_blend.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_blend.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_blend.obj `if test -f 'lib/liblv/lv_draw/lv_draw_blend.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_blend.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_blend.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_blend.c' object='lib/liblv/lv_draw/antfx-lv_draw_blend.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_blend.obj `if test -f 'lib/liblv/lv_draw/lv_draw_blend.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_blend.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_blend.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_img.o: lib/liblv/lv_draw/lv_draw_img.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_img.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_img.o `test -f 'lib/liblv/lv_draw/lv_draw_img.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_img.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_img.c' object='lib/liblv/lv_draw/antfx-lv_draw_img.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_img.o `test -f 'lib/liblv/lv_draw/lv_draw_img.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_img.c
+
+lib/liblv/lv_draw/antfx-lv_draw_img.obj: lib/liblv/lv_draw/lv_draw_img.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_img.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_img.obj `if test -f 'lib/liblv/lv_draw/lv_draw_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_img.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_img.c' object='lib/liblv/lv_draw/antfx-lv_draw_img.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_img.obj `if test -f 'lib/liblv/lv_draw/lv_draw_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_img.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_rect.o: lib/liblv/lv_draw/lv_draw_rect.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_rect.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.o `test -f 'lib/liblv/lv_draw/lv_draw_rect.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_rect.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_rect.c' object='lib/liblv/lv_draw/antfx-lv_draw_rect.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.o `test -f 'lib/liblv/lv_draw/lv_draw_rect.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_rect.c
+
+lib/liblv/lv_draw/antfx-lv_draw_rect.obj: lib/liblv/lv_draw/lv_draw_rect.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_rect.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.obj `if test -f 'lib/liblv/lv_draw/lv_draw_rect.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_rect.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_rect.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_rect.c' object='lib/liblv/lv_draw/antfx-lv_draw_rect.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_rect.obj `if test -f 'lib/liblv/lv_draw/lv_draw_rect.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_rect.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_rect.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_line.o: lib/liblv/lv_draw/lv_draw_line.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_line.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_line.o `test -f 'lib/liblv/lv_draw/lv_draw_line.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_line.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_line.c' object='lib/liblv/lv_draw/antfx-lv_draw_line.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_line.o `test -f 'lib/liblv/lv_draw/lv_draw_line.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_line.c
+
+lib/liblv/lv_draw/antfx-lv_draw_line.obj: lib/liblv/lv_draw/lv_draw_line.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_line.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_line.obj `if test -f 'lib/liblv/lv_draw/lv_draw_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_line.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_line.c' object='lib/liblv/lv_draw/antfx-lv_draw_line.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_line.obj `if test -f 'lib/liblv/lv_draw/lv_draw_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_line.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_label.o: lib/liblv/lv_draw/lv_draw_label.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_label.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_label.o `test -f 'lib/liblv/lv_draw/lv_draw_label.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_label.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_label.c' object='lib/liblv/lv_draw/antfx-lv_draw_label.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_label.o `test -f 'lib/liblv/lv_draw/lv_draw_label.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_label.c
+
+lib/liblv/lv_draw/antfx-lv_draw_label.obj: lib/liblv/lv_draw/lv_draw_label.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_label.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_label.obj `if test -f 'lib/liblv/lv_draw/lv_draw_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_label.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_label.c' object='lib/liblv/lv_draw/antfx-lv_draw_label.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_label.obj `if test -f 'lib/liblv/lv_draw/lv_draw_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_label.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_mask.o: lib/liblv/lv_draw/lv_draw_mask.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_mask.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_mask.o `test -f 'lib/liblv/lv_draw/lv_draw_mask.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_mask.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_mask.c' object='lib/liblv/lv_draw/antfx-lv_draw_mask.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_mask.o `test -f 'lib/liblv/lv_draw/lv_draw_mask.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_mask.c
+
+lib/liblv/lv_draw/antfx-lv_draw_mask.obj: lib/liblv/lv_draw/lv_draw_mask.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_mask.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_mask.obj `if test -f 'lib/liblv/lv_draw/lv_draw_mask.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_mask.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_mask.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_mask.c' object='lib/liblv/lv_draw/antfx-lv_draw_mask.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_mask.obj `if test -f 'lib/liblv/lv_draw/lv_draw_mask.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_mask.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_mask.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_draw_arc.o: lib/liblv/lv_draw/lv_draw_arc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_arc.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.o `test -f 'lib/liblv/lv_draw/lv_draw_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_arc.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_arc.c' object='lib/liblv/lv_draw/antfx-lv_draw_arc.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.o `test -f 'lib/liblv/lv_draw/lv_draw_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_draw_arc.c
+
+lib/liblv/lv_draw/antfx-lv_draw_arc.obj: lib/liblv/lv_draw/lv_draw_arc.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_draw_arc.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.obj `if test -f 'lib/liblv/lv_draw/lv_draw_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_arc.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_draw_arc.c' object='lib/liblv/lv_draw/antfx-lv_draw_arc.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_draw_arc.obj `if test -f 'lib/liblv/lv_draw/lv_draw_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_draw_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_draw_arc.c'; fi`
+
+lib/liblv/lv_draw/antfx-lv_img_cache.o: lib/liblv/lv_draw/lv_img_cache.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_cache.o -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_cache.o `test -f 'lib/liblv/lv_draw/lv_img_cache.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_cache.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_cache.c' object='lib/liblv/lv_draw/antfx-lv_img_cache.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_cache.o `test -f 'lib/liblv/lv_draw/lv_img_cache.c' || echo '$(srcdir)/'`lib/liblv/lv_draw/lv_img_cache.c
+
+lib/liblv/lv_draw/antfx-lv_img_cache.obj: lib/liblv/lv_draw/lv_img_cache.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_draw/antfx-lv_img_cache.obj -MD -MP -MF lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo -c -o lib/liblv/lv_draw/antfx-lv_img_cache.obj `if test -f 'lib/liblv/lv_draw/lv_img_cache.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_cache.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_cache.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Tpo lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
+#	$(AM_V_CC)source='lib/liblv/lv_draw/lv_img_cache.c' object='lib/liblv/lv_draw/antfx-lv_img_cache.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_draw/antfx-lv_img_cache.obj `if test -f 'lib/liblv/lv_draw/lv_img_cache.c'; then $(CYGPATH_W) 'lib/liblv/lv_draw/lv_img_cache.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_draw/lv_img_cache.c'; fi`
 
 lib/liblv/lv_hal/antfx-lv_hal_disp.o: lib/liblv/lv_hal/lv_hal_disp.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_hal/antfx-lv_hal_disp.o -MD -MP -MF lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_disp.Tpo -c -o lib/liblv/lv_hal/antfx-lv_hal_disp.o `test -f 'lib/liblv/lv_hal/lv_hal_disp.c' || echo '$(srcdir)/'`lib/liblv/lv_hal/lv_hal_disp.c
@@ -2106,803 +3351,19 @@ lib/liblv/lv_hal/antfx-lv_hal_tick.obj: lib/liblv/lv_hal/lv_hal_tick.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_hal/antfx-lv_hal_tick.obj `if test -f 'lib/liblv/lv_hal/lv_hal_tick.c'; then $(CYGPATH_W) 'lib/liblv/lv_hal/lv_hal_tick.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_hal/lv_hal_tick.c'; fi`
 
-lib/liblv/lv_misc/antfx-lv_circ.o: lib/liblv/lv_misc/lv_circ.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_circ.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Tpo -c -o lib/liblv/lv_misc/antfx-lv_circ.o `test -f 'lib/liblv/lv_misc/lv_circ.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_circ.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_circ.c' object='lib/liblv/lv_misc/antfx-lv_circ.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_circ.o `test -f 'lib/liblv/lv_misc/lv_circ.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_circ.c
-
-lib/liblv/lv_misc/antfx-lv_circ.obj: lib/liblv/lv_misc/lv_circ.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_circ.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Tpo -c -o lib/liblv/lv_misc/antfx-lv_circ.obj `if test -f 'lib/liblv/lv_misc/lv_circ.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_circ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_circ.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_circ.c' object='lib/liblv/lv_misc/antfx-lv_circ.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_circ.obj `if test -f 'lib/liblv/lv_misc/lv_circ.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_circ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_circ.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_area.o: lib/liblv/lv_misc/lv_area.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_area.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo -c -o lib/liblv/lv_misc/antfx-lv_area.o `test -f 'lib/liblv/lv_misc/lv_area.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_area.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_area.c' object='lib/liblv/lv_misc/antfx-lv_area.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_area.o `test -f 'lib/liblv/lv_misc/lv_area.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_area.c
-
-lib/liblv/lv_misc/antfx-lv_area.obj: lib/liblv/lv_misc/lv_area.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_area.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo -c -o lib/liblv/lv_misc/antfx-lv_area.obj `if test -f 'lib/liblv/lv_misc/lv_area.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_area.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_area.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_area.c' object='lib/liblv/lv_misc/antfx-lv_area.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_area.obj `if test -f 'lib/liblv/lv_misc/lv_area.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_area.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_area.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_task.o: lib/liblv/lv_misc/lv_task.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_task.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo -c -o lib/liblv/lv_misc/antfx-lv_task.o `test -f 'lib/liblv/lv_misc/lv_task.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_task.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_task.c' object='lib/liblv/lv_misc/antfx-lv_task.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_task.o `test -f 'lib/liblv/lv_misc/lv_task.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_task.c
-
-lib/liblv/lv_misc/antfx-lv_task.obj: lib/liblv/lv_misc/lv_task.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_task.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo -c -o lib/liblv/lv_misc/antfx-lv_task.obj `if test -f 'lib/liblv/lv_misc/lv_task.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_task.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_task.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_task.c' object='lib/liblv/lv_misc/antfx-lv_task.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_task.obj `if test -f 'lib/liblv/lv_misc/lv_task.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_task.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_task.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_fs.o: lib/liblv/lv_misc/lv_fs.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_fs.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo -c -o lib/liblv/lv_misc/antfx-lv_fs.o `test -f 'lib/liblv/lv_misc/lv_fs.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_fs.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_fs.c' object='lib/liblv/lv_misc/antfx-lv_fs.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_fs.o `test -f 'lib/liblv/lv_misc/lv_fs.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_fs.c
-
-lib/liblv/lv_misc/antfx-lv_fs.obj: lib/liblv/lv_misc/lv_fs.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_fs.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo -c -o lib/liblv/lv_misc/antfx-lv_fs.obj `if test -f 'lib/liblv/lv_misc/lv_fs.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_fs.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_fs.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_fs.c' object='lib/liblv/lv_misc/antfx-lv_fs.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_fs.obj `if test -f 'lib/liblv/lv_misc/lv_fs.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_fs.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_fs.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_anim.o: lib/liblv/lv_misc/lv_anim.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_anim.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo -c -o lib/liblv/lv_misc/antfx-lv_anim.o `test -f 'lib/liblv/lv_misc/lv_anim.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_anim.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_anim.c' object='lib/liblv/lv_misc/antfx-lv_anim.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_anim.o `test -f 'lib/liblv/lv_misc/lv_anim.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_anim.c
-
-lib/liblv/lv_misc/antfx-lv_anim.obj: lib/liblv/lv_misc/lv_anim.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_anim.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo -c -o lib/liblv/lv_misc/antfx-lv_anim.obj `if test -f 'lib/liblv/lv_misc/lv_anim.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_anim.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_anim.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_anim.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_anim.c' object='lib/liblv/lv_misc/antfx-lv_anim.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_anim.obj `if test -f 'lib/liblv/lv_misc/lv_anim.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_anim.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_anim.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_mem.o: lib/liblv/lv_misc/lv_mem.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_mem.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo -c -o lib/liblv/lv_misc/antfx-lv_mem.o `test -f 'lib/liblv/lv_misc/lv_mem.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_mem.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_mem.c' object='lib/liblv/lv_misc/antfx-lv_mem.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_mem.o `test -f 'lib/liblv/lv_misc/lv_mem.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_mem.c
-
-lib/liblv/lv_misc/antfx-lv_mem.obj: lib/liblv/lv_misc/lv_mem.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_mem.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo -c -o lib/liblv/lv_misc/antfx-lv_mem.obj `if test -f 'lib/liblv/lv_misc/lv_mem.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_mem.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_mem.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_mem.c' object='lib/liblv/lv_misc/antfx-lv_mem.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_mem.obj `if test -f 'lib/liblv/lv_misc/lv_mem.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_mem.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_mem.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_ll.o: lib/liblv/lv_misc/lv_ll.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_ll.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo -c -o lib/liblv/lv_misc/antfx-lv_ll.o `test -f 'lib/liblv/lv_misc/lv_ll.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_ll.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_ll.c' object='lib/liblv/lv_misc/antfx-lv_ll.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_ll.o `test -f 'lib/liblv/lv_misc/lv_ll.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_ll.c
-
-lib/liblv/lv_misc/antfx-lv_ll.obj: lib/liblv/lv_misc/lv_ll.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_ll.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo -c -o lib/liblv/lv_misc/antfx-lv_ll.obj `if test -f 'lib/liblv/lv_misc/lv_ll.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_ll.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_ll.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_ll.c' object='lib/liblv/lv_misc/antfx-lv_ll.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_ll.obj `if test -f 'lib/liblv/lv_misc/lv_ll.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_ll.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_ll.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_color.o: lib/liblv/lv_misc/lv_color.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_color.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo -c -o lib/liblv/lv_misc/antfx-lv_color.o `test -f 'lib/liblv/lv_misc/lv_color.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_color.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_color.c' object='lib/liblv/lv_misc/antfx-lv_color.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_color.o `test -f 'lib/liblv/lv_misc/lv_color.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_color.c
-
-lib/liblv/lv_misc/antfx-lv_color.obj: lib/liblv/lv_misc/lv_color.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_color.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo -c -o lib/liblv/lv_misc/antfx-lv_color.obj `if test -f 'lib/liblv/lv_misc/lv_color.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_color.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_color.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_color.c' object='lib/liblv/lv_misc/antfx-lv_color.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_color.obj `if test -f 'lib/liblv/lv_misc/lv_color.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_color.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_color.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_txt.o: lib/liblv/lv_misc/lv_txt.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt.o `test -f 'lib/liblv/lv_misc/lv_txt.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt.c' object='lib/liblv/lv_misc/antfx-lv_txt.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt.o `test -f 'lib/liblv/lv_misc/lv_txt.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_txt.c
-
-lib/liblv/lv_misc/antfx-lv_txt.obj: lib/liblv/lv_misc/lv_txt.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_txt.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo -c -o lib/liblv/lv_misc/antfx-lv_txt.obj `if test -f 'lib/liblv/lv_misc/lv_txt.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_txt.c' object='lib/liblv/lv_misc/antfx-lv_txt.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_txt.obj `if test -f 'lib/liblv/lv_misc/lv_txt.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_txt.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_txt.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_math.o: lib/liblv/lv_misc/lv_math.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_math.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo -c -o lib/liblv/lv_misc/antfx-lv_math.o `test -f 'lib/liblv/lv_misc/lv_math.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_math.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_math.c' object='lib/liblv/lv_misc/antfx-lv_math.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_math.o `test -f 'lib/liblv/lv_misc/lv_math.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_math.c
-
-lib/liblv/lv_misc/antfx-lv_math.obj: lib/liblv/lv_misc/lv_math.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_math.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo -c -o lib/liblv/lv_misc/antfx-lv_math.obj `if test -f 'lib/liblv/lv_misc/lv_math.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_math.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_math.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_math.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_math.c' object='lib/liblv/lv_misc/antfx-lv_math.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_math.obj `if test -f 'lib/liblv/lv_misc/lv_math.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_math.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_math.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_log.o: lib/liblv/lv_misc/lv_log.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_log.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo -c -o lib/liblv/lv_misc/antfx-lv_log.o `test -f 'lib/liblv/lv_misc/lv_log.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_log.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_log.c' object='lib/liblv/lv_misc/antfx-lv_log.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_log.o `test -f 'lib/liblv/lv_misc/lv_log.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_log.c
-
-lib/liblv/lv_misc/antfx-lv_log.obj: lib/liblv/lv_misc/lv_log.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_log.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo -c -o lib/liblv/lv_misc/antfx-lv_log.obj `if test -f 'lib/liblv/lv_misc/lv_log.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_log.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_log.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_log.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_log.c' object='lib/liblv/lv_misc/antfx-lv_log.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_log.obj `if test -f 'lib/liblv/lv_misc/lv_log.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_log.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_log.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_gc.o: lib/liblv/lv_misc/lv_gc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_gc.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo -c -o lib/liblv/lv_misc/antfx-lv_gc.o `test -f 'lib/liblv/lv_misc/lv_gc.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_gc.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_gc.c' object='lib/liblv/lv_misc/antfx-lv_gc.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_gc.o `test -f 'lib/liblv/lv_misc/lv_gc.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_gc.c
-
-lib/liblv/lv_misc/antfx-lv_gc.obj: lib/liblv/lv_misc/lv_gc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_gc.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo -c -o lib/liblv/lv_misc/antfx-lv_gc.obj `if test -f 'lib/liblv/lv_misc/lv_gc.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_gc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_gc.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_gc.c' object='lib/liblv/lv_misc/antfx-lv_gc.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_gc.obj `if test -f 'lib/liblv/lv_misc/lv_gc.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_gc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_gc.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_utils.o: lib/liblv/lv_misc/lv_utils.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_utils.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo -c -o lib/liblv/lv_misc/antfx-lv_utils.o `test -f 'lib/liblv/lv_misc/lv_utils.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_utils.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_utils.c' object='lib/liblv/lv_misc/antfx-lv_utils.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_utils.o `test -f 'lib/liblv/lv_misc/lv_utils.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_utils.c
-
-lib/liblv/lv_misc/antfx-lv_utils.obj: lib/liblv/lv_misc/lv_utils.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_utils.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo -c -o lib/liblv/lv_misc/antfx-lv_utils.obj `if test -f 'lib/liblv/lv_misc/lv_utils.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_utils.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_utils.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_utils.c' object='lib/liblv/lv_misc/antfx-lv_utils.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_utils.obj `if test -f 'lib/liblv/lv_misc/lv_utils.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_utils.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_utils.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_async.o: lib/liblv/lv_misc/lv_async.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_async.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo -c -o lib/liblv/lv_misc/antfx-lv_async.o `test -f 'lib/liblv/lv_misc/lv_async.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_async.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_async.c' object='lib/liblv/lv_misc/antfx-lv_async.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_async.o `test -f 'lib/liblv/lv_misc/lv_async.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_async.c
-
-lib/liblv/lv_misc/antfx-lv_async.obj: lib/liblv/lv_misc/lv_async.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_async.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo -c -o lib/liblv/lv_misc/antfx-lv_async.obj `if test -f 'lib/liblv/lv_misc/lv_async.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_async.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_async.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_async.c' object='lib/liblv/lv_misc/antfx-lv_async.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_async.obj `if test -f 'lib/liblv/lv_misc/lv_async.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_async.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_async.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_printf.o: lib/liblv/lv_misc/lv_printf.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_printf.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo -c -o lib/liblv/lv_misc/antfx-lv_printf.o `test -f 'lib/liblv/lv_misc/lv_printf.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_printf.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_printf.c' object='lib/liblv/lv_misc/antfx-lv_printf.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_printf.o `test -f 'lib/liblv/lv_misc/lv_printf.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_printf.c
-
-lib/liblv/lv_misc/antfx-lv_printf.obj: lib/liblv/lv_misc/lv_printf.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_printf.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo -c -o lib/liblv/lv_misc/antfx-lv_printf.obj `if test -f 'lib/liblv/lv_misc/lv_printf.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_printf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_printf.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_printf.c' object='lib/liblv/lv_misc/antfx-lv_printf.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_printf.obj `if test -f 'lib/liblv/lv_misc/lv_printf.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_printf.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_printf.c'; fi`
-
-lib/liblv/lv_misc/antfx-lv_bidi.o: lib/liblv/lv_misc/lv_bidi.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_bidi.o -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo -c -o lib/liblv/lv_misc/antfx-lv_bidi.o `test -f 'lib/liblv/lv_misc/lv_bidi.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_bidi.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_bidi.c' object='lib/liblv/lv_misc/antfx-lv_bidi.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_bidi.o `test -f 'lib/liblv/lv_misc/lv_bidi.c' || echo '$(srcdir)/'`lib/liblv/lv_misc/lv_bidi.c
-
-lib/liblv/lv_misc/antfx-lv_bidi.obj: lib/liblv/lv_misc/lv_bidi.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_misc/antfx-lv_bidi.obj -MD -MP -MF lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo -c -o lib/liblv/lv_misc/antfx-lv_bidi.obj `if test -f 'lib/liblv/lv_misc/lv_bidi.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_bidi.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_bidi.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Tpo lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
-#	$(AM_V_CC)source='lib/liblv/lv_misc/lv_bidi.c' object='lib/liblv/lv_misc/antfx-lv_bidi.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_misc/antfx-lv_bidi.obj `if test -f 'lib/liblv/lv_misc/lv_bidi.c'; then $(CYGPATH_W) 'lib/liblv/lv_misc/lv_bidi.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_misc/lv_bidi.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_arc.o: lib/liblv/lv_objx/lv_arc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_arc.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Tpo -c -o lib/liblv/lv_objx/antfx-lv_arc.o `test -f 'lib/liblv/lv_objx/lv_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_arc.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_arc.c' object='lib/liblv/lv_objx/antfx-lv_arc.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_arc.o `test -f 'lib/liblv/lv_objx/lv_arc.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_arc.c
-
-lib/liblv/lv_objx/antfx-lv_arc.obj: lib/liblv/lv_objx/lv_arc.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_arc.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Tpo -c -o lib/liblv/lv_objx/antfx-lv_arc.obj `if test -f 'lib/liblv/lv_objx/lv_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_arc.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_arc.c' object='lib/liblv/lv_objx/antfx-lv_arc.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_arc.obj `if test -f 'lib/liblv/lv_objx/lv_arc.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_arc.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_arc.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_bar.o: lib/liblv/lv_objx/lv_bar.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_bar.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Tpo -c -o lib/liblv/lv_objx/antfx-lv_bar.o `test -f 'lib/liblv/lv_objx/lv_bar.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_bar.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_bar.c' object='lib/liblv/lv_objx/antfx-lv_bar.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_bar.o `test -f 'lib/liblv/lv_objx/lv_bar.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_bar.c
-
-lib/liblv/lv_objx/antfx-lv_bar.obj: lib/liblv/lv_objx/lv_bar.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_bar.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Tpo -c -o lib/liblv/lv_objx/antfx-lv_bar.obj `if test -f 'lib/liblv/lv_objx/lv_bar.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_bar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_bar.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_bar.c' object='lib/liblv/lv_objx/antfx-lv_bar.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_bar.obj `if test -f 'lib/liblv/lv_objx/lv_bar.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_bar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_bar.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_cb.o: lib/liblv/lv_objx/lv_cb.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cb.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cb.o `test -f 'lib/liblv/lv_objx/lv_cb.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cb.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cb.c' object='lib/liblv/lv_objx/antfx-lv_cb.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cb.o `test -f 'lib/liblv/lv_objx/lv_cb.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cb.c
-
-lib/liblv/lv_objx/antfx-lv_cb.obj: lib/liblv/lv_objx/lv_cb.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cb.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cb.obj `if test -f 'lib/liblv/lv_objx/lv_cb.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cb.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cb.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cb.c' object='lib/liblv/lv_objx/antfx-lv_cb.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cb.obj `if test -f 'lib/liblv/lv_objx/lv_cb.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cb.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cb.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_cpicker.o: lib/liblv/lv_objx/lv_cpicker.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cpicker.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cpicker.o `test -f 'lib/liblv/lv_objx/lv_cpicker.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cpicker.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cpicker.c' object='lib/liblv/lv_objx/antfx-lv_cpicker.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cpicker.o `test -f 'lib/liblv/lv_objx/lv_cpicker.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cpicker.c
-
-lib/liblv/lv_objx/antfx-lv_cpicker.obj: lib/liblv/lv_objx/lv_cpicker.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cpicker.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cpicker.obj `if test -f 'lib/liblv/lv_objx/lv_cpicker.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cpicker.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cpicker.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cpicker.c' object='lib/liblv/lv_objx/antfx-lv_cpicker.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cpicker.obj `if test -f 'lib/liblv/lv_objx/lv_cpicker.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cpicker.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cpicker.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_ddlist.o: lib/liblv/lv_objx/lv_ddlist.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_ddlist.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Tpo -c -o lib/liblv/lv_objx/antfx-lv_ddlist.o `test -f 'lib/liblv/lv_objx/lv_ddlist.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_ddlist.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_ddlist.c' object='lib/liblv/lv_objx/antfx-lv_ddlist.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_ddlist.o `test -f 'lib/liblv/lv_objx/lv_ddlist.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_ddlist.c
-
-lib/liblv/lv_objx/antfx-lv_ddlist.obj: lib/liblv/lv_objx/lv_ddlist.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_ddlist.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Tpo -c -o lib/liblv/lv_objx/antfx-lv_ddlist.obj `if test -f 'lib/liblv/lv_objx/lv_ddlist.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_ddlist.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_ddlist.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_ddlist.c' object='lib/liblv/lv_objx/antfx-lv_ddlist.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_ddlist.obj `if test -f 'lib/liblv/lv_objx/lv_ddlist.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_ddlist.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_ddlist.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_kb.o: lib/liblv/lv_objx/lv_kb.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_kb.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Tpo -c -o lib/liblv/lv_objx/antfx-lv_kb.o `test -f 'lib/liblv/lv_objx/lv_kb.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_kb.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_kb.c' object='lib/liblv/lv_objx/antfx-lv_kb.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_kb.o `test -f 'lib/liblv/lv_objx/lv_kb.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_kb.c
-
-lib/liblv/lv_objx/antfx-lv_kb.obj: lib/liblv/lv_objx/lv_kb.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_kb.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Tpo -c -o lib/liblv/lv_objx/antfx-lv_kb.obj `if test -f 'lib/liblv/lv_objx/lv_kb.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_kb.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_kb.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_kb.c' object='lib/liblv/lv_objx/antfx-lv_kb.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_kb.obj `if test -f 'lib/liblv/lv_objx/lv_kb.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_kb.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_kb.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_line.o: lib/liblv/lv_objx/lv_line.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_line.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Tpo -c -o lib/liblv/lv_objx/antfx-lv_line.o `test -f 'lib/liblv/lv_objx/lv_line.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_line.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_line.c' object='lib/liblv/lv_objx/antfx-lv_line.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_line.o `test -f 'lib/liblv/lv_objx/lv_line.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_line.c
-
-lib/liblv/lv_objx/antfx-lv_line.obj: lib/liblv/lv_objx/lv_line.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_line.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Tpo -c -o lib/liblv/lv_objx/antfx-lv_line.obj `if test -f 'lib/liblv/lv_objx/lv_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_line.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_line.c' object='lib/liblv/lv_objx/antfx-lv_line.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_line.obj `if test -f 'lib/liblv/lv_objx/lv_line.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_line.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_line.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_mbox.o: lib/liblv/lv_objx/lv_mbox.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_mbox.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Tpo -c -o lib/liblv/lv_objx/antfx-lv_mbox.o `test -f 'lib/liblv/lv_objx/lv_mbox.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_mbox.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_mbox.c' object='lib/liblv/lv_objx/antfx-lv_mbox.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_mbox.o `test -f 'lib/liblv/lv_objx/lv_mbox.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_mbox.c
-
-lib/liblv/lv_objx/antfx-lv_mbox.obj: lib/liblv/lv_objx/lv_mbox.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_mbox.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Tpo -c -o lib/liblv/lv_objx/antfx-lv_mbox.obj `if test -f 'lib/liblv/lv_objx/lv_mbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_mbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_mbox.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_mbox.c' object='lib/liblv/lv_objx/antfx-lv_mbox.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_mbox.obj `if test -f 'lib/liblv/lv_objx/lv_mbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_mbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_mbox.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_preload.o: lib/liblv/lv_objx/lv_preload.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_preload.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Tpo -c -o lib/liblv/lv_objx/antfx-lv_preload.o `test -f 'lib/liblv/lv_objx/lv_preload.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_preload.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_preload.c' object='lib/liblv/lv_objx/antfx-lv_preload.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_preload.o `test -f 'lib/liblv/lv_objx/lv_preload.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_preload.c
-
-lib/liblv/lv_objx/antfx-lv_preload.obj: lib/liblv/lv_objx/lv_preload.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_preload.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Tpo -c -o lib/liblv/lv_objx/antfx-lv_preload.obj `if test -f 'lib/liblv/lv_objx/lv_preload.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_preload.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_preload.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_preload.c' object='lib/liblv/lv_objx/antfx-lv_preload.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_preload.obj `if test -f 'lib/liblv/lv_objx/lv_preload.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_preload.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_preload.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_roller.o: lib/liblv/lv_objx/lv_roller.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_roller.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Tpo -c -o lib/liblv/lv_objx/antfx-lv_roller.o `test -f 'lib/liblv/lv_objx/lv_roller.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_roller.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_roller.c' object='lib/liblv/lv_objx/antfx-lv_roller.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_roller.o `test -f 'lib/liblv/lv_objx/lv_roller.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_roller.c
-
-lib/liblv/lv_objx/antfx-lv_roller.obj: lib/liblv/lv_objx/lv_roller.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_roller.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Tpo -c -o lib/liblv/lv_objx/antfx-lv_roller.obj `if test -f 'lib/liblv/lv_objx/lv_roller.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_roller.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_roller.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_roller.c' object='lib/liblv/lv_objx/antfx-lv_roller.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_roller.obj `if test -f 'lib/liblv/lv_objx/lv_roller.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_roller.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_roller.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_table.o: lib/liblv/lv_objx/lv_table.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_table.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Tpo -c -o lib/liblv/lv_objx/antfx-lv_table.o `test -f 'lib/liblv/lv_objx/lv_table.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_table.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_table.c' object='lib/liblv/lv_objx/antfx-lv_table.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_table.o `test -f 'lib/liblv/lv_objx/lv_table.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_table.c
-
-lib/liblv/lv_objx/antfx-lv_table.obj: lib/liblv/lv_objx/lv_table.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_table.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Tpo -c -o lib/liblv/lv_objx/antfx-lv_table.obj `if test -f 'lib/liblv/lv_objx/lv_table.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_table.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_table.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_table.c' object='lib/liblv/lv_objx/antfx-lv_table.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_table.obj `if test -f 'lib/liblv/lv_objx/lv_table.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_table.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_table.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_tabview.o: lib/liblv/lv_objx/lv_tabview.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_tabview.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Tpo -c -o lib/liblv/lv_objx/antfx-lv_tabview.o `test -f 'lib/liblv/lv_objx/lv_tabview.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_tabview.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_tabview.c' object='lib/liblv/lv_objx/antfx-lv_tabview.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_tabview.o `test -f 'lib/liblv/lv_objx/lv_tabview.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_tabview.c
-
-lib/liblv/lv_objx/antfx-lv_tabview.obj: lib/liblv/lv_objx/lv_tabview.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_tabview.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Tpo -c -o lib/liblv/lv_objx/antfx-lv_tabview.obj `if test -f 'lib/liblv/lv_objx/lv_tabview.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_tabview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_tabview.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_tabview.c' object='lib/liblv/lv_objx/antfx-lv_tabview.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_tabview.obj `if test -f 'lib/liblv/lv_objx/lv_tabview.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_tabview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_tabview.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_tileview.o: lib/liblv/lv_objx/lv_tileview.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_tileview.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Tpo -c -o lib/liblv/lv_objx/antfx-lv_tileview.o `test -f 'lib/liblv/lv_objx/lv_tileview.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_tileview.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_tileview.c' object='lib/liblv/lv_objx/antfx-lv_tileview.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_tileview.o `test -f 'lib/liblv/lv_objx/lv_tileview.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_tileview.c
-
-lib/liblv/lv_objx/antfx-lv_tileview.obj: lib/liblv/lv_objx/lv_tileview.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_tileview.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Tpo -c -o lib/liblv/lv_objx/antfx-lv_tileview.obj `if test -f 'lib/liblv/lv_objx/lv_tileview.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_tileview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_tileview.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_tileview.c' object='lib/liblv/lv_objx/antfx-lv_tileview.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_tileview.obj `if test -f 'lib/liblv/lv_objx/lv_tileview.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_tileview.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_tileview.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_btn.o: lib/liblv/lv_objx/lv_btn.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_btn.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Tpo -c -o lib/liblv/lv_objx/antfx-lv_btn.o `test -f 'lib/liblv/lv_objx/lv_btn.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_btn.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_btn.c' object='lib/liblv/lv_objx/antfx-lv_btn.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_btn.o `test -f 'lib/liblv/lv_objx/lv_btn.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_btn.c
-
-lib/liblv/lv_objx/antfx-lv_btn.obj: lib/liblv/lv_objx/lv_btn.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_btn.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Tpo -c -o lib/liblv/lv_objx/antfx-lv_btn.obj `if test -f 'lib/liblv/lv_objx/lv_btn.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_btn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_btn.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_btn.c' object='lib/liblv/lv_objx/antfx-lv_btn.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_btn.obj `if test -f 'lib/liblv/lv_objx/lv_btn.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_btn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_btn.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_calendar.o: lib/liblv/lv_objx/lv_calendar.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_calendar.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Tpo -c -o lib/liblv/lv_objx/antfx-lv_calendar.o `test -f 'lib/liblv/lv_objx/lv_calendar.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_calendar.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_calendar.c' object='lib/liblv/lv_objx/antfx-lv_calendar.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_calendar.o `test -f 'lib/liblv/lv_objx/lv_calendar.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_calendar.c
-
-lib/liblv/lv_objx/antfx-lv_calendar.obj: lib/liblv/lv_objx/lv_calendar.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_calendar.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Tpo -c -o lib/liblv/lv_objx/antfx-lv_calendar.obj `if test -f 'lib/liblv/lv_objx/lv_calendar.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_calendar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_calendar.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_calendar.c' object='lib/liblv/lv_objx/antfx-lv_calendar.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_calendar.obj `if test -f 'lib/liblv/lv_objx/lv_calendar.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_calendar.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_calendar.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_chart.o: lib/liblv/lv_objx/lv_chart.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_chart.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Tpo -c -o lib/liblv/lv_objx/antfx-lv_chart.o `test -f 'lib/liblv/lv_objx/lv_chart.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_chart.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_chart.c' object='lib/liblv/lv_objx/antfx-lv_chart.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_chart.o `test -f 'lib/liblv/lv_objx/lv_chart.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_chart.c
-
-lib/liblv/lv_objx/antfx-lv_chart.obj: lib/liblv/lv_objx/lv_chart.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_chart.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Tpo -c -o lib/liblv/lv_objx/antfx-lv_chart.obj `if test -f 'lib/liblv/lv_objx/lv_chart.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_chart.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_chart.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_chart.c' object='lib/liblv/lv_objx/antfx-lv_chart.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_chart.obj `if test -f 'lib/liblv/lv_objx/lv_chart.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_chart.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_chart.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_canvas.o: lib/liblv/lv_objx/lv_canvas.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_canvas.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Tpo -c -o lib/liblv/lv_objx/antfx-lv_canvas.o `test -f 'lib/liblv/lv_objx/lv_canvas.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_canvas.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_canvas.c' object='lib/liblv/lv_objx/antfx-lv_canvas.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_canvas.o `test -f 'lib/liblv/lv_objx/lv_canvas.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_canvas.c
-
-lib/liblv/lv_objx/antfx-lv_canvas.obj: lib/liblv/lv_objx/lv_canvas.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_canvas.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Tpo -c -o lib/liblv/lv_objx/antfx-lv_canvas.obj `if test -f 'lib/liblv/lv_objx/lv_canvas.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_canvas.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_canvas.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_canvas.c' object='lib/liblv/lv_objx/antfx-lv_canvas.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_canvas.obj `if test -f 'lib/liblv/lv_objx/lv_canvas.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_canvas.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_canvas.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_gauge.o: lib/liblv/lv_objx/lv_gauge.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_gauge.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Tpo -c -o lib/liblv/lv_objx/antfx-lv_gauge.o `test -f 'lib/liblv/lv_objx/lv_gauge.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_gauge.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_gauge.c' object='lib/liblv/lv_objx/antfx-lv_gauge.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_gauge.o `test -f 'lib/liblv/lv_objx/lv_gauge.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_gauge.c
-
-lib/liblv/lv_objx/antfx-lv_gauge.obj: lib/liblv/lv_objx/lv_gauge.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_gauge.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Tpo -c -o lib/liblv/lv_objx/antfx-lv_gauge.obj `if test -f 'lib/liblv/lv_objx/lv_gauge.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_gauge.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_gauge.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_gauge.c' object='lib/liblv/lv_objx/antfx-lv_gauge.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_gauge.obj `if test -f 'lib/liblv/lv_objx/lv_gauge.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_gauge.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_gauge.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_label.o: lib/liblv/lv_objx/lv_label.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_label.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Tpo -c -o lib/liblv/lv_objx/antfx-lv_label.o `test -f 'lib/liblv/lv_objx/lv_label.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_label.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_label.c' object='lib/liblv/lv_objx/antfx-lv_label.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_label.o `test -f 'lib/liblv/lv_objx/lv_label.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_label.c
-
-lib/liblv/lv_objx/antfx-lv_label.obj: lib/liblv/lv_objx/lv_label.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_label.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Tpo -c -o lib/liblv/lv_objx/antfx-lv_label.obj `if test -f 'lib/liblv/lv_objx/lv_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_label.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_label.c' object='lib/liblv/lv_objx/antfx-lv_label.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_label.obj `if test -f 'lib/liblv/lv_objx/lv_label.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_label.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_label.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_list.o: lib/liblv/lv_objx/lv_list.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_list.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Tpo -c -o lib/liblv/lv_objx/antfx-lv_list.o `test -f 'lib/liblv/lv_objx/lv_list.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_list.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_list.c' object='lib/liblv/lv_objx/antfx-lv_list.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_list.o `test -f 'lib/liblv/lv_objx/lv_list.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_list.c
-
-lib/liblv/lv_objx/antfx-lv_list.obj: lib/liblv/lv_objx/lv_list.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_list.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Tpo -c -o lib/liblv/lv_objx/antfx-lv_list.obj `if test -f 'lib/liblv/lv_objx/lv_list.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_list.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_list.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_list.c' object='lib/liblv/lv_objx/antfx-lv_list.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_list.obj `if test -f 'lib/liblv/lv_objx/lv_list.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_list.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_list.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_slider.o: lib/liblv/lv_objx/lv_slider.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_slider.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Tpo -c -o lib/liblv/lv_objx/antfx-lv_slider.o `test -f 'lib/liblv/lv_objx/lv_slider.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_slider.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_slider.c' object='lib/liblv/lv_objx/antfx-lv_slider.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_slider.o `test -f 'lib/liblv/lv_objx/lv_slider.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_slider.c
-
-lib/liblv/lv_objx/antfx-lv_slider.obj: lib/liblv/lv_objx/lv_slider.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_slider.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Tpo -c -o lib/liblv/lv_objx/antfx-lv_slider.obj `if test -f 'lib/liblv/lv_objx/lv_slider.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_slider.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_slider.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_slider.c' object='lib/liblv/lv_objx/antfx-lv_slider.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_slider.obj `if test -f 'lib/liblv/lv_objx/lv_slider.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_slider.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_slider.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_ta.o: lib/liblv/lv_objx/lv_ta.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_ta.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Tpo -c -o lib/liblv/lv_objx/antfx-lv_ta.o `test -f 'lib/liblv/lv_objx/lv_ta.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_ta.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_ta.c' object='lib/liblv/lv_objx/antfx-lv_ta.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_ta.o `test -f 'lib/liblv/lv_objx/lv_ta.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_ta.c
-
-lib/liblv/lv_objx/antfx-lv_ta.obj: lib/liblv/lv_objx/lv_ta.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_ta.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Tpo -c -o lib/liblv/lv_objx/antfx-lv_ta.obj `if test -f 'lib/liblv/lv_objx/lv_ta.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_ta.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_ta.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_ta.c' object='lib/liblv/lv_objx/antfx-lv_ta.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_ta.obj `if test -f 'lib/liblv/lv_objx/lv_ta.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_ta.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_ta.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_spinbox.o: lib/liblv/lv_objx/lv_spinbox.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_spinbox.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Tpo -c -o lib/liblv/lv_objx/antfx-lv_spinbox.o `test -f 'lib/liblv/lv_objx/lv_spinbox.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_spinbox.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_spinbox.c' object='lib/liblv/lv_objx/antfx-lv_spinbox.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_spinbox.o `test -f 'lib/liblv/lv_objx/lv_spinbox.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_spinbox.c
-
-lib/liblv/lv_objx/antfx-lv_spinbox.obj: lib/liblv/lv_objx/lv_spinbox.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_spinbox.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Tpo -c -o lib/liblv/lv_objx/antfx-lv_spinbox.obj `if test -f 'lib/liblv/lv_objx/lv_spinbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_spinbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_spinbox.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_spinbox.c' object='lib/liblv/lv_objx/antfx-lv_spinbox.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_spinbox.obj `if test -f 'lib/liblv/lv_objx/lv_spinbox.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_spinbox.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_spinbox.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_btnm.o: lib/liblv/lv_objx/lv_btnm.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_btnm.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Tpo -c -o lib/liblv/lv_objx/antfx-lv_btnm.o `test -f 'lib/liblv/lv_objx/lv_btnm.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_btnm.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_btnm.c' object='lib/liblv/lv_objx/antfx-lv_btnm.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_btnm.o `test -f 'lib/liblv/lv_objx/lv_btnm.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_btnm.c
-
-lib/liblv/lv_objx/antfx-lv_btnm.obj: lib/liblv/lv_objx/lv_btnm.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_btnm.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Tpo -c -o lib/liblv/lv_objx/antfx-lv_btnm.obj `if test -f 'lib/liblv/lv_objx/lv_btnm.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_btnm.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_btnm.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_btnm.c' object='lib/liblv/lv_objx/antfx-lv_btnm.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_btnm.obj `if test -f 'lib/liblv/lv_objx/lv_btnm.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_btnm.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_btnm.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_cont.o: lib/liblv/lv_objx/lv_cont.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cont.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cont.o `test -f 'lib/liblv/lv_objx/lv_cont.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cont.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cont.c' object='lib/liblv/lv_objx/antfx-lv_cont.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cont.o `test -f 'lib/liblv/lv_objx/lv_cont.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_cont.c
-
-lib/liblv/lv_objx/antfx-lv_cont.obj: lib/liblv/lv_objx/lv_cont.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_cont.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Tpo -c -o lib/liblv/lv_objx/antfx-lv_cont.obj `if test -f 'lib/liblv/lv_objx/lv_cont.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cont.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cont.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_cont.c' object='lib/liblv/lv_objx/antfx-lv_cont.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_cont.obj `if test -f 'lib/liblv/lv_objx/lv_cont.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_cont.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_cont.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_img.o: lib/liblv/lv_objx/lv_img.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_img.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Tpo -c -o lib/liblv/lv_objx/antfx-lv_img.o `test -f 'lib/liblv/lv_objx/lv_img.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_img.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_img.c' object='lib/liblv/lv_objx/antfx-lv_img.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_img.o `test -f 'lib/liblv/lv_objx/lv_img.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_img.c
-
-lib/liblv/lv_objx/antfx-lv_img.obj: lib/liblv/lv_objx/lv_img.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_img.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Tpo -c -o lib/liblv/lv_objx/antfx-lv_img.obj `if test -f 'lib/liblv/lv_objx/lv_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_img.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_img.c' object='lib/liblv/lv_objx/antfx-lv_img.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_img.obj `if test -f 'lib/liblv/lv_objx/lv_img.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_img.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_img.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_imgbtn.o: lib/liblv/lv_objx/lv_imgbtn.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_imgbtn.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Tpo -c -o lib/liblv/lv_objx/antfx-lv_imgbtn.o `test -f 'lib/liblv/lv_objx/lv_imgbtn.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_imgbtn.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_imgbtn.c' object='lib/liblv/lv_objx/antfx-lv_imgbtn.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_imgbtn.o `test -f 'lib/liblv/lv_objx/lv_imgbtn.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_imgbtn.c
-
-lib/liblv/lv_objx/antfx-lv_imgbtn.obj: lib/liblv/lv_objx/lv_imgbtn.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_imgbtn.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Tpo -c -o lib/liblv/lv_objx/antfx-lv_imgbtn.obj `if test -f 'lib/liblv/lv_objx/lv_imgbtn.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_imgbtn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_imgbtn.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_imgbtn.c' object='lib/liblv/lv_objx/antfx-lv_imgbtn.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_imgbtn.obj `if test -f 'lib/liblv/lv_objx/lv_imgbtn.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_imgbtn.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_imgbtn.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_led.o: lib/liblv/lv_objx/lv_led.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_led.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Tpo -c -o lib/liblv/lv_objx/antfx-lv_led.o `test -f 'lib/liblv/lv_objx/lv_led.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_led.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_led.c' object='lib/liblv/lv_objx/antfx-lv_led.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_led.o `test -f 'lib/liblv/lv_objx/lv_led.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_led.c
-
-lib/liblv/lv_objx/antfx-lv_led.obj: lib/liblv/lv_objx/lv_led.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_led.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Tpo -c -o lib/liblv/lv_objx/antfx-lv_led.obj `if test -f 'lib/liblv/lv_objx/lv_led.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_led.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_led.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_led.c' object='lib/liblv/lv_objx/antfx-lv_led.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_led.obj `if test -f 'lib/liblv/lv_objx/lv_led.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_led.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_led.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_lmeter.o: lib/liblv/lv_objx/lv_lmeter.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_lmeter.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Tpo -c -o lib/liblv/lv_objx/antfx-lv_lmeter.o `test -f 'lib/liblv/lv_objx/lv_lmeter.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_lmeter.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_lmeter.c' object='lib/liblv/lv_objx/antfx-lv_lmeter.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_lmeter.o `test -f 'lib/liblv/lv_objx/lv_lmeter.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_lmeter.c
-
-lib/liblv/lv_objx/antfx-lv_lmeter.obj: lib/liblv/lv_objx/lv_lmeter.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_lmeter.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Tpo -c -o lib/liblv/lv_objx/antfx-lv_lmeter.obj `if test -f 'lib/liblv/lv_objx/lv_lmeter.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_lmeter.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_lmeter.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_lmeter.c' object='lib/liblv/lv_objx/antfx-lv_lmeter.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_lmeter.obj `if test -f 'lib/liblv/lv_objx/lv_lmeter.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_lmeter.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_lmeter.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_page.o: lib/liblv/lv_objx/lv_page.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_page.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Tpo -c -o lib/liblv/lv_objx/antfx-lv_page.o `test -f 'lib/liblv/lv_objx/lv_page.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_page.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_page.c' object='lib/liblv/lv_objx/antfx-lv_page.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_page.o `test -f 'lib/liblv/lv_objx/lv_page.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_page.c
-
-lib/liblv/lv_objx/antfx-lv_page.obj: lib/liblv/lv_objx/lv_page.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_page.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Tpo -c -o lib/liblv/lv_objx/antfx-lv_page.obj `if test -f 'lib/liblv/lv_objx/lv_page.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_page.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_page.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_page.c' object='lib/liblv/lv_objx/antfx-lv_page.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_page.obj `if test -f 'lib/liblv/lv_objx/lv_page.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_page.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_page.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_sw.o: lib/liblv/lv_objx/lv_sw.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_sw.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Tpo -c -o lib/liblv/lv_objx/antfx-lv_sw.o `test -f 'lib/liblv/lv_objx/lv_sw.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_sw.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_sw.c' object='lib/liblv/lv_objx/antfx-lv_sw.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_sw.o `test -f 'lib/liblv/lv_objx/lv_sw.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_sw.c
-
-lib/liblv/lv_objx/antfx-lv_sw.obj: lib/liblv/lv_objx/lv_sw.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_sw.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Tpo -c -o lib/liblv/lv_objx/antfx-lv_sw.obj `if test -f 'lib/liblv/lv_objx/lv_sw.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_sw.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_sw.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_sw.c' object='lib/liblv/lv_objx/antfx-lv_sw.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_sw.obj `if test -f 'lib/liblv/lv_objx/lv_sw.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_sw.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_sw.c'; fi`
-
-lib/liblv/lv_objx/antfx-lv_win.o: lib/liblv/lv_objx/lv_win.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_win.o -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Tpo -c -o lib/liblv/lv_objx/antfx-lv_win.o `test -f 'lib/liblv/lv_objx/lv_win.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_win.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_win.c' object='lib/liblv/lv_objx/antfx-lv_win.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_win.o `test -f 'lib/liblv/lv_objx/lv_win.c' || echo '$(srcdir)/'`lib/liblv/lv_objx/lv_win.c
-
-lib/liblv/lv_objx/antfx-lv_win.obj: lib/liblv/lv_objx/lv_win.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_objx/antfx-lv_win.obj -MD -MP -MF lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Tpo -c -o lib/liblv/lv_objx/antfx-lv_win.obj `if test -f 'lib/liblv/lv_objx/lv_win.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_win.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_win.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Tpo lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po
-#	$(AM_V_CC)source='lib/liblv/lv_objx/lv_win.c' object='lib/liblv/lv_objx/antfx-lv_win.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_objx/antfx-lv_win.obj `if test -f 'lib/liblv/lv_objx/lv_win.c'; then $(CYGPATH_W) 'lib/liblv/lv_objx/lv_win.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_objx/lv_win.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_alien.o: lib/liblv/lv_themes/lv_theme_alien.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_alien.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_alien.o `test -f 'lib/liblv/lv_themes/lv_theme_alien.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_alien.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_alien.c' object='lib/liblv/lv_themes/antfx-lv_theme_alien.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_alien.o `test -f 'lib/liblv/lv_themes/lv_theme_alien.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_alien.c
-
-lib/liblv/lv_themes/antfx-lv_theme_alien.obj: lib/liblv/lv_themes/lv_theme_alien.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_alien.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_alien.obj `if test -f 'lib/liblv/lv_themes/lv_theme_alien.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_alien.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_alien.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_alien.c' object='lib/liblv/lv_themes/antfx-lv_theme_alien.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_alien.obj `if test -f 'lib/liblv/lv_themes/lv_theme_alien.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_alien.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_alien.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme.o: lib/liblv/lv_themes/lv_theme.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme.o `test -f 'lib/liblv/lv_themes/lv_theme.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme.c' object='lib/liblv/lv_themes/antfx-lv_theme.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme.o `test -f 'lib/liblv/lv_themes/lv_theme.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme.c
-
-lib/liblv/lv_themes/antfx-lv_theme.obj: lib/liblv/lv_themes/lv_theme.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme.obj `if test -f 'lib/liblv/lv_themes/lv_theme.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme.c' object='lib/liblv/lv_themes/antfx-lv_theme.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme.obj `if test -f 'lib/liblv/lv_themes/lv_theme.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_default.o: lib/liblv/lv_themes/lv_theme_default.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_default.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_default.o `test -f 'lib/liblv/lv_themes/lv_theme_default.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_default.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_default.c' object='lib/liblv/lv_themes/antfx-lv_theme_default.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_default.o `test -f 'lib/liblv/lv_themes/lv_theme_default.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_default.c
-
-lib/liblv/lv_themes/antfx-lv_theme_default.obj: lib/liblv/lv_themes/lv_theme_default.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_default.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_default.obj `if test -f 'lib/liblv/lv_themes/lv_theme_default.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_default.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_default.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_default.c' object='lib/liblv/lv_themes/antfx-lv_theme_default.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_default.obj `if test -f 'lib/liblv/lv_themes/lv_theme_default.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_default.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_default.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_night.o: lib/liblv/lv_themes/lv_theme_night.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_night.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_night.o `test -f 'lib/liblv/lv_themes/lv_theme_night.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_night.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_night.c' object='lib/liblv/lv_themes/antfx-lv_theme_night.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_night.o `test -f 'lib/liblv/lv_themes/lv_theme_night.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_night.c
-
-lib/liblv/lv_themes/antfx-lv_theme_night.obj: lib/liblv/lv_themes/lv_theme_night.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_night.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_night.obj `if test -f 'lib/liblv/lv_themes/lv_theme_night.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_night.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_night.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_night.c' object='lib/liblv/lv_themes/antfx-lv_theme_night.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_night.obj `if test -f 'lib/liblv/lv_themes/lv_theme_night.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_night.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_night.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_templ.o: lib/liblv/lv_themes/lv_theme_templ.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_templ.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_templ.o `test -f 'lib/liblv/lv_themes/lv_theme_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_templ.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_templ.c' object='lib/liblv/lv_themes/antfx-lv_theme_templ.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_templ.o `test -f 'lib/liblv/lv_themes/lv_theme_templ.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_templ.c
-
-lib/liblv/lv_themes/antfx-lv_theme_templ.obj: lib/liblv/lv_themes/lv_theme_templ.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_templ.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_templ.obj `if test -f 'lib/liblv/lv_themes/lv_theme_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_templ.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_templ.c' object='lib/liblv/lv_themes/antfx-lv_theme_templ.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_templ.obj `if test -f 'lib/liblv/lv_themes/lv_theme_templ.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_templ.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_templ.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_zen.o: lib/liblv/lv_themes/lv_theme_zen.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_zen.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_zen.o `test -f 'lib/liblv/lv_themes/lv_theme_zen.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_zen.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_zen.c' object='lib/liblv/lv_themes/antfx-lv_theme_zen.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_zen.o `test -f 'lib/liblv/lv_themes/lv_theme_zen.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_zen.c
-
-lib/liblv/lv_themes/antfx-lv_theme_zen.obj: lib/liblv/lv_themes/lv_theme_zen.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_zen.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_zen.obj `if test -f 'lib/liblv/lv_themes/lv_theme_zen.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_zen.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_zen.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_zen.c' object='lib/liblv/lv_themes/antfx-lv_theme_zen.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_zen.obj `if test -f 'lib/liblv/lv_themes/lv_theme_zen.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_zen.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_zen.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_material.o: lib/liblv/lv_themes/lv_theme_material.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_material.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_material.o `test -f 'lib/liblv/lv_themes/lv_theme_material.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_material.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_material.c' object='lib/liblv/lv_themes/antfx-lv_theme_material.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_material.o `test -f 'lib/liblv/lv_themes/lv_theme_material.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_material.c
-
-lib/liblv/lv_themes/antfx-lv_theme_material.obj: lib/liblv/lv_themes/lv_theme_material.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_material.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_material.obj `if test -f 'lib/liblv/lv_themes/lv_theme_material.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_material.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_material.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_material.c' object='lib/liblv/lv_themes/antfx-lv_theme_material.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_material.obj `if test -f 'lib/liblv/lv_themes/lv_theme_material.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_material.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_material.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_nemo.o: lib/liblv/lv_themes/lv_theme_nemo.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_nemo.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_nemo.o `test -f 'lib/liblv/lv_themes/lv_theme_nemo.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_nemo.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_nemo.c' object='lib/liblv/lv_themes/antfx-lv_theme_nemo.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_nemo.o `test -f 'lib/liblv/lv_themes/lv_theme_nemo.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_nemo.c
-
-lib/liblv/lv_themes/antfx-lv_theme_nemo.obj: lib/liblv/lv_themes/lv_theme_nemo.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_nemo.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_nemo.obj `if test -f 'lib/liblv/lv_themes/lv_theme_nemo.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_nemo.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_nemo.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_nemo.c' object='lib/liblv/lv_themes/antfx-lv_theme_nemo.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_nemo.obj `if test -f 'lib/liblv/lv_themes/lv_theme_nemo.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_nemo.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_nemo.c'; fi`
-
-lib/liblv/lv_themes/antfx-lv_theme_mono.o: lib/liblv/lv_themes/lv_theme_mono.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_mono.o -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.o `test -f 'lib/liblv/lv_themes/lv_theme_mono.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_mono.c
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_mono.c' object='lib/liblv/lv_themes/antfx-lv_theme_mono.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.o `test -f 'lib/liblv/lv_themes/lv_theme_mono.c' || echo '$(srcdir)/'`lib/liblv/lv_themes/lv_theme_mono.c
-
-lib/liblv/lv_themes/antfx-lv_theme_mono.obj: lib/liblv/lv_themes/lv_theme_mono.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_themes/antfx-lv_theme_mono.obj -MD -MP -MF lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.obj `if test -f 'lib/liblv/lv_themes/lv_theme_mono.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_mono.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_mono.c'; fi`
-	$(AM_V_at)$(am__mv) lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Tpo lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
-#	$(AM_V_CC)source='lib/liblv/lv_themes/lv_theme_mono.c' object='lib/liblv/lv_themes/antfx-lv_theme_mono.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_themes/antfx-lv_theme_mono.obj `if test -f 'lib/liblv/lv_themes/lv_theme_mono.c'; then $(CYGPATH_W) 'lib/liblv/lv_themes/lv_theme_mono.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_themes/lv_theme_mono.c'; fi`
+lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.o: lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.o -MD -MP -MF lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Tpo -c -o lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.o `test -f 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c' || echo '$(srcdir)/'`lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
+	$(AM_V_at)$(am__mv) lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Tpo lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po
+#	$(AM_V_CC)source='lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c' object='lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.o `test -f 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c' || echo '$(srcdir)/'`lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
+
+lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.obj: lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.obj -MD -MP -MF lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Tpo -c -o lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.obj `if test -f 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; then $(CYGPATH_W) 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; fi`
+	$(AM_V_at)$(am__mv) lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Tpo lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po
+#	$(AM_V_CC)source='lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c' object='lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(antfx_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o lib/liblv/lv_gpu/antfx-lv_gpu_stm32_dma2d.obj `if test -f 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; then $(CYGPATH_W) 'lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; else $(CYGPATH_W) '$(srcdir)/lib/liblv/lv_gpu/lv_gpu_stm32_dma2d.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -3178,18 +3639,18 @@ distclean-generic:
 	-rm -f lib/liblv/lv_draw/$(am__dirstamp)
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lib/liblv/lv_font/$(am__dirstamp)
+	-rm -f lib/liblv/lv_gpu/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_gpu/$(am__dirstamp)
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lib/liblv/lv_hal/$(am__dirstamp)
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lib/liblv/lv_misc/$(am__dirstamp)
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/$(am__dirstamp)
-	-rm -f lib/liblv/lv_objx/$(am__dirstamp)
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lib/liblv/lv_themes/$(am__dirstamp)
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lib/liblv/lv_widgets/$(am__dirstamp)
 	-rm -f widgets/$(DEPDIR)/$(am__dirstamp)
 	-rm -f widgets/$(am__dirstamp)
-	-rm -f widgets/fonts/$(DEPDIR)/$(am__dirstamp)
-	-rm -f widgets/fonts/$(am__dirstamp)
 	-rm -f widgets/icons/$(DEPDIR)/$(am__dirstamp)
 	-rm -f widgets/icons/$(am__dirstamp)
 
@@ -3213,34 +3674,54 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f ./$(DEPDIR)/antfx-weather.Po
-	-rm -f ./$(DEPDIR)/loopback.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
-	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_style.Po
-	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
-	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
+	-rm -f lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_disp.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_indev.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_tick.Po
@@ -3248,8 +3729,8 @@ distclean: distclean-am
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
-	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
@@ -3258,52 +3739,51 @@ distclean: distclean-am
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po
 	-rm -f widgets/$(DEPDIR)/antfx-default_wp.Po
 	-rm -f widgets/$(DEPDIR)/antfx-image.Po
-	-rm -f widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-alarm.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-calendar.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-camera.Po
@@ -3378,34 +3858,54 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/antfx-media.Po
 	-rm -f ./$(DEPDIR)/antfx-utils.Po
 	-rm -f ./$(DEPDIR)/antfx-weather.Po
-	-rm -f ./$(DEPDIR)/loopback.Po
 	-rm -f backends/$(DEPDIR)/antfx-fb_engine.Po
 	-rm -f backends/$(DEPDIR)/antfx-sdl2_engine.Po
 	-rm -f lib/ini/$(DEPDIR)/antfx-ini.Po
-	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_disp.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_group.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_indev.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_obj.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_refr.Po
 	-rm -f lib/liblv/lv_core/$(DEPDIR)/antfx-lv_style.Po
-	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_arc.Po
-	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_basic.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_blend.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_img.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_label.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_line.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_mask.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_rect.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_draw_triangle.Po
+	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_buf.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_cache.Po
 	-rm -f lib/liblv/lv_draw/$(DEPDIR)/antfx-lv_img_decoder.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_dejavu_16_persian_hebrew.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_fmt_txt.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_12.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_16.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_22.Po
-	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_roboto_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_loader.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_12_subpx.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_14.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_16.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_18.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_20.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_22.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_24.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_26.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_28_compressed.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_30.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_32.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_34.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_36.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_38.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_40.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_42.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_44.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_46.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_montserrat_48.Po
+	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_simsun_16_cjk.Po
 	-rm -f lib/liblv/lv_font/$(DEPDIR)/antfx-lv_font_unscii_8.Po
+	-rm -f lib/liblv/lv_gpu/$(DEPDIR)/antfx-lv_gpu_stm32_dma2d.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_disp.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_indev.Po
 	-rm -f lib/liblv/lv_hal/$(DEPDIR)/antfx-lv_hal_tick.Po
@@ -3413,8 +3913,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_area.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_async.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_bidi.Po
-	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_circ.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_color.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_debug.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_fs.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_gc.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_ll.Po
@@ -3423,52 +3923,51 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_mem.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_printf.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_task.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_templ.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt.Po
+	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_txt_ap.Po
 	-rm -f lib/liblv/lv_misc/$(DEPDIR)/antfx-lv_utils.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_arc.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_bar.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btn.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_btnm.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_calendar.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_canvas.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cb.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_chart.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cont.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_cpicker.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ddlist.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_gauge.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_img.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_imgbtn.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_kb.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_label.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_led.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_line.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_list.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_lmeter.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_mbox.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_page.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_preload.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_roller.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_slider.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_spinbox.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_sw.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_ta.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_table.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tabview.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_tileview.Po
-	-rm -f lib/liblv/lv_objx/$(DEPDIR)/antfx-lv_win.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_alien.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_default.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_empty.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_material.Po
 	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_mono.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_nemo.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_night.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_templ.Po
-	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_zen.Po
+	-rm -f lib/liblv/lv_themes/$(DEPDIR)/antfx-lv_theme_template.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_arc.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_bar.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btn.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_btnmatrix.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_calendar.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_canvas.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_chart.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_checkbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cont.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_cpicker.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_dropdown.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_gauge.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_img.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_imgbtn.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_keyboard.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_label.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_led.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_line.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_linemeter.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_list.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_msgbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objmask.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_objx_templ.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_page.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_roller.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_slider.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinbox.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_spinner.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_switch.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_table.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tabview.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_textarea.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_tileview.Po
+	-rm -f lib/liblv/lv_widgets/$(DEPDIR)/antfx-lv_win.Po
 	-rm -f widgets/$(DEPDIR)/antfx-default_wp.Po
 	-rm -f widgets/$(DEPDIR)/antfx-image.Po
-	-rm -f widgets/fonts/$(DEPDIR)/antfx-roboto_bold_50.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-alarm.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-calendar.Po
 	-rm -f widgets/icons/$(DEPDIR)/antfx-camera.Po

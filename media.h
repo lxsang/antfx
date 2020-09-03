@@ -49,9 +49,9 @@ typedef struct {
 
 
 int antfx_media_music_play(const char* song);
-int antfx_media_music_pause();
-int antfx_media_music_resume();
-int antfx_media_music_stop();
+void antfx_media_music_pause();
+void antfx_media_music_resume();
+void antfx_media_music_stop();
 void antfx_media_init();
 void antfx_media_release();
 

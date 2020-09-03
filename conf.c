@@ -54,20 +54,6 @@ static int ini_handle(void *user_data, const char *section, const char *name,
     {
         config->weather.weather_check_period = (int)atoi(value);
     }
-    else if (EQU(section, "antfxd") && EQU(name, "startup_sound"))
-    {
-        strncpy(config->startup_sound, value, ANTFX_MAX_STR_BUFF_SZ);
-    }
-    /*else if (EQU(section, "audio") && EQU(name, "input"))
-    {
-        config->audio.inputs = bst_insert(config->audio.inputs, config->audio.n_in, value);
-        config->audio.n_in++;
-    }
-    else if (EQU(section, "audio") && EQU(name, "output"))
-    {
-        config->audio.outputs = bst_insert(config->audio.outputs, config->audio.n_out, value);
-        config->audio.n_out++;
-    }*/
     else
     {
         ERROR("Unknow config: [%s] %s = %s", section, name, value);
@@ -78,7 +64,6 @@ static int ini_handle(void *user_data, const char *section, const char *name,
 int antfx_read_config(const char *file, antfx_conf_t *config)
 {
     memset(config->db_path, 0, ANTFX_MAX_STR_BUFF_SZ);
-    memset(config->startup_sound, 0, ANTFX_MAX_STR_BUFF_SZ);
 
     memset(config->display_dev.fb_dev, 0, ANTFX_MAX_STR_BUFF_SZ);
     memset(config->display_dev.ts_calibrate_cmd, 0, ANTFX_MAX_STR_BUFF_SZ);
@@ -89,6 +74,10 @@ int antfx_read_config(const char *file, antfx_conf_t *config)
     memset(config->fav.music_path, 0, ANTFX_MAX_STR_BUFF_SZ);
     config->fav.id = 0;
     config->fav.shuffle = 0;
+    config->fav.input = DEFAULT_INPUT_DEV;
+    config->fav.output = DEFAULT_OUTPUT_DEV;
+    config->fav.input_volume = DEFAULT_INPUT_VOLUME;
+    config->fav.output_volume = DEFAULT_OUTPUT_VOLUME;
 
     memset(config->i2c_dev.dev_del, 0, ANTFX_MAX_STR_BUFF_SZ);
     memset(config->i2c_dev.dev_new, 0, ANTFX_MAX_STR_BUFF_SZ);

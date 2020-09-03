@@ -24,7 +24,6 @@
 static void antfx_media_music_release_ctrl(antfx_media_music_ctl_t *ctl)
 {
     LOG("Clean up music controller");
-    int error;
     if (ctl->mh != NULL)
     {
         if (mpg123_close(ctl->mh) != MPG123_OK)
@@ -39,14 +38,24 @@ static void antfx_media_music_release_ctrl(antfx_media_music_ctl_t *ctl)
     SET_STATUS(MUSIC_STOP);
 }
 
+/*
 static void antfx_media_set_output(void)
 {
-    if (antfx_audio_set_output(-1, "Default output") == -1)
+    antfx_conf_t *conf = antfx_get_config();
+    if(antfx_audio_set_input_volume(conf->fav.input_volume) == -1)
+    {
+        ERROR("Unable to set initial input volume value %d", conf->fav.input_volume);
+    }
+    if(antfx_audio_set_output_volume(conf->fav.output_volume) == -1)
+    {
+        ERROR("Unable to set initial output volume value %d", conf->fav.output_volume);
+    }
+    if (antfx_audio_set_output(conf->fav.output, "Default output") == -1)
     {
         ERROR("Unable to set default output");
     }
 }
-
+*/
 static int antfx_media_fm_cb(void *data, int len)
 {
     if (!antfx_audio_writable())
@@ -71,7 +80,8 @@ static int antfx_media_fm_cb(void *data, int len)
 static int antfx_media_music_playback(int fd, unsigned char** data, int max_len, antfx_audio_write_event_t e)
 {
     antfx_conf_t *conf = antfx_get_config();
-    int ws, error, done;
+    int ws, error;
+    size_t done;
     if(conf->media.music.mh == NULL|| conf->audio.session.output_stream == NULL)
     {
         antfx_media_music_release_ctrl(&conf->media.music);
@@ -190,18 +200,18 @@ int antfx_media_music_play(const char *song)
     strncpy(conf->media.music.current_song, song, ANTFX_MAX_STR_BUFF_SZ);
     return 0;
 }
-int antfx_media_music_pause()
+void antfx_media_music_pause()
 {
     SET_STATUS(MUSIC_PAUSE);
     antfx_audio_output_pause();
 }
-int antfx_media_music_resume()
+void antfx_media_music_resume()
 {
     SET_STATUS(MUSIC_PLAYING);
     antfx_audio_output_resume();
     
 }
-int antfx_media_music_stop()
+void antfx_media_music_stop()
 {
     SET_STATUS(MUSIC_STOP);
     while(conf->media.music.mh != NULL)
@@ -223,12 +233,11 @@ void antfx_media_init()
     conf->media.music.buffer_len = 0;
     memset(conf->media.music.current_song, 0, ANTFX_MAX_STR_BUFF_SZ);
     conf->media.mode = M_NONE;
-    antfx_audio_init(antfx_media_set_output);
+    antfx_audio_init();
 }
 void antfx_media_release()
 {
     mpg123_exit();
-    antfx_conf_t *conf = antfx_get_config();
     antfx_media_music_stop();
     antfx_audio_release();
 }

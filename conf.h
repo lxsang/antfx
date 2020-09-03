@@ -24,7 +24,6 @@ typedef struct
     antfx_wt_t weather;
     antfx_media_ctl_t media;
     char db_path[ANTFX_MAX_STR_BUFF_SZ];
-    char startup_sound[ANTFX_MAX_STR_BUFF_SZ];
 } antfx_conf_t;
 
 int antfx_read_config(const char*, antfx_conf_t*);

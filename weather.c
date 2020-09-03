@@ -35,12 +35,8 @@ static void *weather_thread_handler(void *data)
 {
     antfx_wt_t* wt = (antfx_wt_t*) data;
     char buffer[MAX_CURL_PAGE_LENGTH];
-    float temperature;
-    char* url;
-    regex_t regex;
     regmatch_t matches[2];
     antfx_conf_t* conf = antfx_get_config();
-    int ret;
     LOG("Fetching weather infomation");
     CURL *curl_handle;
     CURLcode res;
@@ -70,7 +66,8 @@ static void *weather_thread_handler(void *data)
     }
 
     memset(wt->desc, '\0', sizeof(wt->desc));
-    memcpy(wt->desc, buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
+    snprintf(wt->desc, ANTFX_MAX_STR_BUFF_SZ, "%s, ", conf->fav.city);
+    memcpy(wt->desc + strlen(wt->desc), buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
     strcat(wt->desc, " C, ");
     // description
     if (!regex_match("\\s*\"main\":\\s*\"([a-zA-Z]+)\",?\\s*", buffer, 2, matches))
@@ -92,6 +89,7 @@ static void *weather_thread_handler(void *data)
     memcpy(wt->icon, buffer + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
     LOG("Icon: '%s'", wt->icon);
     wt->update = 1;
+    return NULL;
 }
 void weather_update(antfx_wt_t* wt)
 {

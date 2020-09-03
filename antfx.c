@@ -2,10 +2,10 @@
 
 engine_frame_t _screen;
 
-static void render(lv_disp_t * disp, const lv_area_t * area, lv_color_t * color_p)
+static void render(lv_disp_t * disp, const lv_area_t * area, lv_color16_t * color_p)
 {
     int32_t x, y;
-    int code, loc;
+    int loc;
     int size = _screen.bbp/8;
     for(y = area->y1; y <= area->y2; y++) {
         for(x = area->x1; x <= area->x2; x++) {
@@ -30,6 +30,7 @@ static void render(lv_disp_t * disp, const lv_area_t * area, lv_color_t * color_
 
 static bool pointer_input(lv_indev_drv_t * indev_driver, lv_indev_data_t * data)
 {
+    (void) indev_driver;
     uint8_t last_type = _screen.pointer.evt.type;
     get_pointer_input(&_screen);
 

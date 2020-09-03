@@ -22,7 +22,7 @@ static pa_sample_spec sample_output_spec = {
     .rate = 44100,
     .channels = 2};
 
-static int antfx_audio_pulse_connect(antfx_audio_t *, void *);
+static int antfx_audio_pulse_connect(antfx_audio_t *);
 static void antfx_audio_pulse_release(antfx_audio_t *);
 static void antfx_context_state_callback(pa_context *c, void *userdata);
 static void antfx_audio_sink_info_cb(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
@@ -40,7 +40,7 @@ static void antfx_audio_stream_started_callback(pa_stream *s, void *userdata);
 static void antfx_audio_stream_moved_callback(pa_stream *s, void *userdata);
 static void antfx_audio_stream_buffer_attr_callback(pa_stream *s, void *userdata);
 static void antfx_audio_write_to_output(int, antfx_audio_session_t *);
-static void stdin_callback(pa_mainloop_api *a, pa_io_event *e, int fd, pa_io_event_flags_t f, void *userdata);
+static int antfx_audio_set_volume(int v, int is_input);
 //static void antfx_audio_time_event_callback(pa_mainloop_api *m, pa_time_event *e, const struct timeval *tv, void *userdata);
 
 static void antfx_audio_write_to_output(int length, antfx_audio_session_t *session)
@@ -89,12 +89,14 @@ static void antfx_audio_stream_write_callback(pa_stream *s, size_t length, void 
 {
     assert(s);
     assert(length > 0);
-    antfx_audio_session_t *session = (antfx_audio_session_t *)userdata;
+    UNUSED(userdata);
+    antfx_conf_t* conf = antfx_get_config();
+    antfx_audio_session_t *session = &conf->audio.session;
     pthread_mutex_lock(&session->lock);
     int writable = pa_stream_writable_size(s);
     if (writable < length)
     {
-       return;
+        return;
     }
     if (session->buffer.ready)
     {
@@ -150,9 +152,10 @@ static void antfx_audio_stream_read_callback(pa_stream *s, size_t length, void *
 /* This routine is called whenever the stream state changes */
 static void antfx_audio_stream_state_callback(pa_stream *s, void *userdata)
 {
+    UNUSED(userdata);
     assert(s);
-    assert(userdata);
-    antfx_audio_session_t *session = (antfx_audio_session_t *)userdata;
+    antfx_conf_t* conf = antfx_get_config();
+    antfx_audio_session_t *session = &conf->audio.session;
     const pa_buffer_attr *a;
     char cmt[PA_CHANNEL_MAP_SNPRINT_MAX], sst[PA_SAMPLE_SPEC_SNPRINT_MAX];
     switch (pa_stream_get_state(s))
@@ -215,7 +218,7 @@ static void antfx_audio_stream_state_callback(pa_stream *s, void *userdata)
 static void antfx_audio_stream_suspended_callback(pa_stream *s, void *userdata)
 {
     assert(s);
-
+    UNUSED(userdata);
     if (pa_stream_is_suspended(s))
         LOG("Stream %s device suspended", pa_stream_get_device_name(s));
     else
@@ -225,26 +228,27 @@ static void antfx_audio_stream_suspended_callback(pa_stream *s, void *userdata)
 static void antfx_audio_stream_underflow_callback(pa_stream *s, void *userdata)
 {
     assert(s);
-
+    UNUSED(userdata);
     LOG("Stream %s underrun", pa_stream_get_device_name(s));
 }
 
 static void antfx_audio_stream_overflow_callback(pa_stream *s, void *userdata)
 {
     assert(s);
-
+    UNUSED(userdata);
     LOG("Stream %s overrun", pa_stream_get_device_name(s));
 }
 
 static void antfx_audio_stream_started_callback(pa_stream *s, void *userdata)
 {
     assert(s);
-
+    UNUSED(userdata);
     LOG("Stream %s started", pa_stream_get_device_name(s));
 }
 
 static void antfx_audio_stream_moved_callback(pa_stream *s, void *userdata)
 {
+    UNUSED(userdata);
     assert(s);
 
     LOG("Stream moved to device %s (%u, %ssuspended).", pa_stream_get_device_name(s), pa_stream_get_device_index(s), pa_stream_is_suspended(s) ? "" : "not ");
@@ -253,13 +257,14 @@ static void antfx_audio_stream_moved_callback(pa_stream *s, void *userdata)
 static void antfx_audio_stream_buffer_attr_callback(pa_stream *s, void *userdata)
 {
     assert(s);
+    UNUSED(userdata);
     LOG("Stream %s buffer attributes changed.", pa_stream_get_device_name(s));
 }
 
 static void antfx_audio_stream_event_callback(pa_stream *s, const char *name, pa_proplist *pl, void *userdata)
 {
     char *t;
-
+    UNUSED(userdata);
     assert(s);
     assert(name);
     assert(pl);
@@ -289,12 +294,12 @@ static int antfx_audio_create_stream(antfx_audio_session_t *session, const char 
         return -1;
     }
 
-    pa_stream_set_state_callback(*stream, antfx_audio_stream_state_callback, session);
-    pa_stream_set_write_callback(*stream, antfx_audio_stream_write_callback, session);
+    pa_stream_set_state_callback(*stream, antfx_audio_stream_state_callback, NULL);
+    pa_stream_set_write_callback(*stream, antfx_audio_stream_write_callback, NULL);
     pa_stream_set_read_callback(*stream, antfx_audio_stream_read_callback, userdata);
     pa_stream_set_suspended_callback(*stream, antfx_audio_stream_suspended_callback, NULL);
     pa_stream_set_moved_callback(*stream, antfx_audio_stream_moved_callback, NULL);
-    pa_stream_set_underflow_callback(*stream, antfx_audio_stream_underflow_callback, session);
+    pa_stream_set_underflow_callback(*stream, antfx_audio_stream_underflow_callback, NULL);
     pa_stream_set_overflow_callback(*stream, antfx_audio_stream_overflow_callback, NULL);
     pa_stream_set_started_callback(*stream, antfx_audio_stream_started_callback, NULL);
     pa_stream_set_event_callback(*stream, antfx_audio_stream_event_callback, NULL);
@@ -302,7 +307,6 @@ static int antfx_audio_create_stream(antfx_audio_session_t *session, const char 
 
     if (mode == PLAYBACK)
     {
-        pa_cvolume cv;
         // volume_is_set ? pa_cvolume_set(&cv, sample_spec.channels, volume) :  NULL
         if (pa_stream_connect_playback(*stream, dev_name, NULL, PA_STREAM_INTERPOLATE_TIMING | PA_STREAM_ADJUST_LATENCY | PA_STREAM_AUTO_TIMING_UPDATE, NULL, NULL) < 0)
         {
@@ -318,6 +322,7 @@ static int antfx_audio_create_stream(antfx_audio_session_t *session, const char 
             return -1;
         }
     }
+    return 0;
 }
 
 static void antfx_audio_source_info_cb(pa_context *c,
@@ -329,14 +334,10 @@ static void antfx_audio_source_info_cb(pa_context *c,
     {
         return;
     }
-    antfx_audio_dev_list_t *dev_list = (antfx_audio_dev_list_t *)userdata;
 
-    pa_sink_port_info **ports = NULL;
-    pa_sink_port_info *port = NULL;
-    pa_sink_port_info *active_port = NULL;
-    const char *prop_key = NULL;
-    void *prop_state = NULL;
-    int j;
+   
+    antfx_conf_t *conf = antfx_get_config();
+    antfx_audio_dev_list_t *dev_list = &conf->audio.inputs;
     if (regex_match("^.*\\.monitor$", i->name, 0, NULL))
     {
         return;
@@ -350,9 +351,19 @@ static void antfx_audio_source_info_cb(pa_context *c,
     dev->map = i->channel_map;
     dev->card = i->card;
     dev->volume = i->volume;
+    dev->index = i->index;
     strncpy(dev->name, i->name, ANTFX_MAX_STR_BUFF_SZ);
     strncpy(dev->desc, i->description, ANTFX_MAX_STR_BUFF_SZ);
     dev_list->devices = bst_insert(dev_list->devices, dev_list->count, dev, 1);
+
+    if (dev_list->count == conf->fav.input)
+    {
+        if (antfx_audio_set_input_volume(conf->fav.input_volume) == -1)
+        {
+            ERROR("Unable to set initial input volume value %d", conf->fav.input_volume);
+        }
+    }
+
     dev_list->count++;
     /*
     while ((prop_key = pa_proplist_iterate(i->proplist, &prop_state)))
@@ -405,15 +416,9 @@ static void antfx_audio_sink_info_cb(pa_context *c,
     {
         return;
     }
-    antfx_audio_dev_list_t *dev_list = (antfx_audio_dev_list_t *)userdata;
-
-    pa_sink_port_info **ports = NULL;
-    pa_sink_port_info *port = NULL;
-    pa_sink_port_info *active_port = NULL;
-    const char *prop_key = NULL;
-    void *prop_state = NULL;
-    int j;
-
+    UNUSED(userdata);
+    antfx_conf_t* conf = antfx_get_config();
+    antfx_audio_dev_list_t *dev_list = &conf->audio.outputs;
     antfx_audio_dev_t *dev = malloc(sizeof(antfx_audio_dev_t));
     if (!dev)
     {
@@ -423,9 +428,23 @@ static void antfx_audio_sink_info_cb(pa_context *c,
     dev->map = i->channel_map;
     dev->card = i->card;
     dev->volume = i->volume;
+    dev->index = i->index;
     strncpy(dev->name, i->name, ANTFX_MAX_STR_BUFF_SZ);
     strncpy(dev->desc, i->description, ANTFX_MAX_STR_BUFF_SZ);
     dev_list->devices = bst_insert(dev_list->devices, dev_list->count, dev, 1);
+
+    if(dev_list->count == conf->fav.output)
+    {
+         if(antfx_audio_set_output_volume(conf->fav.output_volume) == -1)
+        {
+            ERROR("Unable to set initial output volume value %d", conf->fav.output_volume);
+        }
+        if (antfx_audio_set_output(conf->fav.output, "Default output") == -1)
+        {
+            ERROR("Unable to set default output");
+        }
+    }
+
     dev_list->count++;
     /*
     while ((prop_key = pa_proplist_iterate(i->proplist, &prop_state)))
@@ -538,12 +557,9 @@ static void antfx_context_state_callback(pa_context *c, void *userdata)
 
     case PA_CONTEXT_READY:
     {
-        int r;
-        pa_buffer_attr buffer_attr;
-
         assert(c);
         LOG("Connection to pulse audio is ready");
-        pa_op = pa_context_get_sink_info_list(c, antfx_audio_sink_info_cb, &au->outputs);
+        pa_op = pa_context_get_sink_info_list(c, antfx_audio_sink_info_cb, NULL);
         if (!pa_op)
         {
             ERROR("pa_context_get_sink_info_list() failed");
@@ -551,7 +567,7 @@ static void antfx_context_state_callback(pa_context *c, void *userdata)
         }
         pa_operation_unref(pa_op);
 
-        pa_op = pa_context_get_source_info_list(c, antfx_audio_source_info_cb, &au->inputs);
+        pa_op = pa_context_get_source_info_list(c, antfx_audio_source_info_cb, NULL);
         if (!pa_op)
         {
             ERROR("pa_context_get_source_info_list() failed");
@@ -577,7 +593,7 @@ static void antfx_context_state_callback(pa_context *c, void *userdata)
     return;
 }
 
-static int antfx_audio_pulse_connect(antfx_audio_t *au, void *userdata)
+static int antfx_audio_pulse_connect(antfx_audio_t *au)
 {
     au->session.context = pa_context_new(au->session.mainloop_api, "Antfx");
     if (!au->session.context)
@@ -586,7 +602,7 @@ static int antfx_audio_pulse_connect(antfx_audio_t *au, void *userdata)
         antfx_audio_pulse_release(au);
         return -1;
     }
-    pa_context_set_state_callback(au->session.context, antfx_context_state_callback, userdata);
+    pa_context_set_state_callback(au->session.context, antfx_context_state_callback, NULL);
     if (pa_context_connect(au->session.context, NULL, PA_CONTEXT_NOFAIL, NULL) < 0)
     {
         if (pa_context_errno(au->session.context) == PA_ERR_INVALID)
@@ -596,6 +612,46 @@ static int antfx_audio_pulse_connect(antfx_audio_t *au, void *userdata)
             return -1;
         }
     }
+    return 0;
+}
+static int antfx_audio_set_volume(int v, int is_input)
+{
+    pa_operation *pa_op = NULL;
+    pa_cvolume volume;
+    int actual_volume = v * PA_VOLUME_NORM / 100;
+    antfx_conf_t *conf = antfx_get_config();
+    bst_node_t *node = NULL;
+    if (is_input)
+        node = bst_find(conf->audio.inputs.devices, conf->fav.input);
+    else
+        node = bst_find(conf->audio.outputs.devices, conf->fav.output);
+    antfx_audio_dev_t *dev = NULL;
+    if (node == NULL)
+    {
+        ERROR("antfx_audio_set_volume: Cannot find sound device from device list (in: %d, out: %d)",
+              conf->fav.input,
+              conf->fav.output);
+        return -1;
+    }
+    dev = (antfx_audio_dev_t *)node->data;
+    LOG("Set volume volume to %d", actual_volume);
+    volume.channels = dev->map.channels;
+    for (int i = 0; i < dev->map.channels; i++)
+    {
+        volume.values[i] = actual_volume;
+    }
+
+    if (is_input)
+        pa_op = pa_context_set_source_volume_by_index(conf->audio.session.context, dev->index, &volume, NULL, NULL);
+    else
+        pa_op = pa_context_set_sink_volume_by_index(conf->audio.session.context, dev->index, &volume, NULL, NULL);
+    if (!pa_op)
+    {
+        ERROR("pa_context_set_*_volume_by_index() failed");
+        return -1;
+    }
+    pa_operation_unref(pa_op);
+    pa_op = NULL;
     return 0;
 }
 static void antfx_audio_dev_dump(bst_node_t *node, void **argv, int argc)
@@ -613,6 +669,7 @@ static void antfx_audio_dev_dump(bst_node_t *node, void **argv, int argc)
 }
 static void antfx_audio_io_event_cb(pa_mainloop_api *a, pa_io_event *e, int fd, pa_io_event_flags_t f, void *userdata)
 {
+    (void) f;
     antfx_conf_t *conf = antfx_get_config();
     assert(a == conf->audio.session.mainloop_api);
     assert(e);
@@ -658,7 +715,7 @@ static void antfx_audio_io_event_cb(pa_mainloop_api *a, pa_io_event *e, int fd, 
     }
 }
 
-int antfx_audio_init(void (*callback)(void))
+int antfx_audio_init()
 {
 
     antfx_conf_t *conf = antfx_get_config();
@@ -711,7 +768,7 @@ int antfx_audio_init(void (*callback)(void))
         antfx_audio_pulse_release(&conf->audio);
         return -1;
     }
-    return antfx_audio_pulse_connect(&conf->audio, callback);
+    return antfx_audio_pulse_connect(&conf->audio);
 }
 
 void antfx_audio_release()
@@ -816,7 +873,7 @@ int antfx_audio_set_input(int id, const char *name, int (*callback)(void *, int)
         //sample_output_spec.channels = dev->map.channels;
     }
 
-    return antfx_audio_create_stream(&conf->audio.session, name, dev_name, RECORD, &sample_output_spec, callback);
+    return antfx_audio_create_stream(&conf->audio.session, name, dev_name, RECORD, &sample_input_spec, callback);
 }
 int antfx_audio_set_output(int id, const char *name)
 {
@@ -869,6 +926,7 @@ int antfx_audio_write_event_fd(int fd, int (*callback)(int, unsigned char **, in
         conf->audio.session.io_event = NULL;
         return -1;
     }
+    return 0;
 }
 
 void antfx_audio_output_pause()
@@ -878,7 +936,6 @@ void antfx_audio_output_pause()
 }
 void antfx_audio_output_resume()
 {
-    printf("resum the music\n");
     antfx_conf_t *conf = antfx_get_config();
     conf->audio.session.buffer.ready = 1;
     pthread_mutex_lock(&conf->audio.session.lock);
@@ -897,4 +954,13 @@ int antfx_audio_output_is_paused()
 {
     antfx_conf_t *conf = antfx_get_config();
     return pa_stream_is_corked(conf->audio.session.output_stream);
+}
+
+int antfx_audio_set_input_volume(int v)
+{
+    return antfx_audio_set_volume(v, 1);
+}
+int antfx_audio_set_output_volume(int v)
+{
+    return antfx_audio_set_volume(v, 0);
 }
