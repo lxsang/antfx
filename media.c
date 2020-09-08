@@ -8,10 +8,12 @@
 #include <errno.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <dirent.h>
 #include "log.h"
 #include "media.h"
 #include "hw.h"
 #include "conf.h"
+#include "utils.h"
 
 #define SET_STATUS(s)                        \
     antfx_conf_t *conf = antfx_get_config(); \
@@ -76,26 +78,63 @@ static int antfx_media_fm_cb(void *data, int len)
     }
     return 0;
 }
+static void antfx_audio_music_load_playlist()
+{
+    DIR *d;
+    antfx_conf_t *conf = antfx_get_config();
+    struct dirent *dir;
+    conf->media.music.total_songs = 0;
+    if (conf->media.music.songs)
+    {
+        bst_free(conf->media.music.songs, 1);
+        conf->media.music.songs = NULL;
+    }
 
-static int antfx_media_music_playback(int fd, unsigned char** data, int max_len, antfx_audio_write_event_t e)
+    d = opendir(conf->fav.music_path);
+    if (d != NULL)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if (regex_match("^.*\\.mp3$", dir->d_name, 0, NULL))
+            {
+                conf->media.music.songs = bst_insert(conf->media.music.songs, conf->media.music.total_songs, strdup(dir->d_name), 1);
+                conf->media.music.total_songs++;
+            }
+        }
+        closedir(d);
+        LOG("Playlist loaded with %d entries", conf->media.music.total_songs);
+    }
+    else
+    {
+        ERROR("Unable to open music library directory: %s", conf->fav.music_path);
+    }
+}
+void *antfx_media_audio_thread(void *data)
+{
+    antfx_audio_init();
+}
+
+static int antfx_media_music_playback(int fd, unsigned char **data, int max_len, antfx_audio_write_event_t e)
 {
     antfx_conf_t *conf = antfx_get_config();
     int ws, error;
     size_t done;
-    if(conf->media.music.mh == NULL|| conf->audio.session.output_stream == NULL)
+    if (conf->media.music.mh == NULL || conf->audio.session.output_stream == NULL)
     {
         antfx_media_music_release_ctrl(&conf->media.music);
-        if(fd > 0) close(fd);
+        if (fd > 0)
+            close(fd);
         return -1;
     }
-    if(e == A_EVENT_FAIL)
+    if (e == A_EVENT_FAIL)
     {
         LOG("Event fail release controller");
         antfx_media_music_release_ctrl(&conf->media.music);
-        if(fd > 0) close(fd);
+        if (fd > 0)
+            close(fd);
         return -1;
     }
-    if(e == A_EVENT_PENDING)
+    if (e == A_EVENT_PENDING)
     {
         return 0;
     }
@@ -104,7 +143,7 @@ static int antfx_media_music_playback(int fd, unsigned char** data, int max_len,
     case MUSIC_PAUSE:
         return 0;
     case MUSIC_PLAYING:
-        if(max_len == 0)
+        if (max_len == 0)
         {
             return 0;
         }
@@ -125,7 +164,7 @@ static int antfx_media_music_playback(int fd, unsigned char** data, int max_len,
         }
         if (conf->media.music.buffer_len > 0 && conf->media.music.buffer_len < max_len)
         {
-            *data = (unsigned char*)conf->media.music.buffer;
+            *data = (unsigned char *)conf->media.music.buffer;
             ws = conf->media.music.buffer_len;
             conf->media.music.buffer_len = 0;
             return ws;
@@ -151,7 +190,7 @@ int antfx_media_music_play(const char *song)
     antfx_conf_t *conf = antfx_get_config();
     conf->media.mode = M_NONE;
     LOG("Playing %s", song);
-    if(conf->media.music.status != MUSIC_STOP)
+    if (conf->media.music.status != MUSIC_STOP)
     {
         antfx_media_music_stop();
     }
@@ -209,12 +248,11 @@ void antfx_media_music_resume()
 {
     SET_STATUS(MUSIC_PLAYING);
     antfx_audio_output_resume();
-    
 }
 void antfx_media_music_stop()
 {
     SET_STATUS(MUSIC_STOP);
-    while(conf->media.music.mh != NULL)
+    while (conf->media.music.mh != NULL)
     {
         usleep(10000);
     }
@@ -231,15 +269,39 @@ void antfx_media_init()
     conf->media.music.current_frame = 0;
     conf->media.music.buffer = NULL;
     conf->media.music.buffer_len = 0;
+    conf->media.music.songs = NULL;
+    conf->media.music.total_songs = 0;
+    conf->media.music.current_page = 0;
     memset(conf->media.music.current_song, 0, ANTFX_MAX_STR_BUFF_SZ);
     conf->media.mode = M_NONE;
-    antfx_audio_init();
+    // start audio system in another thread
+    pthread_t tid;
+    if (pthread_create(&tid, NULL,(void *(*)(void *))antfx_media_audio_thread, NULL) != 0)
+    {
+        ERROR("pthread_create: cannot create audio thread: %s", strerror(errno));
+    }
+    else
+    {
+        if(pthread_detach(tid) != 0)
+        {
+            ERROR("Unable to detach thread");
+        }
+    }
+    // antfx_audio_init();
+    // load the music list
+    antfx_audio_music_load_playlist();
 }
 void antfx_media_release()
 {
+    antfx_conf_t *conf = antfx_get_config();
     mpg123_exit();
     antfx_media_music_stop();
     antfx_audio_release();
+    if (conf->media.music.songs)
+    {
+        bst_free(conf->media.music.songs, 1);
+        conf->media.music.songs = NULL;
+    }
 }
 
 int antfx_media_fm_start(float freq, int id)
@@ -260,9 +322,9 @@ int antfx_media_fm_start(float freq, int id)
 void antfx_media_fm_stop()
 {
     antfx_conf_t *conf = antfx_get_config();
-    if(conf->media.mode != M_FM_MODE)
+    if (conf->media.mode != M_FM_MODE)
         return;
-    
+
     antfx_audio_remove_input();
     antfx_hw_fm_mute();
     antfx_audio_flush();

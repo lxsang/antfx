@@ -1,5 +1,4 @@
 #include <time.h>
-#include <dirent.h>
 #include "gui.h"
 #include "db.h"
 #include "hw.h"
@@ -72,6 +71,8 @@ static void antfx_ui_alert(const char *);
 static void antfx_ui_set_volume(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_set_volume_cb(lv_obj_t *obj, lv_event_t event);
 static void antfx_ui_music_shuffle_cb(lv_obj_t *obj, lv_event_t event);
+static void antfx_media_music_next_page(lv_obj_t *obj, lv_event_t event);
+static void antfx_media_music_prev_page(lv_obj_t *obj, lv_event_t event);
 
 void antfx_ui_update()
 {
@@ -231,7 +232,7 @@ void antfx_ui_main(engine_config_t conf)
 
     lv_obj_t *list = lv_list_create(scr, NULL);
     lv_obj_add_style(list, LV_LIST_PART_BG, &list_style);
-  
+
     lv_obj_set_size(list, 48, lv_disp_get_ver_res(NULL));
 
     lv_obj_t *btn;
@@ -281,6 +282,9 @@ void antfx_ui_main(engine_config_t conf)
     lv_obj_add_style(g_scr_info.lbl_weather, LV_LABEL_PART_MAIN, &status_style);
 
     g_scr_info.lbl_status = lv_label_create(cont, NULL);
+    lv_label_set_long_mode(g_scr_info.lbl_status, LV_LABEL_LONG_BREAK);
+    lv_obj_set_width(g_scr_info.lbl_status, (lv_disp_get_hor_res(NULL) / 2));
+    lv_label_set_align(g_scr_info.lbl_status, LV_LABEL_ALIGN_CENTER);
     lv_label_set_text(g_scr_info.lbl_status, "");
     lv_obj_add_style(g_scr_info.lbl_status, LV_LABEL_PART_MAIN, &status_style);
 
@@ -518,28 +522,68 @@ static void antfx_ui_fm_item_action_cb(lv_obj_t *obj, lv_event_t event)
         lv_msgbox_start_auto_close(obj, 0);
     }
 }
+static void antfx_media_music_next_page(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *win;
+    antfx_conf_t *conf;
+    int total_page;
+    if (event == LV_EVENT_CLICKED)
+    {
+        conf = antfx_get_config();
+        win = (lv_obj_t *)lv_obj_get_user_data(obj);
+        total_page = conf->media.music.total_songs / 6;
+        if (conf->media.music.total_songs % 6 > 0)
+            total_page++;
+        if (conf->media.music.current_page < total_page - 1)
+        {
+            conf->media.music.current_page++;
+            lv_obj_del(win);
+            antfx_ui_show_music_dialog(NULL, LV_EVENT_CLICKED);
+        }
+    }
+}
+static void antfx_media_music_prev_page(lv_obj_t *obj, lv_event_t event)
+{
+    lv_obj_t *win;
+    antfx_conf_t *conf;
+    int total_page;
+    if (event == LV_EVENT_CLICKED)
+    {
+        conf = antfx_get_config();
+        win = (lv_obj_t *)lv_obj_get_user_data(obj);
+        total_page = conf->media.music.total_songs / 6;
+        if (conf->media.music.total_songs % 6 > 0)
+            total_page++;
+        if (conf->media.music.current_page > 0)
+        {
+            conf->media.music.current_page--;
+            lv_obj_del(win);
+            antfx_ui_show_music_dialog(NULL, LV_EVENT_CLICKED);
+        }
+    }
+}
 static void antfx_ui_music_list_refresh(lv_obj_t *list)
 {
-    DIR *d;
     antfx_conf_t *conf = antfx_get_config();
-    struct dirent *dir;
+    bst_node_t *node;
     lv_obj_t *btn;
-    d = opendir(conf->fav.music_path);
-    if (d != NULL)
+    lv_list_clean(list);
+    if (conf->media.music.songs != NULL)
     {
-        while ((dir = readdir(d)) != NULL)
+        int pos = conf->media.music.current_page * 6;
+        for (int i = pos; i < pos + 6; i++)
         {
-            if (regex_match("^.*\\.mp3$", dir->d_name, 0, NULL))
+            node = bst_find(conf->media.music.songs, i);
+            if (node && node->data)
             {
-                btn = lv_list_add_btn(list, LV_SYMBOL_AUDIO, dir->d_name);
+                btn = lv_list_add_btn(list, LV_SYMBOL_AUDIO, (char *)node->data);
                 lv_obj_set_event_cb(btn, antfx_ui_music_play);
             }
         }
-        closedir(d);
     }
     else
     {
-        antfx_ui_alert("Unable to open music library directory");
+        antfx_ui_alert("Playlist is empty");
     }
 }
 static void antfx_ui_fm_list_refresh(lv_obj_t *list)
@@ -568,24 +612,41 @@ static void antfx_ui_show_music_dialog(lv_obj_t *obj, lv_event_t event)
 {
     UNUSED(obj);
     lv_obj_t *scr = lv_disp_get_scr_act(NULL);
+    char title[ANTFX_MAX_STR_BUFF_SZ];
     antfx_conf_t *conf = antfx_get_config();
     if (event == LV_EVENT_CLICKED)
     {
         lv_obj_t *win = lv_win_create(scr, NULL);
         lv_obj_t *btn;
-
+        int total_page = conf->media.music.total_songs / 6;
+        if (conf->media.music.total_songs % 6 > 0)
+            total_page++;
+        snprintf(
+            title,
+            ANTFX_MAX_STR_BUFF_SZ,
+            "Playlist (%d/%d)",
+            conf->media.music.current_page,
+            total_page);
         btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE);
         lv_obj_set_event_cb(btn, lv_win_close_event_cb);
-
-        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
-        lv_win_set_title(win, conf->fav.music_path);
-        lv_win_set_scrollbar_mode(win, LV_SCROLLBAR_MODE_OFF);
 
         lv_obj_t *list;
         list = lv_list_create(win, NULL);
         lv_obj_set_size(list, lv_disp_get_hor_res(NULL) - 25, lv_disp_get_ver_res(NULL) - 75);
-
+        lv_list_set_scrollbar_mode(list, LV_SCROLLBAR_MODE_OFF);
         antfx_ui_music_list_refresh(list);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_NEXT);
+        lv_obj_set_event_cb(btn, antfx_media_music_next_page);
+        lv_obj_set_user_data(btn, win);
+
+        btn = lv_win_add_btn(win, LV_SYMBOL_PREV);
+        lv_obj_set_event_cb(btn, antfx_media_music_prev_page);
+        lv_obj_set_user_data(btn, win);
+
+        lv_obj_set_size(win, lv_disp_get_hor_res(NULL), lv_disp_get_ver_res(NULL));
+        lv_win_set_title(win, title);
+        lv_win_set_scrollbar_mode(win, LV_SCROLLBAR_MODE_OFF);
 
         lv_obj_set_top(win, true);
     }

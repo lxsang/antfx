@@ -94,7 +94,7 @@ static void antfx_audio_stream_write_callback(pa_stream *s, size_t length, void 
     antfx_audio_session_t *session = &conf->audio.session;
     pthread_mutex_lock(&session->lock);
     int writable = pa_stream_writable_size(s);
-    if (writable < length)
+    if (writable < (int)length)
     {
         return;
     }
@@ -334,7 +334,7 @@ static void antfx_audio_source_info_cb(pa_context *c,
     {
         return;
     }
-
+    UNUSED(userdata);
    
     antfx_conf_t *conf = antfx_get_config();
     antfx_audio_dev_list_t *dev_list = &conf->audio.inputs;
@@ -535,7 +535,7 @@ static void antfx_audio_pulse_release(antfx_audio_t *au)
             }
             au->session.mainloop_api->quit(au->session.mainloop_api, 0);
         }
-        pa_threaded_mainloop_free(au->session.mainloop);
+        pa_mainloop_free(au->session.mainloop);
         au->session.mainloop = NULL;
         au->session.mainloop_api = NULL;
     }
@@ -719,7 +719,7 @@ int antfx_audio_init()
 {
 
     antfx_conf_t *conf = antfx_get_config();
-
+    int ret;
     conf->audio.inputs.devices = NULL;
     conf->audio.inputs.count = 0;
     conf->audio.outputs.devices = NULL;
@@ -737,17 +737,17 @@ int antfx_audio_init()
 
     pthread_mutex_init(&conf->audio.session.lock, NULL);
     LOG("Init the audio system");
-    conf->audio.session.mainloop = pa_threaded_mainloop_new();
+    conf->audio.session.mainloop = pa_mainloop_new();
     if (conf->audio.session.mainloop == NULL)
     {
-        ERROR("pa_threaded_mainloop_new() failed");
+        ERROR("pa_mainloop_new() failed");
         return -1;
     }
-    conf->audio.session.mainloop_api = pa_threaded_mainloop_get_api(conf->audio.session.mainloop);
+    conf->audio.session.mainloop_api = pa_mainloop_get_api(conf->audio.session.mainloop);
     if (conf->audio.session.mainloop_api == NULL)
     {
-        ERROR("pa_threaded_mainloop_get_api() failed");
-        pa_threaded_mainloop_free(conf->audio.session.mainloop);
+        ERROR("pa_mainloop_get_api() failed");
+        pa_mainloop_free(conf->audio.session.mainloop);
         antfx_audio_pulse_release(&conf->audio);
         return -1;
     }
@@ -762,13 +762,18 @@ int antfx_audio_init()
         antfx_audio_pulse_release(&conf->audio);
         return -1;
     }*/
-    if (pa_threaded_mainloop_start(conf->audio.session.mainloop) == -1)
+    if(antfx_audio_pulse_connect(&conf->audio) == -1)
     {
-        ERROR("pa_threaded_mainloop_start() failed");
+        ERROR("antfx_audio_pulse_connect() failed");
         antfx_audio_pulse_release(&conf->audio);
         return -1;
     }
-    return antfx_audio_pulse_connect(&conf->audio);
+    if (pa_mainloop_run(conf->audio.session.mainloop, &ret) == -1)
+    {
+        ERROR("pa_mainloop_run() failed");
+        antfx_audio_pulse_release(&conf->audio);
+        return -1;
+    }
 }
 
 void antfx_audio_release()

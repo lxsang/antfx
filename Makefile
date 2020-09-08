@@ -555,10 +555,10 @@ AUTOCONF = ${SHELL} /home/mrsang/workspace/antfx/missing autoconf
 AUTOHEADER = ${SHELL} /home/mrsang/workspace/antfx/missing autoheader
 AUTOMAKE = ${SHELL} /home/mrsang/workspace/antfx/missing automake-1.16
 AWK = gawk
-CC = arm-poky-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi3-toolchain/sysroots/cortexa7t2hf-neon-vfpv4-poky-linux-gnueabi
+CC = arm-poky-linux-gnueabi-gcc  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi0-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
 CCDEPMODE = depmode=gcc3
 CFLAGS =  -O2 -pipe -g -feliminate-unused-debug-types 
-CPP = arm-poky-linux-gnueabi-gcc -E  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi3-toolchain/sysroots/cortexa7t2hf-neon-vfpv4-poky-linux-gnueabi
+CPP = arm-poky-linux-gnueabi-gcc -E  -march=armv6 -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s -mfpu=vfp -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/media/games/mrsang/rpi0-toolchain/sysroots/arm1176jzfshf-vfp-poky-linux-gnueabi
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"antfx\" -DPACKAGE_TARNAME=\"antfx\" -DPACKAGE_VERSION=\"1.0.0b\" -DPACKAGE_STRING=\"antfx\ 1.0.0b\" -DPACKAGE_BUGREPORT=\"xsang.le@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"antfx\" -DVERSION=\"1.0.0b\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBTS=1 -DHAVE_LIBM=1 -DHAVE_LIBWIRINGPI=1 -DHAVE_LIBCURL=1 -DHAVE_LIBPTHREAD=1 -DHAVE_LIBSQLITE3=1 -DHAVE_LIBMPG123=1 -DHAVE_LIBPULSE=1 -DHAVE_LIBPULSE_SIMPLE=1 -D_GNU_SOURCE=1 -DLINUX=1

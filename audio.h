@@ -41,7 +41,7 @@ typedef struct
 {
     pa_context *context;
     pa_mainloop_api *mainloop_api;
-    pa_threaded_mainloop *mainloop;
+    pa_mainloop *mainloop;
     pa_io_event *io_event;
     pa_stream *input_stream;
     pa_stream *output_stream;

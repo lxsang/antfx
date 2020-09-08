@@ -40,6 +40,9 @@ typedef struct
     off_t current_frame;
     int encoding;
     char current_song[ANTFX_MAX_STR_BUFF_SZ];
+    bst_node_t* songs;
+    int total_songs;
+    int current_page;
 } antfx_media_music_ctl_t;
 
 typedef struct {
@@ -52,6 +55,7 @@ int antfx_media_music_play(const char* song);
 void antfx_media_music_pause();
 void antfx_media_music_resume();
 void antfx_media_music_stop();
+void antfx_media_music_play_next();
 void antfx_media_init();
 void antfx_media_release();
 
